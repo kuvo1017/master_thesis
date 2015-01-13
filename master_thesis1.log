@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  13 JAN 2015 21:44
+This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  13 JAN 2015 22:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -265,9 +265,6 @@ Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS)
 Package: courier 2005/04/12 PSNFSS-v9.2a (WaS) 
 ) (./master_thesis1.aux
 
-LaTeX Warning: Label `fig:head-flow' multiply defined.
-
-
 LaTeX Warning: Label `ITARDA2005' multiply defined.
 
 )
@@ -490,56 +487,60 @@ File: ./img/head-flow.png Graphic file (type bmp)
 
 LaTeX Warning: Reference `rear-collid' on page 29 undefined on input line 352.
 
-
-LaTeX Warning: File `./img/rear-collid.png' not found on input line 355.
-
-File: ./img/rear-collid.png Graphic file (type bmp)
-<./img/rear-collid.png> [29
+LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
+(Font)              Font shape `JT1/mc/m/n' tried instead on input line 352.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 352.
+LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
+(Font)              Font shape `JY1/mc/m/n' tried instead on input line 352.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 352.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 6.72699pt on input line 352.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 4.805pt on input line 352.
+File: ./img/front-collid.png Graphic file (type bmp)
+<./img/front-collid.png> [29
 
 ] [30]
-LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 376.
+File: ./img/side-collid.png Graphic file (type bmp)
+ <./img/side-collid.png> [31
+
+] [32
+
+] [33
+
+]
+
+LaTeX Warning: Citation `list_commands' on page 34 undefined on input line 399.
 
 
-LaTeX Warning: Citation `list_commands' on page 31 undefined on input line 379.
-
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 396.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 416.
 
 (c:/w32tex/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [31
+) [34
 
 ]
-LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
-(Font)              Font shape `JT1/mc/m/n' tried instead on input line 407.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 407.
-LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
-(Font)              Font shape `JY1/mc/m/n' tried instead on input line 407.
+(Font)              scaled to size 19.9311pt on input line 443.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 407.
+(Font)              scaled to size 19.9311pt on input line 443.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 4.805pt on input line 415.
-LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 423.
+(Font)              scaled to size 23.90964pt on input line 444.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 423.
-LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 23.90964pt on input line 424.
-LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 23.90964pt on input line 424.
+(Font)              scaled to size 23.90964pt on input line 444.
 
 
-LaTeX Warning: Citation `list_commands' on page 32 undefined on input line 428.
+LaTeX Warning: Citation `list_commands' on page 35 undefined on input line 448.
 
 
-[32]
+[35]
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 442.
+(Font)              scaled to size 6.72699pt on input line 462.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 4.805pt on input line 442.
- [33] [34] [35] (./master_thesis1.aux)
+(Font)              scaled to size 4.805pt on input line 462.
+ [36] [37] [38] (./master_thesis1.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -548,12 +549,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2936 strings out of 493800
- 36242 string characters out of 6153372
- 99725 words of memory out of 5000000
- 6325 multiletter control sequences out of 15000+600000
+ 2943 strings out of 493800
+ 36349 string characters out of 6153372
+ 99746 words of memory out of 5000000
+ 6331 multiletter control sequences out of 15000+600000
  46743 words of font info for 161 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,13n,32p,1243b,381s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on master_thesis1.dvi (35 pages, 64844 bytes).
+Output written on master_thesis1.dvi (38 pages, 67456 bytes).

@@ -349,21 +349,60 @@
 ここでは衝突判定のアルゴリズムについて説明する。
 計算負荷低減のため、衝突判定はエラーが起こっているエージェントと衝突対象のエージェントに対してのみ行い、かつ事故の種類によって違う衝突判定を行っている。以下3つの種類の衝突判定を挙げる。
 \subsubsection{追突事故の衝突判定}
-　追突事故の衝突判定は先行車との衝突であり、一次元的な考えで判定ができるため、比較的簡易なアルゴリズムを使用している。図\ref{rear-collid}を用いて説明する。エージェント1とエージェント2のの中心の位置を取得し、その距離をdとする。また、1,2それぞれの車体の進行方向の長さをw1,w2とすると以下の式が成立するときに、衝突したと判定する。この判定は追突の可能性があるエラーがあるときのみ、先行車判定の部分に実装している。
+　追突事故の衝突判定は先行車との衝突であり、一次元的な考えで判定ができるため、比較的簡易なアルゴリズムを使用している。図\ref{rear-collid}を用いて説明する。エージェント1とエージェント2のの中心の位置を取得し、その距離を\textit{d}とする。また、1,2それぞれの車体の進行方向の長さを$\textit{l}_{1}$,$\textit{l}_{2}$
+1.2とすると以下の式が成立するときに、衝突したと判定する。この判定は追突の可能性があるエラーがあるときのみ、先行車判定の部分に実装している。
+\begin{equation}
+  d < l_1 + l_2
+\end{equation}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 396 816]{./img/rear-collid.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 567 810]{./img/front-collid.png} % 画像サイズ 320pt x 240pt の例
   \caption{追突事故の衝突判定}
   \label{fig:rear-collid}
 \end{figure}
 \clearpage
-\subsubsection{進路変更事故・の衝突判定}
+\subsubsection{進路変更・正面衝突事故の衝突判定}
+進路変更、正面衝突事故の衝突判定も基本的には追突と同じ手法で行うが、車体が横にずれるため二次元的な動きになる。よってエージェント1とエージェント2の距離の\textit{x}成分を$\textit{d}_\textit{x}$,\textit{y}成分を$\textit{d}_\textit{y}$とし、1,2それぞれの車体の進行方向の長さを$\textit{l}_{1}$,$\textit{l}_{2}$、幅方向の長さを$\textit{w}_{1}$,$\textit{w}_{2}$とすると以下の2つの式が成り立つときに、衝突したと判定する。
+\begin{eqnarray}
+  d_x < w_1 + w_2 
+  d_y < l_1 + l_2 
+\end{eqnarray}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/side-collid.png} % 画像サイズ 320pt x 240pt の例
+  \caption{進路変更・正面衝突事故の衝突判定}
+  \label{fig:side-collid}
+\end{figure}
+\clearpage
 
 \subsubsection{出会い頭・右左折事故の衝突判定}
+最後に出会い頭・右左折事故の衝突判定であるが、この判定では衝突時車体どうしが並行な状態ではないため、進路変更・正面衝突事故のアルゴリズムでは対応しきれない。そのため少々複雑な計算手法を用いた。2つの長方形が接触していないということは、長方形の間に線分が引けるということに言い換えられる。ここでその様な2つの長方形の間の線分に垂直な軸を分離軸とする。また、分離軸に対する長方形の射影を投影線分と呼ぶ。ここでは投影線分が離れていれば交差していないということになる。（図\ref{fig:line-shadow}）
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
+  \caption{分離軸と投影線分}
+  \label{fig:line-shadow}
+\end{figure}
+\clearpage
+長方形が接触しているということは結局辺が交わっていると考えられるため、次に線分の交差について分離軸を用いて考える。またこの概念を線分についても考える。図\ref{fig:lines1}（左）では1,2の線分は交わっている。これを分離軸を使って考えると図\ref{fig:lines1}（右）の様に投影線分に対してもう片方の線分の射影を凝縮点と呼ぶ。この凝縮点が互いの投影線分に含まれていれば、2つの線分は交わっている。図\ref{fig:lines2}は、交わっていない線分について、表したものである。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
+  \caption{（左）}
+  \label{fig:line-shadow}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
+  \caption{分離軸と投影線分}
+  \label{fig:line-shadow}
+\end{figure}
+\clearpage
 
 \section{挙動検証と感度解析}
 実装したそれぞれの事故について、挙動の検証および感度解析を行った。
 画像については
+\clearpage
 \section{実都市への応用}
 
 \section{結論}
@@ -444,7 +483,7 @@ MS Word だと好きなところで改行できるけど、
 のように行列やベクトルを書いたり、
 この式に対して相互参照で式 (\ref{eq:spmv}) と参照できたりする。
 \begin{equation}
- \bvec{z} = \bvec{M}^{-1} \bvec{r}\nonumber
+ \bvec{z} = \bvec{M}_{-1} \bvec{r}\nonumber
 \end{equation}
 のように数式番号を消すこともできる。
 %
