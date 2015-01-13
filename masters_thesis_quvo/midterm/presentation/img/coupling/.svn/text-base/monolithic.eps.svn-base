@@ -1,0 +1,186 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: cairo 1.10.2 (http://cairographics.org)
+%%CreationDate: Sun Aug 28 17:48:03 2011
+%%Pages: 1
+%%BoundingBox: 0 -1 310 167
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 2
+%%EndComments
+%%BeginProlog
+/cairo_eps_state save def
+/dict_count countdictstack def
+/op_count count 1 sub def
+userdict begin
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/m { moveto } bind def
+/l { lineto } bind def
+/c { curveto } bind def
+/h { closepath } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/f* { eofill } bind def
+/n { newpath } bind def
+/W { clip } bind def
+/W* { eoclip } bind def
+/BT { } bind def
+/ET { } bind def
+/pdfmark where { pop globaldict /?pdfmark /exec load put }
+    { globaldict begin /?pdfmark /pop load def /pdfmark
+    /cleartomark load def end } ifelse
+/BDC { mark 3 1 roll /BDC pdfmark } bind def
+/EMC { mark /EMC pdfmark } bind def
+/cairo_store_point { /cairo_point_y exch def /cairo_point_x exch def } def
+/Tj { show currentpoint cairo_store_point } bind def
+/TJ {
+  {
+    dup
+    type /stringtype eq
+    { show } { -0.001 mul 0 cairo_font_matrix dtransform rmoveto } ifelse
+  } forall
+  currentpoint cairo_store_point
+} bind def
+/cairo_selectfont { cairo_font_matrix aload pop pop pop 0 0 6 array astore
+    cairo_font exch selectfont cairo_point_x cairo_point_y moveto } bind def
+/Tf { pop /cairo_font exch def /cairo_font_matrix where
+      { pop cairo_selectfont } if } bind def
+/Td { matrix translate cairo_font_matrix matrix concatmatrix dup
+      /cairo_font_matrix exch def dup 4 get exch 5 get cairo_store_point
+      /cairo_font where { pop cairo_selectfont } if } bind def
+/Tm { 2 copy 8 2 roll 6 array astore /cairo_font_matrix exch def
+      cairo_store_point /cairo_font where { pop cairo_selectfont } if } bind def
+/g { setgray } bind def
+/rg { setrgbcolor } bind def
+/d1 { setcachedevice } bind def
+%%EndProlog
+%%Page: 1 1
+%%BeginPageSetup
+%%PageBoundingBox: 0 -1 310 167
+%%EndPageSetup
+q 0 -1 310 168 rectclip q
+0 166.925 310 -167 re W n
+0 0 0.4 rg
+1.584576 w
+0 J
+0 j
+[] 0.0 d
+4 M q 1 0 0 -1 0 166.925003 cm
+12.574 0.789 m 53.605 0.789 l 60.125 0.789 65.375 6.039 65.375 12.559 c 
+65.375 154.355 l 65.375 160.879 60.125 166.125 53.605 166.125 c 12.574 
+166.125 l 6.055 166.125 0.805 160.879 0.805 154.355 c 0.805 12.559 l 
+0.805 6.039 6.055 0.789 12.574 0.789 c h
+12.574 0.789 m S Q
+0.866667 0.866667 1 rg
+59.375 39.238 m 59.375 24.722 47.605 12.952 33.09 12.952 c 18.57 12.952 
+6.805 24.722 6.805 39.238 c 6.805 53.757 18.57 65.523 33.09 65.523 c 
+47.605 65.523 59.375 53.757 59.375 39.238 c h
+59.375 39.238 m f
+0 0 0.4 rg
+1.6 w
+q 1 0 0 -1 0 166.925003 cm
+59.375 127.688 m 59.375 142.203 47.605 153.973 33.09 153.973 c 18.57 
+153.973 6.805 142.203 6.805 127.688 c 6.805 113.168 18.57 101.402 33.09 
+101.402 c 47.605 101.402 59.375 113.168 59.375 127.688 c h
+59.375 127.688 m S Q
+0.866667 0.866667 1 rg
+59.375 127.695 m 59.375 113.179 47.605 101.409 33.09 101.409 c 18.57 
+101.409 6.805 113.179 6.805 127.695 c 6.805 142.214 18.57 153.98 33.09 
+153.98 c 47.605 153.98 59.375 142.214 59.375 127.695 c h
+59.375 127.695 m f
+0 0 0.4 rg
+q 1 0 0 -1 0 166.925003 cm
+59.375 39.23 m 59.375 53.746 47.605 65.516 33.09 65.516 c 18.57 65.516 
+6.805 53.746 6.805 39.23 c 6.805 24.711 18.57 12.945 33.09 12.945 c 
+47.605 12.945 59.375 24.711 59.375 39.23 c h
+59.375 39.23 m S Q
+92.184 93.105 m 93.438 91.359 94.305 89.425 94.809 87.429 c 69.23 
+87.429 l 69.23 79.429 l 94.809 79.429 l 94.309 77.448 93.441 75.542 
+92.184 73.831 c 107.406 79.429 l 107.605 79.429 l 107.605 79.503 l 
+118.406 83.48 l 107.605 87.429 l h
+92.184 93.105 m f
+1.584576 w
+q 1 0 0 -1 0 166.925003 cm
+134.035 0.789 m 175.066 0.789 l 181.586 0.789 186.836 6.039 186.836 
+12.559 c 186.836 154.355 l 186.836 160.879 181.586 166.125 175.066 
+166.125 c 134.035 166.125 l 127.516 166.125 122.266 160.879 122.266 
+154.355 c 122.266 12.559 l 122.266 6.039 127.516 0.789 134.035 0.789 c 
+h
+134.035 0.789 m S Q
+0.866667 0.866667 1 rg
+180.836 39.238 m 180.836 24.722 169.066 12.952 154.551 12.952 c 140.031 
+12.952 128.266 24.722 128.266 39.238 c 128.266 53.757 140.031 65.523 
+154.551 65.523 c 169.066 65.523 180.836 53.757 180.836 39.238 c h
+180.836 39.238 m f
+0 0 0.4 rg
+1.6 w
+q 1 0 0 -1 0 166.925003 cm
+180.836 127.688 m 180.836 142.203 169.066 153.973 154.551 153.973 c 
+140.031 153.973 128.266 142.203 128.266 127.688 c 128.266 113.168 
+140.031 101.402 154.551 101.402 c 169.066 101.402 180.836 113.168 
+180.836 127.688 c h
+180.836 127.688 m S Q
+0.866667 0.866667 1 rg
+180.836 127.695 m 180.836 113.179 169.066 101.409 154.551 101.409 c 
+140.031 101.409 128.266 113.179 128.266 127.695 c 128.266 142.214 
+140.031 153.98 154.551 153.98 c 169.066 153.98 180.836 142.214 180.836 
+127.695 c h
+180.836 127.695 m f
+0 0 0.4 rg
+q 1 0 0 -1 0 166.925003 cm
+180.836 39.23 m 180.836 53.746 169.066 65.516 154.551 65.516 c 140.031 
+65.516 128.266 53.746 128.266 39.23 c 128.266 24.711 140.031 12.945 
+154.551 12.945 c 169.066 12.945 180.836 24.711 180.836 39.23 c h
+180.836 39.23 m S Q
+1.584576 w
+q 1 0 0 -1 0 166.925003 cm
+255.496 0.789 m 296.527 0.789 l 303.047 0.789 308.297 6.039 308.297 
+12.559 c 308.297 154.355 l 308.297 160.879 303.047 166.125 296.527 
+166.125 c 255.496 166.125 l 248.977 166.125 243.727 160.879 243.727 
+154.355 c 243.727 12.559 l 243.727 6.039 248.977 0.789 255.496 0.789 c 
+h
+255.496 0.789 m S Q
+0.866667 0.866667 1 rg
+302.297 39.238 m 302.297 24.722 290.527 12.952 276.012 12.952 c 261.492 
+12.952 249.727 24.722 249.727 39.238 c 249.727 53.757 261.492 65.523 
+276.012 65.523 c 290.527 65.523 302.297 53.757 302.297 39.238 c h
+302.297 39.238 m f
+0 0 0.4 rg
+1.6 w
+q 1 0 0 -1 0 166.925003 cm
+302.297 127.688 m 302.297 142.203 290.527 153.973 276.012 153.973 c 
+261.492 153.973 249.727 142.203 249.727 127.688 c 249.727 113.168 
+261.492 101.402 276.012 101.402 c 290.527 101.402 302.297 113.168 
+302.297 127.688 c h
+302.297 127.688 m S Q
+0.866667 0.866667 1 rg
+302.297 127.695 m 302.297 113.179 290.527 101.409 276.012 101.409 c 
+261.492 101.409 249.727 113.179 249.727 127.695 c 249.727 142.214 
+261.492 153.98 276.012 153.98 c 290.527 153.98 302.297 142.214 302.297 
+127.695 c h
+302.297 127.695 m f
+0 0 0.4 rg
+q 1 0 0 -1 0 166.925003 cm
+302.297 39.23 m 302.297 53.746 290.527 65.516 276.012 65.516 c 261.492 
+65.516 249.727 53.746 249.727 39.23 c 249.727 24.711 261.492 12.945 
+276.012 12.945 c 290.527 12.945 302.297 24.711 302.297 39.23 c h
+302.297 39.23 m S Q
+213.645 93.105 m 214.898 91.359 215.766 89.425 216.27 87.429 c 190.691 
+87.429 l 190.691 79.429 l 216.27 79.429 l 215.77 77.448 214.902 75.542 
+213.645 73.831 c 228.867 79.429 l 229.066 79.429 l 229.066 79.503 l 
+239.867 83.48 l 229.066 87.429 l h
+213.645 93.105 m f
+Q Q
+showpage
+%%Trailer
+count op_count sub {pop} repeat
+countdictstack dict_count sub {end} repeat
+cairo_eps_state restore
+%%EOF

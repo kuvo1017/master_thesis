@@ -1,0 +1,420 @@
+%% -* coding: euc-jp -*-
+%%
+%% Master's Thesis Abstract
+%%
+%% Author: Yasunori Yusa
+%%
+\documentclass[final, ams, tx]{simabstract}
+%% packages
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{mymath}
+\usepackage{pxfonts}
+\usepackage{palatino}
+\usepackage{bfutura}
+\usepackage{courier}
+%% parameters
+\jtitle{分離反復連成解法による大規模破壊力学シミュレーション}
+\etitle{Large-scale Fracture Mechanics Simulation Using Partitioned Iterative \\ Coupling Algorithm}
+\author{遊佐泰紀 (学生証番号 37-106368)}
+\advisor{指導教員 吉村忍 教授}
+%% modify style
+\pagestyle{fancy}
+\lhead{\ifnum \thepage=1 2012 年 3 月 1 日提出 \fi}
+\chead{}
+\rhead{\ifnum \thepage=1 東京大学大学院工学系研究科システム創成学専攻修士論文要旨 \fi}
+\lfoot{}
+\cfoot{{\sf\thepage}}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\topmargin}{-10truemm}
+\addtolength{\headheight}{6truemm}
+\addtolength{\headsep}{4truemm}
+\makeatletter
+\renewcommand{\@cite}[1]{[#1]}
+\renewcommand{\@biblabel}[1]{[#1]}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%% タイトル
+\maketitle
+\section{序論}
+計算機性能および並列計算技術の進歩により、
+現実世界の大規模複雑形状構造物の有限要素解析が行えるようになってきている\cite{Ogino2005}。
+これは、
+形状が複雑な構造物への対応が可能になってきたことを意味すると考えられるが、
+一方、現実世界では別の軸として現象の複雑さがある。
+たとえば、
+固体力学分野では破壊、塑性、接触などが挙げられる。
+本研究の目的は、
+形状と現象が共に複雑な問題に適した効率的な解法を提案することである。
+
+さて、
+非線形性などの複雑な現象の多くは構造不連続部などで局所的に発現する。
+本研究で対象とする破壊力学問題において、
+き裂先端近傍の領域では、
+き裂進展に伴うメッシュの切り替え、
+塑性やクリープなどの材料非線形現象、
+大ひずみなどの幾何学非線形現象、
+破壊力学パラメータの評価などを伴うことがある。
+一方、
+き裂先端から十分に離れた領域は線形弾性体、
+もしくは非線形性が比較的マイルドである。
+問題規模が大きくなると後者の自由度数が大きくなる。
+このような特徴を持つ大規模破壊力学問題に対して、
+き裂先端近傍の領域とそれ以外の領域を独立に扱うようなアプローチが有効である。
+以降、き裂先端近傍の領域をローカル領域、
+もう一つの領域をグローバル領域と呼ぶ。
+
+このようなアプローチをとる既存手法として、
+ズーミング法や重合メッシュ法\cite{Kikuchi2008}が挙げられる。
+また、
+このようなアプローチをとらない通常の有限要素法を用いた大規模破壊力学解析も行われている\cite{Okada2008}。
+これらの手法をマルチフィジックス連成解析手法の観点で分類すると表\ref{tab:coupling_methods}のようになる。
+分離型解法は二つの領域を独立に解析する方法であるのに対して、
+一体型解法は二つの領域を一つの連立一次方程式にして解く方法である。
+分離型解法は片方向、双方向に分類され、
+分離型双方向連成解法は時差解法と反復解法に分類される。
+分離型解法では領域境界上の境界条件を受け渡すことで二つの解析の相互作用を再現するが、
+片方向連成解法および双方向時差解法は領域境界上の連続性を厳密に満たさない解法である。
+これらに対して、
+双方向反復解法は連続性が満たされるまで二つの解析を繰り返す方法である。
+また、
+Overlapping および Non-overlapping は本研究で導入する概念であり、
+図\ref{fig:overlapping_non_overlapping}のように二つの領域を重ね合わせるか否かを意味する。
+ズーミング法は、
+グローバル領域を解析した後に、
+その解析結果から適当な境界条件をローカル領域に付与して解析する手法であり、
+Overlapping 型の分離型片方向連成解法である。
+重合メッシュ法は、
+グローバル領域とローカル領域をラグランジュの未定乗数法で結び付けて一つの連立一次方程式にして解く手法であり、
+Overlapping 型の一体型解法である。
+鈴木らは重合メッシュ法によって生成された連立一次方程式を反復的に解く手法を提案している\cite{Suzuki1999}。
+通常の有限要素法は要素剛性行列を重ね合わせて全体剛性行列を生成するという特徴から Non-overlapping 型の一体型解法と解釈できる。
+
+ズーミング法では、
+ローカル領域の応答がグローバル領域に反映されないために精度を担保するのが難しい。
+重合メッシュ法は生成される剛性行列の条件数が大きくなることが知られており、
+解析できる問題の自由度数が線形代数ソルバーの性能の制約を受ける。
+本研究では、
+ズーミング法よりも高精度であり、
+重合メッシュ法のように線形代数ソルバーを規定せず、
+かつ、通常の有限要素法よりも効率的な解法を提案する。
+提案手法は連成解析手法の文脈で Non-overlapping 型の分離型双方向反復解法に分類される。
+\begin{table}[t]
+ \caption{大規模破壊力学解析手法を連成解析手法として見たときの分類}\label{tab:coupling_methods}
+ \begin{center}
+  \footnotesize
+  \begin{tabular}{l|cc}
+   \hline
+   & {\it Overlapping} & {\it Non-overlapping} \\
+   \hline
+   \hline
+   分離型片方向     & ズーミング法            & N/A \\
+   分離型双方向時差 & N/A                     & N/A \\
+   分離型双方向反復 & 鈴木ら\cite{Suzuki1999} & 本手法 \\
+   一体型           & 重合メッシュ法          & (通常のFEM) \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{../../thesis/src/img/overlapping_non_overlapping.eps}
+ \end{center}
+ \caption{Overlapping 型の分割 (左) と Non-overlapping 型の分割 (右)}\label{fig:overlapping_non_overlapping}
+\end{figure}
+\section{分離反復連成解法のアルゴリズム}
+本研究では図\ref{fig:overlapping_non_overlapping} (右) のようにモデルを重なり合わないように分割し、
+それぞれを独立に解析する。
+二つの領域の相互作用を担保するために、
+マルチフィジックス連成解析手法の一つである分離反復解法を用いる。
+分離反復解法では領域境界上の連続性が満たされるまで二つの領域の解析を繰り返し行う。
+
+分離反復解法のアルゴリズムには反復法の文脈から多くの手法が提案されているが、
+本研究ではブロック Gauss--Seidel 法を用いる。
+ブロック Gauss--Seidel 法では二つの領域の解析を交互に行う。
+領域境界上では、
+グローバル領域からローカル領域に強制変位境界条件を受け渡し、
+ローカル領域からグローバル領域に荷重境界条件を受け渡す。
+このとき、
+収束を加速させるために強制変位境界条件の受け渡し時に緩和を行う。
+緩和係数$\omega$は Aitken 補外
+\begin{equation}
+ \omega^{ (k+1)} = - \omega^{ (k)}
+  \frac{
+  \bvec{r}^{ (k)\trp}
+  \left(\bvec{r}^{ (k+1)} - \bvec{r}^{ (k)}\right)}{
+  || \bvec{r}^{ (k+1)} - \bvec{r}^{ (k)} ||^2}
+\end{equation}
+を用いて残差ベクトル$\bvec{r}$から動的に求める。
+以上をまとめて、
+Aitken 補外による動的緩和付きのブロック Gauss--Seidel 法のアルゴリズムは
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$, $\omega^{(0)} \leftarrow 0.1$, $\bvec{u}^{(0)} \leftarrow \bvec{0}$, $\bvec{f}^{(0)} \leftarrow \bvec{0}$
+ \STATE $\tilde{\bvec{u}}^{(0)} \leftarrow K_G \left(\bvec{f}^{(0)}\right)$
+ \STATE $\bvec{r}^{(0)} \leftarrow - \tilde{\bvec{u}}^{(0)}$
+ \WHILE{$||\bvec{r}^{(k)}|| / ||\bvec{r}^{(0)}|| > \tau$}
+ \STATE $\bvec{f}^{(k+1)} \leftarrow K_L \left(\bvec{u}^{(k)}\right)$
+ \STATE $\tilde{\bvec{u}}^{(k+1)} \leftarrow K_G \left(\bvec{f}^{(k+1)}\right)$
+ \STATE $\bvec{r}^{(k+1)} \leftarrow \bvec{u}^{(k)} - \tilde{\bvec{u}}^{(k+1)}$
+ \STATE $\omega^{(k+1)} \leftarrow - \omega^{(k)}
+ \frac{
+ \bvec{r}^{(k)\trp} \left(\bvec{r}^{(k+1)} - \bvec{r}^{(k)}\right)}{
+ || \bvec{r}^{(k+1)} - \bvec{r}^{(k)} ||^2}$
+ \STATE $\bvec{u}^{(k+1)} \leftarrow \bvec{u}^{(k)} - \omega^{(k+1)} \bvec{r}^{(k+1)}$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+のように表される。
+き裂進展解析ではき裂進展ステップ毎にこれを行うため、
+全体としては二重のループ構造になる。
+ここで、$\bvec{f}$は領域境界上の荷重ベクトル、
+$\tilde{\bvec{u}}$、$\bvec{u}$はそれぞれ緩和前、緩和後の領域境界上の変位ベクトルである。
+$K_G$は領域境界上の荷重$\bvec{f}$を境界条件として解析を行い、
+領域境界上の変位$\bvec{u}$を出力する関数である。
+$K_L$は$K_G$と同様に、
+強制変位$\bvec{u}$を入力として反力$\bvec{f}$を出力する関数である。
+$\bvec{r}$は領域境界上の残差ベクトル、
+$\tau$は許容誤差、$\omega$は緩和係数である。
+許容誤差$\tau$は$10^{-3}$とする。
+\section{三次元疲労き裂進展解析例}
+片側にき裂のある帯板の一様引張の疲労き裂進展解析を行った。
+き裂付き帯板の寸法は板厚 8.00 mm、板幅 48.0 mm、
+板の高さ 160 mm、初期き裂長 10.0 mm とし、
+荷重は 100 MPa とした。
+分離反復解法の他に、
+計算時間と精度の比較対象として通常の有限要素法による解析も行った。
+モデルは対称性から図\ref{fig:ect_3d_mesh}のように 4 分の 1 モデルとした。
+図\ref{fig:ect_3d_mesh}ではグローバルモデルとローカルモデルが分離して可視化されているが、
+実際には連続である。
+有限要素はアイソパラメトリック四面体二次要素であり、
+材料定数はヤング率 210 GPa、ポアソン比 0.3 とした。
+グローバルモデルの自由度数は 1,738,803、
+ローカルモデルの自由度数は 226,083、
+総自由度数は 1,964,886 である。
+き裂進展解析の解析ステップ数は、
+き裂を一要素ずつ進展させ、
+計 41 ステップである。
+
+一番はじめの解析ステップの解析結果を図\ref{fig:ect_3d_result}に示す。
+コンターは Mises の相当応力であり、変位は 200 倍に拡大してある。
+メッシュと同様にグローバルモデルとローカルモデルが分離して可視化されているが、
+実際には連続であることに注意する。
+
+き裂進展ステップ毎の分離反復解法の残差履歴を図\ref{fig:ect_3d_residual2}に示す。
+き裂長に関わらずほぼ一定の反復回数で収束していることがわかる。
+反復回数の平均は 15.8 であった。
+
+分離反復解法による解析と通常の有限要素解析の計算時間を比較する。
+比較に使用した計算機は Intel Core i7-930 (Nehalem) の標準的な Linux PC である。
+コンパイラは Intel C/C++ Compiler 12.1 であり、
+コンパイラオプションは {\tt -fast} とした。
+分離反復解法の計算時間は 12,600 s、
+通常の有限要素法の計算時間は 57,000 s であり、
+スピードアップは 4.52 であった。
+なお、メモリ使用量はそれぞれ 19.4 GB、20.9 GB とほぼ同じであった。
+分離反復解法の計算時間の 50 \%、
+通常の有限要素法の計算時間の 89 \% は線形代数ソルバーであった。
+さて、直接法や前処理付き共役勾配法など、
+一般に線形代数ソルバーでは、
+係数行列に対して下準備を行う段階と右辺ベクトルを与えたときに求解する段階の二つに分かれる。
+本研究で使用した疎行列直接法ソルバーである Intel MKL 10.2 の PARDISO では、
+前者の段階に相当するのがシンボリック分解および数値分解、
+後者の段階に相当するのが三角求解 (前進・後退代入) である。
+これらの処理毎の計算時間を表\ref{tab:ect_3d_time}、表\ref{tab:ect_3d_time_conventional}に示す。
+分離反復解法では、
+グローバル領域とローカル領域の解析を独立に行うため、
+表\ref{tab:ect_3d_time}にはそれぞれの行列分解および三角求解を示している。
+分離反復解法を用いると、
+グローバル領域の解析の行列分解は解析のはじめに一回行えば良く、
+その代わりに三角求解を反復回数だけ多く行うという実装になる。
+しかしながら、
+行列分解は一般に三角求解よりも計算量のオーダーの次数が大きく、
+自由度数の大きい問題の解析では行列分解の方が計算時間が大きくなりがちである。
+したがって、
+分離反復解法を用いると通常の有限要素法よりも連立一次方程式の三角求解回数が多くなるが、
+全体として計算時間が小さくなる結果となった。
+このような計算時間の優位性は、
+メッシュや要素剛性が局所的に変化するような問題一般で得られると考えられる。
+
+続いて、
+分離反復解法、通常の有限要素法、および理論解の三つで精度の比較を行う。
+精度の比較には直接変位外挿法によって求めた応力拡大係数を用いる。
+図\ref{fig:ect_3d_sif_thickness}に、
+一番はじめの解析ステップの応力拡大係数を示す。
+横軸がき裂先端の節点の板厚方向の座標、
+縦軸が応力拡大係数である。
+線が片側にき裂のある帯板の一様引張の二次元的な理論解
+\begin{equation}
+ K_I = F (a/W) \sigma \sqrt{\pi a},
+\end{equation}
+\begin{eqnarray}
+ F (a/W) = 1.12 - 0.231 (a/W) + 10.55 (a/W)^2 \nonumber \\
+ - 21.72 (a/W)^3 + 30.39 (a/W)^4
+\end{eqnarray}
+であり、
+二種類の点がそれぞれ分離反復解法と通常の有限要素法である。
+$K_I$はモード I (引張) の応力拡大係数、
+$a$がき裂長、$W$が帯板の横幅、
+$\sigma$が荷重、$\pi$が円周率である。
+分離反復解法の解析結果は通常の有限要素法による解析結果とほぼ一致し、
+板の中央では二次元的な理論解ともある程度一致していることがわかる。
+板の表面付近では多軸効果から応力拡大係数が小さめに評価されることが知られており、
+この解析結果でもそれを再現できている。
+図\ref{fig:ect_3d_sif}に、
+き裂を進展させたときの板の中央の応力拡大係数を示す。
+横軸がき裂長、縦軸が応力拡大係数である。
+き裂長が変化しても分離反復解法と通常の有限要素法の解析結果はほぼ一致し、
+理論解ともある程度一致していることがわかる。
+この応力拡大係数から Paris 則
+\begin{equation}
+ \frac{\diff a}{\diff N} = C \Delta K^n
+\end{equation}
+を変形して
+\begin{equation}
+ N = \int \diff N
+  \simeq \sum \frac{\Delta a}{C \Delta K^n}
+\end{equation}
+のようにして疲労サイクル数$N$を求めた。
+ここで、
+$\diff a / \diff N$はき裂進展速度、
+$\Delta K$は最大応力拡大係数と最小応力拡大係数の差、
+$C$、$n$は材料定数である。
+本研究では、
+$\Delta a$を要素の辺の長さとし、
+応力拡大係数は$\Delta K = K_I - 0 = K_I$、
+材料定数は\cite{jsmecode}から$C = 3.78 \times 10^{-12}$、$n = 3.07$とした。
+求めた疲労サイクル数$N$を図\ref{fig:ect_3d_cycles}に示す。
+横軸が疲労サイクル数$N$、縦軸がき裂長$a$である。
+図\ref{fig:ect_3d_sif}と同様に分離反復解法と通常の有限要素法の結果はほぼ一致し、
+これらは理論解ともある程度一致している。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize, bb=0 0 800 800]{../../thesis/src/img/ect_3d/mesh.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の 196 万自由度の三次元メッシュ}\label{fig:ect_3d_mesh}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize, bb=0 0 800 800]{../../thesis/src/img/ect_3d/result.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の三次元解析結果の応力コンター付き変形図}\label{fig:ect_3d_result}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{../../thesis/src/img/ect_3d/residual/residual2.eps}
+ \end{center}
+ \caption{分離反復解法による三次元き裂進展解析の残差履歴}\label{fig:ect_3d_residual2}
+\end{figure}
+\begin{table}[tbp]
+ \begin{center}
+  \caption{分離反復解法による三次元き裂進展解析の計算時間とその各処理毎の内訳}\label{tab:ect_3d_time}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理 & 累計時間 & 平均時間 & 回数 \\
+   \hline
+   \hline
+   全体 & 12,600 s & - & - \\
+   \hline
+   分解 ($\bvec{K}_G$) & 960 s (8 \%)    & 960 s   & 1 \\
+   分解 ($\bvec{K}_L$) & 1,190 s (9 \%)  & 29.0 s  & 41 \\
+   求解 ($\bvec{K}_G$) & 3,730 s (30 \%) & 5.41 s  & 690 \\
+   求解 ($\bvec{K}_L$) & 407 s (3 \%)    & 0.627 s & 649 \\
+   その他              & 6,310 s (50 \%) & -  & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{table}[tbp]
+ \begin{center}
+  \caption{通常の有限要素法による三次元き裂進展解析の計算時間とその各処理毎の内訳}\label{tab:ect_3d_time_conventional}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理 & 累計時間 & 平均時間 & 回数 \\
+   \hline
+   \hline
+   全体 & 57,000 s & - & - \\
+   \hline
+   分解   & 50,300 s (88 \%) & 1,230 s & 41 \\
+   求解   & 257 s (1 \%)     & 6.27 s  & 41 \\
+   その他 & 6,440 s (11 \%)  & -  & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{../../thesis/src/img/ect_3d/sif/sif_thickness.eps}
+ \end{center}
+ \caption{片側にき裂のある帯板のき裂先端の応力拡大係数}\label{fig:ect_3d_sif_thickness}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{../../thesis/src/img/ect_3d/sif/sif.eps}
+ \end{center}
+ \caption{三次元き裂進展解析の応力拡大係数}\label{fig:ect_3d_sif}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{../../thesis/src/img/ect_3d/sif/cycles.eps}
+ \end{center}
+ \caption{三次元き裂進展解析の疲労サイクル数}\label{fig:ect_3d_cycles}
+\end{figure}
+\section{結論}
+本研究では、
+き裂先端近傍の領域とそれ以外の領域を分離し、
+それぞれを独立に解析した。
+そして、分離反復連成解法を用いて両者の連続性を担保するような解析を行った。
+三次元疲労き裂進展解析を通じて、
+本手法が通常の有限要素法と同程度の精度で、
+かつ、通常の有限要素法よりも高速な解法であることを示した。
+今回の 196 万自由度の解析例では 4.52 倍高速化した。
+また、
+本手法は二つの領域それぞれのソルバーが線形代数ソルバーを規定せず、
+たとえば将来的には領域分割法\cite{ADVENTURE, Ogino2005}のような分散メモリ並列ソルバーをグローバル領域の解析に用いることも可能であると考えられる。
+
+今後の展望として、
+グローバル領域ソルバーの分散メモリ並列化による複雑形状実構造物の解析、
+き裂進展に伴うメッシュ再生成の高度化、
+弾塑性などの他の複雑な現象への応用などが挙げられる。
+これらはいずれもローカル領域とグローバル領域の性質の差が大きい問題であり、
+このような問題に本手法を応用すれば、
+今回示した比較的単純なき裂進展解析の例よりもさらに効率的な解析が可能となると予想される。
+%% 参考文献
+\begin{thebibliography}{9}
+ \bibitem{ADVENTURE}
+         ADVENTURE Project. \\
+         \url{http://adventure.sys.t.u-tokyo.ac.jp/}
+ \bibitem{Ogino2005}
+         {\sc Ogino, M., Shioya, R., Kawai, H. and Yoshimura, S.}
+         Seismic response analysis of nuclear pressure vessel model
+         with ADVENTURE system on the Earth Simulator.
+         {\em J. of the Earth Simulator},
+         {\bf 2}: 41--54, 2005.
+ \bibitem{Kikuchi2008}
+         {\sc Kikuchi, M., Wada, Y., Takahashi, M. and Li, Y.}
+         Fatigue crack growth simulation using s-version FEM.\
+         {\it Advanced Materials Research},
+         {\bf 33--37}: 133--138, 2008.
+ \bibitem{Okada2008}
+         {\sc Okada, H., Kawai, H. and Araki, K.}
+         A virtual crack closure-integral method (VCCM)
+         to compute the energy release rates and stress intensity factors
+         based on quadratic tetrahedral finite elements.
+         {\it Engineering Fracture Mechanics},
+         {\bf 75} (15): 4466--4485, 2008.
+ \bibitem{Suzuki1999}
+         鈴木, 大坪, 閔, 白石.
+         重合メッシュ法による船体構造のマルチスケール解析.
+         {\it Trans.~of JSCES},
+         {\bf 1999}: 19990020, 1999.
+ \bibitem{jsmecode}
+         日本機械学会.
+         発電用原子力設備規格維持規格 (JSME S NA1-2004),
+         2004.
+\end{thebibliography}
+\end{document}

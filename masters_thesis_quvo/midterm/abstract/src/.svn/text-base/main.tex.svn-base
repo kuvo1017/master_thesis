@@ -1,0 +1,385 @@
+%%
+%% Master's midterm presentation abstract
+%%
+\documentclass[fleqn, final]{jsmeproc}
+\usepackage{graphicx}
+\usepackage{algorithm, algorithmic}
+%% parameters
+\presentationid{}
+\conferencespec{2011年8月29日提出}
+\copyrightnotice{修士課程中間発表概要}
+\jtitle{分離反復解法による大規模非線形固体力学シミュレーション}
+\etitle{\bf Large Scale Non-linear Solid Mechanics Simulation Using Partitioned Coupling Algorithms}
+\authorA{遊佐泰紀}{東京大学大学院工学系研究科システム創成学専攻 \\ 学生証番号: 37-106368; 指導教員: 吉村忍 教授}
+\keywordslist{solid mechanics, large scale simulation, partitioned coupling algorithm}
+%% settings
+\renewcommand{\figurename}{図}
+\renewcommand{\tablename}{表}
+\renewcommand{\baselinestretch}{0.93}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\makeatletter
+\renewcommand{\@cite}[1]{[#1]}
+\renewcommand{\@biblabel}[1]{[#1]}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%% タイトル
+\maketitle
+\section{序論}
+大規模並列計算分野では、
+3次元実構造物の線形有限要素解析が行われている\cite{ogino2005, bhardwaj2002}。
+一方、非線形固体力学の分野では各種非線形現象の詳細な解析が行われている。
+そこで、たとえば大規模弾性解析を弾塑性解析に拡張することを考えるとき、
+増分ステップ数と増分ステップあたりのNewton-Raphson反復回数の積の回数だけ連立一次方程式を求解することになり、
+計算時間は数百倍から数千倍になるのが一般的である。
+このように線形問題を非線形問題に拡張するときは計算時間が大きくなり、
+大規模非線形固体力学問題に対する効率的な解析手法が求められる。
+
+さて、固体力学の非線形現象は一般に材料非線形、境界非線形、幾何学非線形の3つに分類される。
+本研究では、非線形が局所的に現れる材料非線形 (特に弾塑性) と境界非線形 (特に破壊) に注目し、
+巨大な解析モデルの大部分に対して線形解析を行い、
+局所的な領域に対して非線形解析を行うような手法の開発を行う。
+
+大規模非線形固体力学問題に対する既存の有限要素解析手法として、
+計算時間の増加を許容して通常の有限要素解析を行う方法\cite{okada2007}の他にいくつかの手法が提案されている。
+ズーミング法、重合メッシュ法\cite{kikuchi2008}が該当する。
+ズーミング法では、解析領域全体に対して線形有限要素解析を行い、
+その後、注目する小領域を切り出し、
+そのローカルモデルに対してグローバルの解析結果から得た適当な変位・荷重境界条件を付与して詳細な非線形解析を行う。
+ズーミング法は、ローカル領域のグローバル領域への影響が無視できるような問題には有効であるが、
+この影響が無視できない問題に対して適用するには精度の面で難がある。
+一方、重合メッシュ法では、ズーミング法と同様にしてグローバルメッシュ、ローカルメッシュを設定し、
+これらをラグランジュ乗数で結合して1つの連立一次方程式にして求解する。
+このとき、一般に連立一次方程式の係数行列が悪条件になることが知られおり、
+重合メッシュ法を用いて解くことのできる問題の総自由度は線形代数ソルバー (特に、直接法ソルバー) の性能の制約を受ける。
+
+本研究では、問題の総自由度が大きく、非線形なローカル領域のグローバル領域への影響が無視できないような大規模非線形固体力学問題に対する効率的な解法を検討する。
+具体的な手法として、流体・構造連成、磁場・構造連成、地盤・構造連成などの各連成解析分野で使用されている分離反復解法\cite{matthies2003}を用いて、
+構造・構造連成解析を行う。
+また、大規模な問題を扱うとき、ローカル領域は小規模なままであるが、
+グローバル領域の自由度は非常に大きくなる。
+このグローバル領域のソルバーとして領域分割法\cite{ogino2005, bhardwaj2002, toselli2005}を用いる。
+領域分割法では、解析領域を多数の小領域に分割し、
+各部分領域の有限要素解析を繰り返すことで全体の解を得る。
+本研究では、この部分領域の有限要素解析のソルバーに注目する。
+
+分離反復解法による非線形固体力学シミュレーションの例として、
+2次元の簡単な疲労き裂進展解析を示す。
+また、これを大規模化するとき、
+領域分割法の部分領域ソルバーとして直接法を用いるとメモリ不足で解析できないことがしばしばある。
+そこで、領域分割法の部分領域ソルバーとして省メモリなICT (Incomplete Cholesky with Threshold)\cite{saad1994}分解前処理付き共役勾配 (Conjugate Gradient; CG) 法を用いることを考え、
+その準備段階としての簡単な計測結果を示す。
+\section{連成解析手法}
+\subsection{非線形固体力学解析手法の分類}
+前節で触れた非線形固体力学シミュレーションの各手法を連成解析の観点から分類すると、表\ref{tab:coupling_methods}のようになる。
+分離型とは、異なる物理現象の支配方程式をそれぞれを独立に求解することで全体の解を得るタイプの手法であり、
+1つの物理現象の影響が支配的である場合は片方向、
+相互作用を見る場合は双方向の連成を行う。
+分離型双方向連成として、時差解法と分離反復解法が知られているが、
+本研究では高精度の強連成手法である分離反復解法を用いる。
+一体型とは、異なる物理現象の支配方程式を1つの連立一次方程式に離散化することで、全体の解を得るタイプの手法である。
+Overlapped、Non-overlappedの区別は本研究で導入した視点であり、ローカルメッシュをグローバルメッシュに重ね合わせるか否かを表す。
+ズーミング法、重合メッシュ法のローカルメッシュはグローバルメッシュに重ね合わされており、
+それぞれ分離型片方向連成、一体型連成である。
+鈴木らによって、重合メッシュ法を分離反復的に解く研究も行われている\cite{suzuki1999}。
+通常の有限要素法は、1つの連立一次方程式 (全体剛性行列) で複数の領域 (有限要素) の連立一次方程式 (要素剛性行列) をまとめて解くと解釈できるので、Non-overlappedの一体型連成と言える。
+本研究では、図\ref{fig:ssi_model}のようにモデルを重なり合わないように分割して分離型双方向連成として解く。
+\subsection{構造・構造連成解析手法}
+本研究では、構造・構造連成の分離型双方向連成問題として分離反復解法を用いて非線形固体力学問題を図\ref{fig:ssi_model}のようにモデル化する。
+このようなアプローチは、鈴木ら\cite{suzuki1999}の重合メッシュ法を分離反復的に解く研究と類似しているが、
+本研究では大規模問題にこのような手法を適用する利点を主張する。
+これについては次節で詳細に述べる。
+
+分離反復解法の手法にはブロックGauss-Seidel法を用い、
+直線探索にAitken補外を用いる。
+具体的に、ブロックGauss-Seidel法のアルゴリズムは、
+
+\begin{algorithmic}
+ \STATE $k=0$, $\omega^0 = 0.1$, $\{f^0\} = \{0\}$
+ \STATE $\{\tilde{u}^0\} = [K_G]^{-1} \{f^0\}$
+ \STATE $\{r^0\} = - \{\tilde{u}^0\}$
+ \WHILE{$||\{r^k\}|| / ||\{r^0\}|| > \tau$}
+ \STATE $\{f^k\} = [K_L] \{u^k\}$
+ \STATE $\{\tilde{u}^k\} = [K_G]^{-1} \{f^k\}$
+ \STATE $\{r^k\} = \{u^k\} - \{\tilde{u}^k\}$
+ \STATE $\{u^{k+1}\} = \{u^k\} - \omega^k \{r^k\}$
+ \STATE $k=k+1$
+ \ENDWHILE
+\end{algorithmic}
+のように表される。
+ここで、$\{f^k\}$は荷重ベクトル、$\{\tilde{u}^k\}$、$\{u^k\}$はそれぞれ緩和前、緩和後の変位ベクトル、$[K_G]$、$[K_L]$はそれぞれグローバル領域、ローカル領域の剛性行列、$\{r^k\}$は残差ベクトル、$\tau$は許容誤差、$\omega^k$は緩和係数である。
+$[K_G]$、$[K_L]$は反復中において不変であることに注意する。
+また、緩和係数$\omega^k$はAitken補外を用いて、
+\begin{equation}
+ \omega^k = - \omega^{k-1}
+  \frac{\{r^{k-1}\}^\mathrm{T} \left(\{r^k\} - \{r^{k-1}\}\right)}
+  {|| \{r^k\} - \{r^{k-1}\} ||^2}
+\end{equation}
+のように動的に求める。
+$\omega^k$の初期値$\omega^0$は自由に決めることができるが本研究では\cite{suzuki1999}に倣って$0.1$とした
+\begin{table}[t]
+ \caption{計算破壊力学手法の連成解析手法的分類}\label{tab:coupling_methods}
+ \begin{center}
+  \small
+  \begin{tabular}{ccc|cc}
+   \hline
+   \hline
+   & & & Overlapped & Non-overlapped \\
+   \hline
+   分離型 & 片方向 &           & ズーミング法            & - \\
+   分離型 & 双方向 & 時差      & -                       & - \\
+   分離型 & 双方向 & 反復      & 鈴木ら\cite{suzuki1999} & 本手法 \\
+   一体型 &        &           & 重合メッシュ法  & (通常のFEM) \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.4\hsize]{./img/ssi.eps}
+ \end{center}
+ \caption{Non-overlapped分離型双方向連成モデル}\label{fig:ssi_model}
+\end{figure}。
+\section{疲労き裂進展解析}
+図\ref{fig:mesh}のようなメッシュを用いて疲労き裂進展解析を行なった。
+物性値はヤング率を210 GPa、ポアソン比を0.3とした。
+有限要素は平面応力三角形アイソパラメトリック二次要素であり、
+グローバルメッシュの自由度は15,162、ローカルメッシュの自由度は3,066である。
+
+まず、き裂長さ$a$を10 mmから20 mmまで ($a/W$を21 \%から42 \%まで) 変化させて21通りの解析を行った。
+このとき、許容誤差$\tau$は$10^{-3}$とした。
+21通りすべての解析は図\ref{fig:residual}のような残差履歴で十数回程度で収束し、
+収束回数の平均は15.2回であった。
+
+次に、解析結果から直接変位外挿法により応力拡大係数$K_\mathrm{I}$を求めて、
+応力拡大係数の理論解
+\begin{equation}
+ K_\mathrm{I} = F (a/W) \sigma \sqrt{\pi a},
+\end{equation}
+\begin{eqnarray}
+ F (\xi) = 1.12 - 0.231 \xi + 10.55 \xi^2 \nonumber \\
+ - 21.72 \xi^3 + 30.39 \xi^4
+\end{eqnarray}
+と比較した
+結果を図\ref{fig:ect}に示す。
+よく一致していることがわかる。
+
+次に、求めた$K_\mathrm{I}$から、$\Delta K = K_\mathrm{I} - 0$、$\Delta a = \mathrm{const.}$として、Paris則
+\begin{equation}
+ \frac{\mathrm{d}a}{\mathrm{d}N} = C \Delta K^n
+\end{equation}
+を用いて陽的に疲労サイクル数$N$を求めた。
+ただし、材料定数は原子炉容器用フェライト鋼$n = 3.07$、$C = 3.78 \times 10^{-12}$とした\cite{jsmecode}。
+結果を図\ref{fig:ect_cycles}に示す。
+
+最後に、き裂長さ$a$を10 mmから20 mmまで進展させたときの計算時間を示す。
+Intel Core i7-920、DDR3-SDRAM 2 GB$\times$6のLinux (Ubuntu 10.10) PCで、
+Intel Compiler 12.0を使用して、通常の有限要素解析と本手法の計算時間を計測した。
+通常の有限要素解析では117.71 sであったが、
+本手法では29.27 sであり、4.02倍の高速化に成功した。
+この結果は、グローバル領域の剛性行列$[K_G]$が解析全体を通じて一定であり、
+解析のはじめに一度コレスキー分解したら後は前進・後退代入のみを繰り返すという手法によるものである。
+このような$[K_G]$一定という性質は、
+鈴木らの反復的な重合メッシュ法\cite{suzuki1999}では得られない。
+また、ローカル領域の剛性行列$[K_L]$はき裂が進展する度に生成する必要があるが、
+反復中は一定であるため同様の手法で必要なときにのみ再生成する。
+3次元の塊状の構造物を仮定し、
+剛性行列のバンド幅が自由度$N$に対して$O (N^\frac{2}{3})$であると仮定すると、
+コレスキー分解の演算量は$O (N^\frac{7}{3})$であり、
+前進・後退代入の演算量は$O (N^\frac{5}{3})$であるため、
+グローバル領域の自由度が大きくなるほど本手法が効率的になることが考えられる。
+また、$\Delta a = \mathrm{const.}$ではなく$\Delta N = \mathrm{const.}$として、
+ローカルメッシュのリメッシングを伴うような一般的なき裂進展解析の場合も本手法が有効であることが考えられる。
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.5\hsize]{./img/mesh.eps}
+ \end{center}
+ \caption{疲労き裂進展解析の有限要素メッシュ}\label{fig:mesh}
+\end{figure}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/residual/residual.eps}
+ \end{center}
+ \caption{相対残差ノルムの収束履歴}\label{fig:residual}
+\end{figure}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect/ect.eps}
+ \end{center}
+ \caption{各き裂長さに対する応力拡大係数}\label{fig:ect}
+\end{figure}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect/ect_cycles.eps}
+ \end{center}
+ \caption{き裂長さに対する疲労サイクル数}\label{fig:ect_cycles}
+\end{figure}
+\section{領域分割法}
+\subsection{大規模化}
+前節のような解析を3次元大規模実構造物に適用するとき、
+非線形現象の性質から、実際に大規模になるのはグローバル領域のみであり、
+ローカル領域は小規模なままである。
+そこで、大規模なグローバル領域の解析には、
+既存の大規模線形解析手法が適用可能である。
+本研究では、グローバル領域を領域分割法\cite{ogino2005, bhardwaj2002, toselli2005}を用いて求解する。
+領域分割法では、解析領域$\varOmega$を図\ref{fig:ddm}のように複数の小領域$\varOmega_1, \ldots, \varOmega_n$に分割し、
+各部分領域の有限要素解析を並列に行い、それを繰り返すことで全体の解を得る。
+このとき、部分領域は1コアに割り当てるのが一般的であり、
+その単体性能は領域分割法全体の実効性能から見て重要である。
+この部分領域ソルバーには、直接法を用いるのが一般的であるが、
+直接法はメモリを大量に消費するため、
+メモリ不足で解析できないことがしばしばある。
+そこで、本研究では省メモリな部分領域ソルバーとして、
+前処理付き共役勾配 (Preconditioned Conjugate Gradient; PCG) 法を採用し、
+その前処理には使用メモリ容量を制御できるICT (Incomplete Cholesky with Threshold)\cite{saad1994}分解を用いる。
+また、近年のByte per Flop (B/F) 値の小さいような階層型メモリ構造を有するスカラー計算機では、
+キャッシュメモリの有効利用が実効性能の向上に大きく寄与する。
+そこで、係数行列と前処理行列をメインメモリに収めるだけではなく、
+ラストレベルキャッシュメモリに収めるような実装を試みる。
+\subsection{ICT分解前処理付きCG法部分領域ソルバー}
+ICT分解前処理付きCG法の最適な実装のために、
+領域分割法の部分領域ソルバーの特徴を述べる。
+まず、問題は線形弾性体解析であるので連立一次方程式の係数行列は正定値対称である。
+続いて、連立一次方程式の係数行列は解析全体を通じて一定であり、
+前処理行列の生成時間は相対的に無視できる。
+そして、実構造物は一般に薄肉であるために係数行列の性質が悪くなることが知られているが、
+領域分割後の部分領域は塊状であり係数行列の性質は良好である。
+最後に、部分領域の自由度は数百から数万の範囲に収まり、
+自由度に応じて適切な線形代数ソルバーを選択することが可能である。
+本研究では、1,000自由度から10,000自由度を対象とする。
+
+さて、ICT分解前処理では、
+閾値を用いて前処理行列の非ゼロ成分を棄却することで非ゼロ成分数を制御できるため、
+前処理行列と係数行列がちょうどキャッシュメモリに収まるような状態にできる。
+部分領域ソルバーでは前処理行列の生成に多くの時間を費やすことが可能であるため、
+オリジナルのICT分解とは若干異なる方法で、
+オリジナルよりも強力な前処理行列を生成することを試みる。
+具体的には、まず係数行列を完全コレスキー分解し、
+分解後のスカイライン行列に対して適当な閾値で非ゼロ成分を棄却する。
+そのアルゴリズムは
+
+\begin{algorithmic}
+ \FOR{$i=1$ to $n$}
+ \STATE $d_{ii} \leftarrow d_{ii} - \sum_{k=1}^{i-1} d_{kk} l_{ik}^2$
+ \FOR{$j=i+1$ to $n$}
+ \STATE $l_{ij} \leftarrow l_{ij} - \sum_{k=1}^{i-1} d_{kk} l_{ik} l_{jk}$
+ \ENDFOR
+ \ENDFOR
+ \FOR{$i=1$ to $n$}
+ \STATE $\tau_i \leftarrow \tau \sqrt{\sum_{j=1}^{n} l_{ij}^2}$
+ \FOR{$j=1$ to $i-1$}
+ \IF{$|l_{ij}| < \tau_i$}
+ \STATE $l_{ij} \leftarrow 0$
+ \ENDIF
+ \ENDFOR
+ \ENDFOR
+\end{algorithmic}
+のようになる。
+このとき、閾値を小さめに設定すれば、
+直接法のスカイライン行列に近い前処理行列が生成され、
+かなり少ない反復で収束することが期待できる。
+逆に、閾値を大きめに設定すれば、
+生成される前処理行列はほとんど対角スケーリングと同等になるが、
+対角スケーリングよりもいくらか少ない反復回数で収束することが期待できる。
+
+ICT分解の閾値を変化させたときのPCG反復回数を測定した。
+解析モデルは立方体状のモデルを使用し、
+解析領域全体への荷重状況を鑑みてせん断荷重を負荷した。
+相対残差ノルムの閾値は$10^{-12}$とした。
+測定結果を図\ref{fig:ict_steps}に示す。
+横軸が前処理行列の非ゼロ成分数、縦軸がPCG反復回数である。
+グラフは右下がりであり、
+非ゼロ成分数 (消費メモリ容量) に応じて反復回数が削減できることがわかる。
+また、2,673自由度の部分領域モデルにおいて、
+ICT分解、対角スケーリング、IC (0) 分解の各前処理付きCG法の反復回数を図\ref{fig:ic_steps}に示す。
+ここで、対角スケーリング前処理行列の非ゼロ成分数は自由度と同じく、
+IC (0) のそれは係数行列のそれと同じであるため、
+これらはグラフ上で点で表されることに注意する。
+対角スケーリング前処理と比較すると、
+非ゼロ成分数が小さいときにICT分解前処理の方が若干反復回数が大きくなるが、
+概ね反復回数は同等である。
+また、対角スケーリングよりも非ゼロ成分数を少し大きくするだけで、
+反復回数をかなり削減できることがわかる。
+一方、同じ非ゼロ成分数で比較すると、
+ICT分解前処理を使用する方がIC (0) 分解前処理よりも反復回数を約2分の1に削減できることがわかる。
+以上から、ICT分解前処理は対角スケーリングやIC (0) と同等以上の収束性を有することがわかり、
+ICT分解前処理付きCG法による部分領域ソルバーが有効であることが考えられる。
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ddm.eps}
+ \end{center}
+ \caption{領域分割法}\label{fig:ddm}
+\end{figure}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ict_steps/ict_steps.eps}
+ \end{center}
+ \caption{ICT前処理付きCG法の反復回数}\label{fig:ict_steps}
+\end{figure}
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ic_steps/ic_steps.eps}
+ \end{center}
+ \caption{ICT分解、対角スケーリング、IC (0) 分解の各前処理付きCG法の反復回数}\label{fig:ic_steps}
+\end{figure}
+\section{結論と今後の展望}
+疲労き裂進展解析に連成解析手法である分離反復解法を用いることで、
+通常の有限要素解析と同等の精度で、約4倍の高速化に成功した。
+これは、グローバル領域の剛性行列が解析全体を通じて一定であることに起因し、
+グローバル領域の規模が大きくなるほどスピードアップが大きくなることが予想される。
+また、このような問題を大規模化するときに問題となるグローバル領域の線形解析に対して領域分割法を適用することを想定し、
+領域分割法の部分領域ソルバーにICT前処理付きCG法を用いることが有効であることがわかってきた。
+
+今後の展望として、
+まず、非線形固体力学解析として新たに弾塑性解析を行う予定である。
+また、疲労進展解析、弾塑性解析の両者を3次元に拡張し、
+グローバル領域の解析に領域分割法を用い、
+大規模非線形固体力学シミュレーションを行う予定である。
+%% 参考文献
+\begin{thebibliography}{9}
+ \bibitem{ogino2005}
+         M. Ogino, R. Shioya, H. Kawai and S. Yoshimura.
+         Seismic response analysis of nuclear pressure vessel model
+         with ADVENTURE system on the Earth Simulator.
+         {\em Journal of the Earth Simulator},
+         Vol.~2, pp.~41--54, 2005.
+ \bibitem{bhardwaj2002}
+         M. Bhardwaj, K. Pierson, G. Reese, T. Walsh, D.
+         Day, K. Alvin, J. Peery, C. Farhat and M. Lesoinne.
+         Salinas:~a scalable software for high-performance
+         structural and solid mechanics simulations.
+         In {\em Proceedings of the 2002 ACM/IEEE conference on Supercomputing},
+         2002.
+ \bibitem{okada2007}
+         岡田裕, 荒木宏介, 河合浩志.
+         大規模破壊力学解析のための応力拡大係数計算手法 (混合モード/複雑形状き裂解析のための四面体要素用仮想き裂閉口積分法 (VCCM)).
+         日本機械学會論文集A編, Vol.~73, No.~733, pp.~997--1004, 2007.
+ \bibitem{kikuchi2008}
+         菊池正紀, 和田義孝, 高橋真史.
+         重合メッシュ法を用いた疲労き裂進展シミュレーション.
+         日本機械学會論文集A編, Vol.~74, No.~742, pp.~812--818, 2008.
+ \bibitem{matthies2003}
+         H. Matthies and J. Steindorf.
+         Partitioned strong coupling algorithms
+         for fluid-structure interaction.
+         {\em Computers and Structures}, Vol.~81, pp.~805--812, 2003.
+ \bibitem{toselli2005}
+         A. Toselli and O. Widlund.
+         {\em Domain Decomposition Methods---Algorithms and Theory
+         (Springer Series in Computational Mathematics)}.
+         Springer, 2005.
+ \bibitem{saad1994}
+         Y. Saad.
+         ILUT:~a dual threshold incomplete LU factorization.
+         {\em Numerical Linear Algebra with Applications},
+         Vol~1, No.~4, pp.~387--402, 1994.
+ \bibitem{suzuki1999}
+         鈴木克幸, 大坪英臣, 閔勝載, 白石卓士郎.
+         重合メッシュ法による船体構造のマルチスケール解析.
+         {\em Transactions of JSCES}, Paper No.~19990020, 1999.
+ \bibitem{jsmecode}
+         日本機械学会. 発電用原子力設備規格維持規格 (JSME S NA1-2004).
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,422 @@
+%% -*- coding: euc-jp -*-
+\chapter[分離反復連成解法のアルゴリズムと実装]{分離反復連成解法の \\ アルゴリズムと実装}
+\section{緒言}
+本章では、本研究の対象である大規模破壊力学問題の特徴について触れ、
+それに対するアプローチとして分離反復解法のアルゴリズムと実装について説明する。
+本研究では、分離反復解法のアルゴリズムとして Aitken 補外による動的緩和の付いたブロック Gauss--Seidel 法を用いる。
+続いて、
+グローバル領域およびローカル領域の各ソルバーの実装について、
+ホットスポットである線形代数ソルバーの話題を中心に述べる。
+\section{大規模破壊力学問題の特徴}
+破壊力学問題においてき裂先端から十分に離れた領域は線形弾性体、
+もしくは非線形性が比較的マイルドである。
+本研究ではグローバル領域を線形弾性体として扱う。
+これに対して、
+き裂先端近傍ではき裂進展に伴うメッシュ再分割を伴うことや、
+弾塑性などの非線形現象を伴うことがある。
+比較的小規模な解析ではこれらを区別せずに扱うが、
+問題規模が大きくなるとき裂先端近傍の煩雑な処理を行うことが徐々に困難になる傾向がある。
+このような大規模問題を見ると、
+き裂先端近傍は比較小規模なままであり、
+実際に自由度数が大きくなるのはき裂から十分に離れた弾性体領域である。
+そこで、
+本研究では小規模なき裂先端近傍領域と大規模な弾性体領域の解析をそれぞれ独立に行い、
+それらの間の整合性をとるような解析を行う。
+このようなアプローチに関して、
+前々章ではズーミング法や重合メッシュ法を紹介した。
+また、このようなアプローチをとらない通常の有限要素法によるアプローチも紹介した。
+そして、前章ではズーミング法、重合メッシュ法、および通常の有限要素法を連成解析手法の枠組みで分類した。
+本研究では、
+連成解析手法の一つである分離型双方向反復解法を大規模破壊力学問題に応用する。
+次節以降でその具体的なアルゴリズムと実装について述べる。
+\section{分離反復解法のアルゴリズムと実装}
+\subsection{ブロック Gauss--Seidel 法}
+本研究では分離反復解法のアルゴリズムとしてブロック Gauss--Seidel 法を用いる。
+ブロック Gauss--Seidel 法とは、
+片方の問題を解析し、続いてもう片方の問題を解析し、
+それを繰り返すという手法である。
+
+本研究では、連成する二つの領域をグローバル領域、およびローカル領域と呼ぶ。
+図\ref{fig:partitioned_iterative}のように、
+グローバル領域からローカル領域へ受け渡す物理量は節点変位$\bvec{u}$、
+ローカル領域からグローバル領域へ受け渡す物理量は節点反力$\bvec{f}$とした。
+なぜなら、
+多くの場合、小規模なき裂先端近傍には解析条件としての強制変位境界条件が付与されていないからである。
+一般に固体力学解析では、
+自由度を拘束する強制変位境界条件が付いていないと剛体モードで解が不定となってしまう。
+また、
+ローカル領域からグローバル領域に渡す節点反力$\bvec{f}$は、
+渡すときに符号を逆転するようにした。
+これはブロック Gauss--Seidel 法のアルゴリズム
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$
+ \WHILE{not converged}
+ \STATE $\bvec{u}_1^{(k)} \leftarrow \bvec{K}_{1}^{-1} (\bvec{f}_1 - \bvec{K}_{12} \bvec{u}_2^{(k-1)})$
+ \STATE $\bvec{u}_2^{(k)} \leftarrow \bvec{K}_{2}^{-1} (\bvec{f}_2 - \bvec{K}_{12}\trp \bvec{u}_1^{(k)})$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+の中の 4 行目の$\bvec{K}_{12}\trp \bvec{u}_1^{(k)}$にマイナスの符号が付いていることに対応する。
+また、節点反力が表面以外では常にゼロとなるという点とも矛盾しない。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.5\hsize]{./img/partitioned_iterative.eps}
+ \end{center}
+ \caption{分離反復解法のモデル分割と境界上の物理量の受け渡し}\label{fig:partitioned_iterative}
+\end{figure}
+\subsection{Aitken 補外による動的緩和}
+ブロック Gauss--Seidel 法では、
+線形代数ソルバーの SOR (Successive Over-relaxation) 法のように緩和を行うことで収束を加速させることが可能である。
+本研究では、
+グローバル領域からローカル領域へ強制変位を受け渡すときに緩和を行う。
+このとき、
+緩和係数$\omega$を一定にして与えてもある程度の加速が得られるが、
+更なる収束の加速のために本研究では直線探索\cite{Minami2010}を用いて緩和係数を動的に求める。
+直線探索の手法としては Aitken 補外
+\begin{equation}
+ \omega^{ (k)} = - \omega^{ (k-1)}
+  \frac{
+  \bvec{r}^{ (k-1)\trp}
+  \left(\bvec{r}^{ (k)} - \bvec{r}^{ (k-1)}\right)}{
+  || \bvec{r}^{ (k)} - \bvec{r}^{ (k-1)} ||^2}
+\end{equation}
+を用いる。
+ここで、$\bvec{r}$は残差ベクトルである。
+また、緩和係数$\omega^{(k)}$の初期値$\omega^{(0)}$は\cite{Suzuki1999}に倣って0.1とした。
+
+以上をまとめて、
+Aitken 補外付きのブロック Gauss--Seidel 法の実装は
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$
+ \STATE $\omega^{(0)} \leftarrow 0.1$
+ \STATE $\bvec{u}^{(0)} \leftarrow \bvec{0}$
+ \STATE $\bvec{f}^{(0)} \leftarrow \bvec{0}$
+ \STATE $\tilde{\bvec{u}}^{(0)} \leftarrow K_G \left(\bvec{f}^{(0)}\right)$
+ \STATE $\bvec{r}^{(0)} \leftarrow - \tilde{\bvec{u}}^{(0)}$
+ \WHILE{$||\bvec{r}^{(k)}|| / ||\bvec{r}^{(0)}|| > \tau$}
+ \STATE $\bvec{f}^{(k+1)} \leftarrow K_L \left(\bvec{u}^{(k)}\right)$
+ \STATE $\tilde{\bvec{u}}^{(k+1)} \leftarrow K_G \left(\bvec{f}^{(k+1)}\right)$
+ \STATE $\bvec{r}^{(k+1)} \leftarrow \bvec{u}^{(k)} - \tilde{\bvec{u}}^{(k+1)}$
+ \STATE $\omega^{(k+1)} \leftarrow - \omega^{(k)}
+ \frac{
+ \bvec{r}^{(k)\trp} \left(\bvec{r}^{(k+1)} - \bvec{r}^{(k)}\right)}{
+ || \bvec{r}^{(k+1)} - \bvec{r}^{(k)} ||^2}$
+ \STATE $\bvec{u}^{(k+1)} \leftarrow \bvec{u}^{(k)} - \omega^{(k+1)} \bvec{r}^{(k+1)}$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+のようにした。
+これをき裂進展の解析ステップ毎に行う。
+ここで、$\bvec{f}$は領域境界上の荷重ベクトル、
+$\tilde{\bvec{u}}$、$\bvec{u}$はそれぞれ緩和前、緩和後の領域境界上の変位ベクトルである。
+$K_G$は領域境界上の荷重$\bvec{f}$を境界条件として解析を行い、
+領域境界上の変位$\bvec{u}$を出力する関数である。
+$K_L$は$K_G$と同様に、
+強制変位$\bvec{u}$を入力として反力$\bvec{f}$を出力する関数である。
+$\bvec{r}$は領域境界上の残差ベクトル、
+$\tau$は許容誤差、$\omega$は緩和係数である。
+許容誤差$\tau$は$10^{-3}$とする。
+\section{グローバル領域の線形弾性解析ソルバーの実装}
+\subsection{二次元線形弾性解析ソルバーの実装}
+本研究では、
+分離反復解法による破壊力学シミュレーションの例として比較的小規模な二次元解析と三次元解析を行い、
+本手法の利点がスケールすることを示す。
+二次元解析では大規模解析の必須事項である並列計算を行なっていないが、
+本手法のホットスポットを明確にするために二次元解析の実装についても説明する。
+
+グローバル領域では有限要素法による標準的な線形弾性解析を行う。
+有限要素は三点積分に基づく平面応力アイソパラメトリック三角形二次要素とし、
+材料定数は鉄鋼を想定してヤング率 210 GPa、ポアソン比 0.3 とする。
+さて、Non-overlapping 型の分離反復解法に基づくき裂進展では、
+グローバル領域はき裂を含まないため、
+グローバル領域の剛性行列はき裂進展解析全体を通じて一定である。
+直接法や前処理付き反復法などの多くの線形代数ソルバーでは、
+係数行列に対して下準備を行う段階と右辺ベクトルを与えたときに未知ベクトルを求める段階の二つに分かれる\cite{Oguni1991, Davis2006, Saad2003}。
+本研究では、直接法の一つである LDL 分解法を用いる。
+LDL 分解法において、
+二つの段階の一つ目に当たるのが LDL 分解 (数値分解) であり、
+二つ目に当たるのが前進・後退代入 (三角求解) である。
+これらについては解析のホットスポットであるため、後に詳細に述べる。
+本研究では、
+き裂進展解析のはじめにグローバル領域の剛性行列の生成および LDL 分解を行い、
+グローバル領域の解析中では前進・後退代入のみを繰り返すような実装とする。
+連成解析手法の中で分離型反復解法は、
+一体型解法と比較して、
+反復回数の分だけ連立一次方程式を余分に解かなければならないため計算時間において一般に不利である。
+しかしながら、
+問題が線形であり反復中で行列が一定であれば、
+二回目の反復以降の連立一次方程式の求解は前進・後退代入のみとなる。
+つまり、計算時間が単純に反復回数倍になるわけではなく、
+一体型解法と分離型反復解法の計算時間の差はそこまで大きくならない。
+さらに、
+き裂進展解析の文脈では分離型反復解法の方が高速になりうる。
+というのも、
+一般の解析方法ではき裂が進展するたびにメッシュ変化するため、
+その度に剛性行列の再生成および LDL 分解を行う必要がある。
+一方、
+分離型反復解法ではグローバル領域はき裂を含まないため、
+グローバル領域の剛性行列の生成および LDL 分解は解析のはじめに一回行うだけである。
+分離型反復解法を用いると連立一次方程式を解く回数が多くなるが、
+一体型解法よりも分離型反復解法の方が高速なソルバーとなることがありうる。
+
+本研究では以上のような線形代数ソルバーと分離型反復解法の相性の良さを活用して、
+一体型解法よりも高速にき裂進展解析を行う。
+そこで、
+計算時間の観点で重要となる線形代数ソルバーの実装について述べる。
+本研究では、線形代数ソルバーに LDL 分解法を求める。
+行列のフォーマットは図\ref{fig:skyline}のようなスカイライン法を用いる。
+浮動小数点数配列\texttt{val}が行列成分の値、
+自由度数長の整数配列\texttt{ind}が各列の最小の行番号、
+自由度数長の整数配列\texttt{ptr}が\texttt{val}中の行列対角成分の配列インデックスである。
+スカイライン法での LDL 分解は一般的な内積型や外積型のアルゴリズムとは異なり、
+メモリ連続アクセスの担保と無駄な条件分岐の排除のため
+\begin{algorithmic}
+ \FOR{$k = 0$, $N - 1$}
+ \FOR{$i = \mathrm{ind}_k$, $k - 1$}
+ \FOR{$j = \max (\mathrm{ind}_k, \mathrm{ind}_i)$, $i - 1$}
+ \STATE $\mathrm{val}_{\mathrm{ptr}_k - k + i}
+ \leftarrow \mathrm{val}_{\mathrm{ptr}_k - k + i}
+ - \mathrm{val}_{\mathrm{ptr}_i - i + j}
+ \mathrm{val}_{\mathrm{ptr}_k - k + j}
+ \mathrm{val}_{\mathrm{ptr}_j}$
+ \ENDFOR
+ \STATE $\mathrm{val}_{\mathrm{ptr}_k - k + i}
+ \leftarrow \mathrm{val}_{\mathrm{ptr}_k - k + i}
+ / \mathrm{val}_{\mathrm{ptr}_i}$
+ \STATE $\mathrm{val}_{\mathrm{ptr}_k}
+ \leftarrow \mathrm{val}_{\mathrm{ptr}_k}
+ - \mathrm{val}_{\mathrm{ptr}_k - k + i}^2
+ \mathrm{val}_{\mathrm{ptr}_i}$
+ \ENDFOR
+ \ENDFOR
+\end{algorithmic}
+のような縁取り型の実装とする\cite{Oguni1991}。
+ここで、$N$は自由度数、
+浮動小数点数配列$\mathrm{val}$、整数配列$\mathrm{ind}$、
+および整数配列$\mathrm{ptr}$はスカイライン法の配列である。
+LDL 分解の過程を図示すると図\ref{fig:skyline_factorization}のようになる。
+スカイライン法は図\ref{fig:skyline}の上三角部分が都市の高層ビル群に似ているための命名だが、
+スカイライン法での LDL 分解は図\ref{fig:skyline_factorization}のように下三角部分で考える。
+
+スカイライン法での前進・後退代入は、
+メモリの連続アクセスを担保するように実装すると
+\begin{algorithmic}
+ \STATE $\bvec{y} \leftarrow \bvec{f}$
+ \FOR{$i = 0$, $N - 1$}
+ \FOR{$j = \mathrm{ind}_i$, $i - 1$}
+ \STATE $y_i \leftarrow y_i - \mathrm{val}_{\mathrm{ptr}_i - i + j} y_j$
+ \ENDFOR
+ \ENDFOR
+ \FOR{$i = 0$, $N - 1$}
+ \STATE $y_i \leftarrow y_i / \mathrm{val}_{\mathrm{ptr}_i}$
+ \ENDFOR
+ \STATE $\bvec{u} \leftarrow \bvec{y}$
+ \FOR{$j = N - 1$, $0$, $-1$}
+ \FOR{$i = j - 1$, $\mathrm{ind}_j$, $-1$}
+ \STATE $u_i \leftarrow u_i - \mathrm{val}_{\mathrm{ptr}_j - j + i} u_j$
+ \ENDFOR
+ \ENDFOR
+\end{algorithmic}
+のようになる。
+ここで、
+$\bvec{f}$は右辺ベクトル、$\bvec{u}$は未知ベクトル、
+$\bvec{y}$は自由度数長の作業用ベクトルである。
+前進代入は一番内側のループでメモリの同じ場所$y_i$に書き込むためメモリ読み込みが多い実装であり、
+後退代入は逆にメモリ書き込みが多い実装である。
+二次元解析なので行列のバンド幅が$N^{1/2}$に比例すると仮定すると、
+LDL 分解の演算量は$\mathrm{O} (N^2)$、
+前進・後退代入の演算量は$\mathrm{O} (N^{3/2})$となり、
+LDL 分解の方が計算時間が大きくなることが多い。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.8\hsize]{./img/skyline.eps}
+ \end{center}
+ \caption{スカイライン法による係数行列のデータ構造}\label{fig:skyline}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.42\hsize]{./img/skyline_factorization.eps}
+ \end{center}
+ \caption{スカイライン法の LDL 分解}\label{fig:skyline_factorization}
+\end{figure}
+\subsection{三次元線形弾性解析ソルバーの実装}
+三次元解析では四点積分に基づくアイソパラメトリック四面体二次要素を用い、
+それ以外は二次元解析と同様とする。
+線形代数ソルバーには共有メモリ並列の疎行列直接法ソルバーである Intel MKL 10.2~\cite{Intel_MKL} の PARDISO~\cite{Schenka2001} を用いる。
+PARDISO における疎行列のデータ構造は図\ref{fig:csr}のような上三角部分のみの CSR (Compressed Sparse Row) フォーマットである。
+浮動小数点数配列\texttt{val}が行列の非ゼロ成分の値、
+整数配列\texttt{ind}が対応する\texttt{val}の列番号、
+整数配列\texttt{ptr}が\texttt{val}および\texttt{ind}の中の行列対角成分の配列インデックスである。
+また、疎行列直接法ソルバーにおいて、
+係数行列に対して下準備を行う段階はシンボリック分解および数値分解、
+右辺ベクトルを与えたときに未知ベクトルを求める段階は三角求解である。
+PARDISO のシンボリック分解では、
+フィルインの数を最小化する最小次数順序法\cite{Davis2006}によるオーダリングを用いている。
+フィルインとは行列の成分のうち、
+数値分解後に非ゼロになるゼロ成分のことである。
+数値分解は LDL 分解である。
+三次元解析なので行列のバンド幅が$N^{2/3}$に比例すると仮定すると、
+LDL 分解の演算量は$\mathrm{O} (N^{7/3})$、
+前進・後退代入の演算量は$\mathrm{O} (N^{5/3})$となる。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.75\hsize]{./img/csr.eps}
+ \end{center}
+ \caption{上三角部分のみの CSR フォーマットの係数行列のデータ構造}\label{fig:csr}
+\end{figure}
+\section{ローカル領域のき裂進展解析ソルバーの実装}
+ローカル領域のき裂進展解析ソルバーの実装について述べる。
+ローカル領域では基本的にグローバル領域と同じ線形代数ソルバーを用いている。
+さて、分離反復解法において、
+ローカル領域のソルバーの実装で重要となるのは剛性行列を再生成するタイミングである。
+分離反復解法では、
+き裂進展の解析ステップと解析ステップ毎の分離反復の二重のループ構造になっている。
+この中でき裂を進展させるのは解析ステップが進んだときであり、
+解析ステップが進んだら剛性行列を再生成し、すかさず剛性行列の数値分解を行う。
+き裂進展は問題の自由度数やディリクレ境界条件の変化を伴うため、
+剛性行列の再生成時にはメモリの再確保も行う必要がある。
+
+分離反復中ではローカル領域の剛性行列は不変であるが、
+ローカル領域に付与される強制変位境界条件 (ディリクレ境界条件) は反復ステップ毎に変化する。
+分離反復解法では領域毎に異なる線形代数ソルバーを用いることが可能であるが、
+本研究では簡単のためにグローバル領域と同じ線形代数ソルバーを用いている。
+そこで、
+ここではスカイラインフォーマットおよび CSR フォーマットのディリクレ境界条件の処理について述べる。
+ディリクレ境界条件の処理には、
+置換行列を用いたディリクレ境界条件の自由度を分離を行なっている。
+スカイラインフォーマットは行列の上三角部分において列優先なので、
+剛性行列$\bvec{K}$ ($\bvec{K}_L$)、
+荷重ベクトル$\bvec{f}$ ($\bvec{f}_L$)、
+および変位ベクトル$\bvec{u}$ ($\bvec{u}_L$) は置換行列$\bvec{P}$によってディリクレ自由度が後側に分離されて
+\begin{equation}
+ \bvec{P} \bvec{K} \bvec{P}\trp
+  = \pmat{
+  \begin{array}{cc}
+   \bvec{K}_N & \bvec{K}_{ND} \\
+   \bvec{K}_{ND}\trp & \bvec{K}_D \\
+  \end{array}
+  },
+\end{equation}
+\begin{equation}
+ \bvec{P} \bvec{f}
+  = \pvec{
+  \begin{array}{c}
+   \bvec{f}_N \\
+   \bvec{f}_D \\
+  \end{array}
+  } = \pvec{
+  \begin{array}{c}
+   \bvec{f}_N \\
+   \bvec{0} \\
+  \end{array}
+  },
+\end{equation}
+\begin{equation}
+ \bvec{P} \bvec{u}
+  = \pvec{
+  \begin{array}{c}
+   \bvec{u}_N \\
+   \bvec{u}_D \\
+  \end{array}
+  }
+\end{equation}
+のようになる。
+ここで、$\bvec{K}_N$はノイマン自由度に関する剛性行列、
+$\bvec{K}_D$はディリクレ自由度に関する剛性行列、
+$\bvec{K}_{ND}$はノイマン自由度とディリクレ自由度の節点自由度を結びつける剛性行列、
+$\bvec{u}_N$はノイマン自由度に関する未知の変位ベクトル、
+$\bvec{u}_D$はディリクレ自由度に関する既知の変位ベクトル、
+$\bvec{f}_N$はノイマン自由度に関する荷重ベクトル、
+$\bvec{f}_D$はディリクレ自由度に関する荷重ベクトルである。
+$\bvec{f}_D$はゼロである。
+また、置換行列$\bvec{P}$は自由度数長の整数配列で実装される。
+したがって、
+連立一次方程式
+\begin{equation}
+ \bvec{P} \bvec{K} \bvec{P}\trp
+  \bvec{P} \bvec{u}
+  = \bvec{P} \bvec{f}
+\end{equation}
+は
+\begin{equation}
+ \pmat{
+  \begin{array}{cc}
+   \bvec{K}_N & \bvec{K}_{ND} \\
+   \bvec{K}_{ND}\trp & \bvec{K}_D \\
+  \end{array}
+  } \pvec{
+  \begin{array}{c}
+   \bvec{u}_N \\
+   \bvec{u}_D \\
+  \end{array}
+  } = \pvec{
+  \begin{array}{c}
+   \bvec{f}_N \\
+   \bvec{0} \\
+  \end{array}
+  }
+\end{equation}
+のようになる。
+これに対してディリクレ境界条件の処理を行うと
+\begin{equation}
+ \pmat{
+  \begin{array}{cc}
+   \bvec{K}_N & \bvec{K}_{ND} \\
+   \bvec{0} & \bvec{I} \\
+  \end{array}
+  } \pvec{
+  \begin{array}{c}
+   \bvec{u}_N \\
+   \bvec{u}_D \\
+  \end{array}
+  } = \pvec{
+  \begin{array}{c}
+   \bvec{f}_N \\
+   \bvec{u}_D \\
+  \end{array}
+  }
+\end{equation}
+となり、
+ディリクレ自由度を消去すると
+\begin{equation}
+ \bvec{K}_N \bvec{u}_N = \bvec{f}_N - \bvec{K}_{ND} \bvec{u}_D
+\end{equation}
+のようになる。
+ここで、$\bvec{I}$は単位行列である。
+結果的にノイマン自由度のみの連立一次方程式を解けば良いことになる。
+一方、
+CSR フォーマットについてもスカイラインフォーマットとまったく同じ式が導かれるが、
+CSR フォーマットは行列の上三角部分において行優先なので
+\begin{equation}
+ \bvec{P} \bvec{K} \bvec{P}\trp
+  = \pmat{
+  \begin{array}{cc}
+   \bvec{K}_D & \bvec{K}_{ND}\trp \\
+   \bvec{K}_{ND} & \bvec{K}_N \\
+  \end{array}
+  },
+\end{equation}
+\begin{equation}
+ \bvec{P} \bvec{f}
+  = \pvec{
+  \begin{array}{c}
+   \bvec{0} \\
+   \bvec{f}_N \\
+  \end{array}
+  },
+\end{equation}
+\begin{equation}
+ \bvec{P} \bvec{u}
+  = \pvec{
+  \begin{array}{c}
+   \bvec{u}_D \\
+   \bvec{u}_N \\
+  \end{array}
+  }
+\end{equation}
+のようにディリクレ自由度は前側に分離される。
+\section{結言}
+本章では、本研究の対象である大規模破壊力学問題の特徴を述べ、
+それに対する解析手法として分離反復解法のアルゴリズムと実装について説明した。
+また、
+グローバル領域およびローカル領域の各ソルバーの実装について説明した。

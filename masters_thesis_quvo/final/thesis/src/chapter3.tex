@@ -1,0 +1,425 @@
+%% -*- coding: euc-jp -*-
+\chapter[マルチフィジックス連成解析と分離反復解法]{マルチフィジックス連成解析と \\ 分離反復解法}
+\section{緒言}
+本章では、
+マルチフィジックス連成解析および連成解析の各手法について説明し、
+前章で触れた大規模破壊力学問題向けの既存手法を連成解析手法として分類する。
+続いて、
+本研究で用いる分離反復解法と他の連成解析手法との違いを述べ、
+分離反復解法で用いられる反復スキームについて述べる。
+\section{連成解析の概要}
+連成解析とは、
+異なる支配方程式で表される複数の問題の相互作用を扱うシミュレーションのことである。
+連成解析はマルチフィジックス解析とも呼ばれ、
+特に、
+流体・構造連成解析\cite{Zhang2001, Matthies2003, Tezduyar2007, Minami2010}、
+磁場・構造連成解析\cite{Sugimoto2010}、
+地盤・構造連成解析の三つが有名である。
+本研究では、これらの連成解析の手法を取り入れて、
+構造・構造連成解析もしくは固体・固体連成解析というような解析を行う。
+一つ目の固体力学解析として大規模な弾性解析、
+二つ目の固体力学解析としてき裂先端近傍の破壊力学解析を行う。
+これらの連続性を連成解析手法によって担保する。
+\section{連成解析手法の分類}
+連成解析手法は一般に、
+分離型片方向連成解法、
+分離型双方向時差解法\cite{Sugimoto2010}、
+分離型双方向反復解法\cite{Matthies2003, Tezduyar2007, Minami2010}、
+一体型解法\cite{Zhang2001}の四種類に分類される。
+以降、連成する二つの現象を便宜上モデル 1、モデル 2 と呼ぶ。
+二つの独立した支配方程式を離散化すると連立一次方程式
+\begin{equation}
+ \bvec{K}_1 \bvec{u}_1 = \bvec{f}_1,
+\end{equation}
+\begin{equation}
+ \bvec{K}_2 \bvec{u}_2 = \bvec{f}_2
+\end{equation}
+が得られる。
+こられの相互作用は
+\begin{equation}
+ \pmat{
+  \begin{array}{cc}
+   \bvec{K}_1 & \bvec{K}_{12} \\
+   \bvec{K}_{12}\trp & \bvec{K}_2 \\
+   \end{array}
+   } \pvec{
+   \begin{array}{c}
+    \bvec{u}_1 \\
+    \bvec{u}_2 \\
+   \end{array}
+   } = \pvec{
+   \begin{array}{c}
+    \bvec{f}_1 \\
+    \bvec{f}_2 \\
+   \end{array}
+   }
+\end{equation}
+のように連立一次方程式で表せる。
+ただし、
+$\bvec{K}_{12}$はモデル 2 からモデル 1 への境界条件の受け渡しを表現する行列であり、
+$\bvec{K}_{12}\trp$はモデル 1 からモデル 2 への境界条件の受け渡しを表現する行列である。
+この式を用いてこの四種類の手法について説明する。
+以降、
+連成する現象の数は基本的に二つと仮定し、
+動解析、増分解析、き裂進展解析などの何らかの時間軸を持つような解析を対象とする。
+
+分離型解法では問題を支配方程式毎に分離し、それぞれを独立に解く。
+片方向連成解法では、
+モデル 1 を解いた後、
+その解析結果から適当な物理量を取得し、
+その物理量を境界条件としてモデル 2 を解く。
+このとき、
+モデル 2 の解析結果はモデル 1 の解析結果には反映されない。
+分離型片方向連成解法のアルゴリズムは
+\begin{algorithmic}
+ \STATE $t \leftarrow 0$
+ \WHILE{$t < t_{\max}$}
+ \STATE $\bvec{u}_1^{(t)} \leftarrow \bvec{K}_1^{(t)^{-1}} \bvec{f}_1^{(t)}$
+ \STATE $\bvec{u}_2^{(t)} \leftarrow \bvec{K}_2^{(t)^{-1}}
+ \left(\bvec{f}_2^{(t)} - \bvec{K}_{12}^{(t)\trp} \bvec{u}_1^{(t)}\right)$
+ \STATE $t \leftarrow t + 1$
+ \ENDWHILE
+\end{algorithmic}
+のようになる。
+ここで、$t$は時間ステップであり、$t_{\max}$は終了時間である。
+このアルゴリズムを模式図にすると図\ref{fig:coupling_oneway}のようになる。
+
+分離型双方向解法は、
+片方向とは違いモデル 2 の解析結果がモデル 1 の解析結果に反映される手法である。
+時差解法と反復解法に分類される。
+時差解法は一つ前の時間ステップの$\bvec{u}_2^{(t-1)}$を参照し、
+\begin{algorithmic}
+ \STATE $t \leftarrow 0$
+ \WHILE{$t < t_{\max}$}
+ \STATE $\bvec{u}_1^{(t)} \leftarrow \bvec{K}_1^{(t)^{-1}}
+ \left(\bvec{f}_1^{(t)} - \bvec{K}_{12}^{(t)} \bvec{u}_2^{(t-1)}\right)$
+ \STATE $\bvec{u}_2^{(t)} \leftarrow \bvec{K}_2^{(t)^{-1}}
+ \left(\bvec{f}_2^{(t)} - \bvec{K}_{12}^{(t)\trp} \bvec{u}_1^{(t)}\right)$
+ \STATE $t \leftarrow t + 1$
+ \ENDWHILE
+\end{algorithmic}
+のように表現できる。
+このアルゴリズムを模式図にすると図\ref{fig:coupling_staggered}のようになる。
+たとえば、
+モデル 1 からモデル 2 にノイマン境界条件を渡したとしたら、
+モデル 2 からモデル 1 に戻す境界条件はディリクレ境界条件でなければならない。
+時差解法に対して、
+時間ステップ毎にモデル 1 とモデル 2 の相互作用を厳密に解析するのが反復解法である。
+本研究ではこれを用いる。
+分離型双方向反復解法のアルゴリズムは
+\begin{algorithmic}
+ \STATE $t \leftarrow 0$
+ \WHILE{$t < t_{\max}$}
+ \STATE $k \leftarrow 0$
+ \WHILE{not converged}
+ \STATE $\bvec{u}_1^{(t, k)} \leftarrow \bvec{K}_1^{(t, k)^{-1}}
+ \left(\bvec{f}_1^{(t, k)} - \bvec{K}_{12}^{(t, k)} \bvec{u}_2^{(t, k-1)}\right)$
+ \STATE $\bvec{u}_2^{(t, k)} \leftarrow \bvec{K}_2^{(t, k)^{-1}}
+ \left(\bvec{f}_2^{(t, k)} - \bvec{K}_{12}^{(t, k)\trp} \bvec{u}_1^{(t, k)}\right)$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+ \STATE $t \leftarrow t + 1$
+ \ENDWHILE
+\end{algorithmic}
+のようになる。
+ここで、$k$は反復ステップである。
+このアルゴリズムを模式図にすると図\ref{fig:coupling_iterative}のようになる。
+このとき、モデル 1 が線形問題であれば$\bvec{K}_1^{(t, k)} = \bvec{K}_1^{(t)}$となり、
+モデル 2 が線形問題であれば$\bvec{K}_2^{(t, k)} = \bvec{K}_2^{(t)}$となる。
+また、分離型双方向反復解法は分離反復解法とも呼ばれる。
+
+一体型解法は
+\begin{algorithmic}
+ \STATE $t \leftarrow 0$
+ \WHILE{$t < t_{\max}$}
+ \STATE $\pvec{
+ \begin{array}{c}
+  \bvec{u}_1^{(t)} \\
+  \bvec{u}_2^{(t)} \\
+ \end{array}
+ } \leftarrow \pmat{
+ \begin{array}{cc}
+  \bvec{K}_1^{(t)} & \bvec{K}_{12}^{(t)} \\
+  \bvec{K}_{12}^{(t)\trp} & \bvec{K}_2^{(t)} \\
+ \end{array}
+ }^{-1} \pvec{
+ \begin{array}{c}
+  \bvec{f}_1^{(t)} \\
+  \bvec{f}_2^{(t)} \\
+ \end{array}
+ }$
+ \STATE $t \leftarrow t + 1$
+ \ENDWHILE
+\end{algorithmic}
+のように、
+$\bvec{K}_{12}$を導入して二つのモデルを同時に解く手法である。
+このアルゴリズムを模式図にすると図\ref{fig:coupling_monolithic}のようになる。
+$\bvec{K}_{12}$はラグランジュの未定乗数法によって求める。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize]{./img/coupling/oneway.eps}
+ \end{center}
+ \caption{分離型片方向連成解法の模式図}\label{fig:coupling_oneway}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize]{./img/coupling/staggered.eps}
+ \end{center}
+ \caption{分離型双方向時差解法の模式図}\label{fig:coupling_staggered}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize]{./img/coupling/iterative.eps}
+ \end{center}
+ \caption{分離型双方向反復解法の模式図}\label{fig:coupling_iterative}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.7\hsize]{./img/coupling/monolithic.eps}
+ \end{center}
+ \caption{一体型解法の模式図}\label{fig:coupling_monolithic}
+\end{figure}
+\section{大規模破壊力学解析手法の連成解析手法としての分類}
+前章で述べた大規模破壊力学解析の既存手法を連成解析の視点で分類すると表\ref{tab:coupling_methods}のようになる。
+Overlapping および Non-overlapping は本研究で導入した視点であり、
+図\ref{fig:overlapping_non_overlapping}のように、
+ローカルモデルをグローバルモデルに重ねあわせるか否かを表す。
+多くの流体・構造連成解析や地盤・構造連成解析は、
+解析領域が重なり合わないため本質的に Non-overlapping である\cite{Matthies2003, Tezduyar2007, Minami2010}。
+一方、
+磁場・構造連成解析は電磁力が物体力として作用するため本質的に Overlapping である\cite{Sugimoto2010}。
+これらに対して、
+本研究の対象である構造・構造連成解析では Overlapping、Non-overlapping のどちらかを選択することが可能である。
+さて、前章で述べた大規模破壊力学解析手法を順に見ていく。
+ズーミング法は Overlapping 型の分離型片方向連成である。
+なお、
+Non-overlapping 型の分離型片方向連成は、
+図\ref{fig:overlapping_non_overlapping}の右図ようにグローバルモデルに巨大な切り欠きが存在することになってしまうため現実的でないと考えられる。
+重合メッシュ法は Overlapping 型の一体型解法である。
+鈴木らは重合メッシュ法で生成した行列を用いて反復的な解析を行っている\cite{Suzuki1999, Suzuki2002}。
+通常の有限要素法による破壊力学解析は、
+複数の要素剛性行列を全体剛性行列に足し合わせるという性質から Non-overlapping 型の一体型解法と解釈することができる。
+
+ここで、
+き裂進展解析向けではないが大規模固体解析の手法を四つ紹介する。
+一つ目は領域分割法\cite{Yagawa1991, Yagawa1993, Yagawa1993_2}である。
+領域分割法はスーパーコンピュータや PC クラスタの上での大規模線形弾性体解析で実績がある\cite{ADVENTURE, Yoshimura2002, Ogino2005}。
+領域分割法では、
+図\ref{fig:ddm}のように分割された領域を並列に解析し、
+それを反復することで全体の解を求める。
+この点から領域分割法は Non-overlapping 型の分離型双方向反復解法と言える。
+本研究では、
+き裂先端近傍のように局所的な複雑さに注目するため領域分割法のアプローチは有効ではない。
+二つ目は均質化法\cite{Terada2001}である。
+均質化法は周期的な構造を持つ問題を対象とした Overlapping 型の一体型解法である。
+均質化法も領域分割法と同様に局所的な複雑さに対しては有効ではない。
+三つ目は Nishikawa et al. が提案した反復サブストラクチャ法\cite{Nishikawa2007}である。
+反復サブストラクチャ法は大規模溶接問題向けに提案された手法であり、
+反復的な重合メッシュ法と似たアルゴリズムで Overlapping 型の分離型双方向反復解法である。
+四つ目は Yamada et al. が提案し、
+現在も研究を行なっている領域分割型重合メッシュ法である\cite{Yamada2011}。
+これは Non-overlapping 型の一体型解法であり、
+領域間境界で節点が一致しない場合にエネルギーを保存するような補間方法が重点的に研究されている。
+
+以上の四つの手法の他に、
+グローバル領域の解析は有限要素法で行うがローカル領域の解析は有限要素法以外の方法で行うような破壊力学解析手法を二つ紹介する。
+一つ目は有限要素交代繰り返し法\cite{Nishioka1983}である。
+有限要素交代繰り返し法のローカル領域は破壊力学の理論解で求めるような Overlapping 型の分離型双方向反復解法である。
+応力拡大係数の計算に理論解を用いるので、
+三次元き裂の場合は表面き裂や埋没き裂などの比較的単純な形状のき裂しか扱えないという弱点がある。
+二つ目は拡張有限要素法\cite{Nagashima2003}である。
+拡張有限要素法では、
+有限要素の内挿関数にき裂形状を表現する関数を重ねあわせる。
+この重ね合わせる関数をローカル領域と捉えると、
+拡張有限要素法は Overlapping 型の一体型解法である。
+拡張有限要素法は複雑な形状のき裂を扱うことができるが、
+重合メッシュ法と同様に剛性行列の条件数が大きくなるため、
+大規模化時には線形代数ソルバーの制約を受ける。
+本研究では、
+複雑形状の三次元き裂を扱うことを視野に入れているのでローカル領域の解析には有限要素法を用いる。
+
+以上のような既存の各手法に対して、
+本研究では Non-overlapping 型の分離型双方向反復解法を用いる。
+これを用いるメリットについては次節で述べる。
+\begin{table}[tbp]
+ \caption{大規模破壊力学解析手法を連成解析手法として見たときの分類}\label{tab:coupling_methods}
+ \begin{center}
+  \small
+  \begin{tabular}{l|cc}
+   \hline
+   & Overlapping & Non-overlapping \\
+   \hline
+   \hline
+   分離型片方向     & ズーミング法   & N/A \\
+   \hline
+   分離型双方向時差 & N/A            & N/A \\
+   \hline
+   分離型双方向反復 & 鈴木らの重合メッシュ法\cite{Suzuki1999, Suzuki2002} & 領域分割法 \\
+   {}               & 反復サブストラクチャ法\cite{Nishikawa2007} & 本研究 \\
+   {}               & 有限要素交代繰り返し法 & \\
+   \hline
+   一体型           & 重合メッシュ法 & (通常の有限要素法) \\
+   {}               & 均質化法       & 領域分割型重合メッシュ法\cite{Yamada2011} \\
+   {}               & 拡張有限要素法 & \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=\hsize]{./img/overlapping_non_overlapping.eps}
+ \end{center}
+ \caption{Overlapping 型の分割 (左) と Non-overlapping 型の分割 (右)}\label{fig:overlapping_non_overlapping}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.4\hsize]{./img/ddm.eps}
+ \end{center}
+ \caption{領域分割法の領域分割}\label{fig:ddm}
+\end{figure}
+\section{分離反復解法の特徴}
+分離反復解法は Matthies and Steindorf により流体・構造連成解析向けに提案された手法である\cite{Matthies2003}。
+分離反復解法では、
+複数の現象のそれぞれを独立に解き、
+それらを反復することである時間ステップでの最終的な解を得る。
+反復計算で誤差を小さくしているため、
+片方向解法および双方向時差解法よりも高精度な解を得ることができる。
+また、
+収束判定の閾値を十分に小さくすれば一体型解法と同程度に高い精度の解を得ることができる。
+しかしながら、
+分離反復解法では反復回数の分だけ多くの解析を行わなければならないため、
+計算速度の点からは一体型解法の方が好まれる傾向にある。
+一方、
+分離反復解法では各現象を独立に解析するため、
+既存の知見を役立てやすいという利点がある。
+たとえば、流体・構造連成解析において、
+乱流モデルを用いる有限差分法の非圧縮性粘性流体解析ソルバーと高性能要素を用いる有限要素法の大変形解析ソルバーを連成させるような解析を試みるとき、
+分離反復解法を用いて実績のあるそれぞれのコードを組み合わせる方法が好まれる。
+
+本研究も分離反復解法を用いているため以上のような利点がある。
+本手法を用いることで将来的には、
+スーパーコンピュータ上で動作する大規模並列解析ソルバーと材料実験から導かれた複雑な構成式の組み込まれた材料非線形解析ソルバーを組み合わせることが可能となることが考えられる。
+これに加えて、
+本研究ではき裂進展解析という文脈から、
+線形代数ソルバーの特性を活かして一体型解法よりも高速な分離反復解法の実装を行っている。
+これについては次章で詳細に述べる。
+\section{分離反復解法の反復スキーム}
+連成解析分野の分離反復解法の反復スキームとして、
+ブロック Jacobi 法、
+ブロック Gauss--Seidel 法\cite{Tezduyar2007}、
+Broyden 法\cite{Kelley2003}、
+Newton--Krylov 法\cite{Kelley2003}がよく用いられる\cite{Minami2010}。
+ブロック Jacobi 法は一次収束の定点反復法の一種であり、
+二つのモデルを同時に解けるという特徴がある。
+2$\times$2のブロック行列を含む連立方程式
+\begin{equation}
+ \pmat{
+  \begin{array}{cc}
+   \bvec{K}_1 & \bvec{K}_{12} \\
+   \bvec{K}_{12}\trp & \bvec{K}_2 \\
+  \end{array}
+  } \pvec{
+  \begin{array}{c}
+   \bvec{u}_1 \\
+   \bvec{u}_2 \\
+  \end{array}
+  } = \pvec{
+  \begin{array}{c}
+   \bvec{f}_1 \\
+   \bvec{f}_2 \\
+  \end{array}
+  }
+\end{equation}
+を線形代数ソルバーの Jacobi 法のように
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$
+ \WHILE{not converged}
+ \STATE $\bvec{u}_1^{(k)} \leftarrow \bvec{K}_{1}^{-1} (\bvec{f}_1 - \bvec{K}_{12} \bvec{u}_2^{(k-1)})$
+ \STATE $\bvec{u}_2^{(k)} \leftarrow \bvec{K}_{2}^{-1} (\bvec{f}_2 - \bvec{K}_{12}\trp \bvec{u}_1^{(k-1)})$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+と行うためブロック Jacobi 法と呼ばれる。
+擬似コード中で 3 行目と 4 行目は同時に実行できる。
+また、分離反復解法による連成解析では$\bvec{K}_{12}$を陽に生成することは少なく、
+$\bvec{K}_{12}$は境界上のディリクレ境界条件 (もしくはノイマン境界条件) の受け渡し、
+$\bvec{K}_{12}\trp$はノイマン境界条件 (もしくはディリクレ境界条件) の受け渡しを表す。
+ブロック Gauss--Seidel 法もブロック Jacobi 法と同様に定点反復法の一種である。
+ブロック Jacobi 法と同様に連立方程式を線形代数ソルバーの Gauss--Seidel 法のように
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$
+ \WHILE{not converged}
+ \STATE $\bvec{u}_1^{(k)} \leftarrow \bvec{K}_{1}^{-1} (\bvec{f}_1 - \bvec{K}_{12} \bvec{u}_2^{(k-1)})$
+ \STATE $\bvec{u}_2^{(k)} \leftarrow \bvec{K}_{2}^{-1} (\bvec{f}_2 - \bvec{K}_{12}\trp \bvec{u}_1^{(k)})$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+と行うためブロック Gauss--Seidel 法と呼ばれる。
+擬似コード中の 3 行目と 4 行目に依存関係があり、
+これらを同時に実行することはできない。
+その代わり、同じ一次収束の手法でもブロック Gauss--Seidel 法はブロック Jacobi 法よりも一般に反復回数が小さくなると言われている。
+Yamada and Yoshimura はブロック Gauss--Seidel 法を改良した直線探索法を流体・構造連成解析向けに提案している\cite{Yamada2008}。
+Broyden 法は超一次収束の準 Newton 法に基づく連成解析手法である。
+Newton--Krylov 法は Krylov 部分空間で二次収束の Newton 法を行うような連成解析手法である。
+Newton 法なのでヤコビ行列が必要であるが、
+ヤコビ行列を陽に生成しない Newton--Krylov 法は Jacobian-free Newton--Krylov 法と呼ばれる。
+
+また、
+構造・構造連成解析手法と解釈できる既存手法の反復スキームについても紹介する。
+特に、ブロック Gauss--Seidel 法以外のものを紹介する。
+鈴木らの反復的な重合メッシュ法\cite{Suzuki1999, Suzuki2002}はブロック Gauss--Seidel 法や前処理付き共役勾配法を用いている。
+前処理付き共役勾配法のアルゴリズムは、
+前処理行列$\bvec{M}$、ベクトル$\bvec{r}$、$\bvec{z}$、$\bvec{p}$、$\bvec{q}$、および変数$\alpha$、$\beta$、$k$を用いて
+\begin{algorithmic}
+ \STATE $k \leftarrow 0$
+ \STATE $\bvec{r}^{(0)} \leftarrow \bvec{f} - \bvec{K} \bvec{u}^{(0)}$
+ \STATE $\bvec{z}^{(0)} \leftarrow \bvec{M}^{-1} \bvec{r}^{(0)}$
+ \STATE $\bvec{p}^{(0)} \leftarrow \bvec{z}^{(0)}$
+ \WHILE{$||\bvec{r}^{(k)}|| / ||\bvec{b}^{(k)}||$ is not small enough}
+ \STATE $\bvec{q}^{(k)} \leftarrow \bvec{K} \bvec{p}^{(k)}$
+ \STATE $\alpha^{(k)} \leftarrow (\bvec{r}^{(k)}, \bvec{z}^{(k)}) / (\bvec{p}^{(k)}, \bvec{q}^{(k)})$
+ \STATE $\bvec{u}^{(k+1)} \leftarrow \bvec{u}^{(k)} + \alpha^{(k)} \bvec{p}^{(k)}$
+ \STATE $\bvec{r}^{(k+1)} \leftarrow \bvec{r}^{(k)} - \alpha^{(k)} \bvec{q}^{(k)}$
+ \STATE $\bvec{z}^{(k+1)} \leftarrow \bvec{M}^{-1} \bvec{r}^{(k+1)}$
+ \STATE $\beta^{(k)} \leftarrow (\bvec{r}^{(k+1)}, \bvec{z}^{(k+1)}) / (\bvec{r}^{(k)}, \bvec{z}^{(k)})$
+ \STATE $\bvec{p}^{(k+1)} \leftarrow \bvec{z}^{(k+1)} + \beta^{(k)} \bvec{p}^{(k)}$
+ \STATE $k \leftarrow k + 1$
+ \ENDWHILE
+\end{algorithmic}
+のように表せるが、
+行列・ベクトル積$\bvec{q}^{(k+1)} \leftarrow \bvec{K} \bvec{p}^{(k)}$は重合メッシュ法で陽に生成した全体剛性行列
+\begin{equation}
+ \bvec{K} =  \pmat{
+  \begin{array}{cc}
+   \bvec{K}_G & \bvec{K}_{GL} \\
+   \bvec{K}_{GL}\trp & \bvec{K}_L \\
+  \end{array}
+  }
+\end{equation}
+を用いて行い、
+前処理$\bvec{z}^{(k+1)} \leftarrow \bvec{M}^{-1} \bvec{r}^{(k+1)}$にはブロック Jacobi 前処理に基づく前処理行列
+\begin{equation}
+ \bvec{M} =  \pmat{
+  \begin{array}{cc}
+   \bvec{K}_G & \bvec{0} \\
+   \bvec{0} & \bvec{K}_L \\
+  \end{array}
+  }
+\end{equation}
+を用いている。
+領域分割法\cite{Yagawa1991, Yagawa1993, Yagawa1993_2}は静的縮約により領域境界上の自由度のみで前処理付き共役勾配法を行う。
+前処理には Neumann--Neumann 前処理とコースグリッド修正を組み合わせた BDD (Balancing Domain Decomposition)~\cite{Mandel1993} や FETI (Finite Element Tearing and Interconnecting)~\cite{Farhat1991} が用いられる。
+
+本研究では、き裂先端近傍の塑性や大ひずみを考慮しない線形弾性解析を行う。
+また、
+二つの解析の並列性よりも反復回数の方が計算時間への影響が大きいため、
+本研究ではブロック Jacobi 法ではなくブロック Gauss--Seidel 法を用いる。
+今後、応力集中部が局所的に塑性するような材料非線形問題などの別の問題に本手法を適用する場合、
+解析領域のほとんどが線形であればブロック Gauss--Seidel 法が十分に有効であることが予想される。
+\section{結言}
+本章では、
+マルチフィジックス連成解析および連成解析の各手法について述べ、
+前章で触れた大規模破壊力学問題向けの既存手法を連成解析手法として分類した。
+続いて、
+本研究で用いる分離反復解法と他の連成解析手法との違いを述べ、
+分離反復解法で用いられる反復スキームについて述べた。

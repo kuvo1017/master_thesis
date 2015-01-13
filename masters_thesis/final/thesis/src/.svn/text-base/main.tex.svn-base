@@ -1,0 +1,159 @@
+%% -*- coding: euc-jp -*-
+%%
+%% Master's Thesis
+%%
+%% Author: Yasunori Yusa
+%%
+\documentclass[12pt, a4j, twoside, openany, titlepage]{jsbook}
+%
+%% hyperref: EUC-JP -> Unicode
+\usepackage{atbegshi}
+\AtBeginShipoutFirst{\special{pdf:tounicode EUC-UCS2}}
+%
+%% packages
+\usepackage{amsmath}  % AMS math extension
+\usepackage{amssymb}  % AMS symbol extension
+\usepackage{graphicx} % figure extension
+\usepackage[margin=30truemm]{geometry} % geometry
+\usepackage[nohints]{minitoc}
+% \usepackage[nottoc]{tocbibind} % ToC of LoF and LoT
+\usepackage{fancyhdr} % head and foot
+\usepackage[dvipdfmx, bookmarks=true, bookmarksnumbered=true, pdfborder={0 0 0},
+pdftitle={Ê¬Î¥È¿ÉüÏ¢À®²òË¡¤Ë¤è¤ëÂçµ¬ÌÏÇË²õÎÏ³Ø¥·¥ß¥å¥ì¡¼¥·¥ç¥ó},
+pdfauthor={Í·º´ÂÙµª},
+pdfsubject={Large-scale Fracture Mechanics Simulation Using Partitioned Iterative Coupling Algorithm},
+pdfkeywords={¿ôÃÍ·×»», ·×»»ÇË²õÎÏ³Ø, Âçµ¬ÌÏÍ­¸ÂÍ×ÁÇË¡, Ï¢À®²òÀÏ, È¿ÉüË¡}]{hyperref} % hyperref
+\usepackage{url}         % URL
+\usepackage{cite}        % cite references
+\usepackage{algorithmic} % algorithm
+\usepackage{mymath}      % my math package
+%
+%% fonts
+\usepackage{pxfonts}  % PX (Palatino)
+\usepackage{palatino} % Palatino
+\usepackage{bfutura}  % Futura
+\usepackage{courier}  % Courier
+%
+%% line space optimized for 30 lines
+\renewcommand{\baselinestretch}{1.18}
+%
+%% ToC of subsubsections
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setcounter{minitocdepth}{3}
+\renewcommand{\mtctitle}{{ }}
+\renewcommand{\mtcfont}{\small\rmfamily\upshape\mdseries}
+\renewcommand{\mtcSfont}{\small\sffamily\upshape\mdseries}
+\nomtcrule
+%
+%% head and foot
+\makeatletter
+\fancypagestyle{plainhead}{
+\lhead[]{{\footnotesize{\if@mainmatter\it\fi\thepage}\hspace{1em}\leftmark}}
+\chead{}
+\rhead[{\footnotesize{\if@mainmatter\it\fi\thepage}}]{}
+}
+\makeatother
+\fancypagestyle{plainfoot}{
+\lfoot{}
+\cfoot{}
+\rfoot{}
+}
+\pagestyle{plainhead}
+\pagestyle{plainfoot}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+%
+%% maketitle
+\renewcommand{\maketitle}{
+\begin{titlepage}
+ \setcounter{page}{0}
+ \begin{center}
+  {\Large\sf ÅìµþÂç³ØÂç³Ø±¡¹©³Ø·Ï¸¦µæ²Ê¥·¥¹¥Æ¥àÁÏÀ®³ØÀì¹¶} \\[8ex]
+  {\LARGE\sf ½¤»ÎÏÀÊ¸} \\[8.5ex]
+  {\Huge\sf Ê¬Î¥È¿ÉüÏ¢À®²òË¡¤Ë¤è¤ë} \\[1.5ex]
+  {\Huge\sf Âçµ¬ÌÏÇË²õÎÏ³Ø¥·¥ß¥å¥ì¡¼¥·¥ç¥ó} \\[2.5ex]
+  {\LARGE\sf Large-scale Fracture Mechanics Simulation} \\[0.5ex]
+  {\LARGE\sf Using Partitioned Iterative} \\[0.5ex]
+  {\LARGE\sf Coupling Algorithm} \\
+  \vfill
+  {\LARGE\sf 2012 Ç¯ 3 ·î 1 ÆüÄó½Ð} \\[12ex]
+  {\Large\sf »ØÆ³¶µ°÷ µÈÂ¼Ç¦ ¶µ¼ø} \\[12ex]
+  {\Large\sf ³ØÀ¸¾ÚÈÖ¹æ 37-106368} \\[6ex]
+  {\Huge\sf Í·º´ÂÙµª}
+ \end{center}
+\end{titlepage}
+}
+%
+%% chapter
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{0\Cvs}%
+  \vfill
+  {\parindent \z@ \center \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \huge\headfont \@chapapp\thechapter\@chappos
+        \par\nobreak
+        \vskip \Cvs
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \headfont #1\par\nobreak}%
+    \vfill
+    \minitoc
+    \vfill\newpage}
+\makeatother
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\begin{document}
+%
+%% front matter
+\frontmatter
+%
+%% title
+\maketitle
+%
+%% abstract
+% \include{abstract}
+%
+%% list of contents
+\dominitoc
+\tableofcontents
+%
+%% list of figures
+\clearpage
+\phantomsection
+\mtcaddchapter[\listfigurename]
+\listoffigures
+%
+%% list of tables
+\clearpage
+\phantomsection
+\mtcaddchapter[\listtablename]
+\listoftables
+%
+%% main matter
+\mainmatter
+%
+%% chapters
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
+%
+%% acknowledgment
+\include{acknowledgment}
+%
+%% references
+\include{references}
+%
+%% appendix
+% \appendix
+% \include{appendix}
+%
+\end{document}

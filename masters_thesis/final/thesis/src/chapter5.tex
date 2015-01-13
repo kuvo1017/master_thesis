@@ -1,0 +1,486 @@
+%% -*- coding: euc-jp -*-
+\chapter{数値実験と考察}
+\section{緒言}
+本章では、分離反復解法を用いて数値実験を行う。
+まず、
+単純な形状のモデルを用いた静弾性解析を通じて、
+分離反復解法の反復特性について調べる。
+続いて、
+分離反復解法を用いて二次元および三次元の疲労き裂進展解析を行う。
+このとき、
+比較のために通常の有限要素法およびズーミング法を用いた解析も行う。
+通常の有限要素法とは計算時間および精度、
+ズーミング法とは精度の比較を行う。
+二次元および三次元の解析を通じて、
+本手法を用いることが大規模三次元解析に対して効率的であることを示す。
+\section{静弾性解析}
+本節では図\ref{fig:two_cubes}のような単純な二つの正方形のモデルを静解析することで分離反復解法の特性を数値的に考察する。
+強制変位境界条件が付与されている下の正方形をグローバルモデル、
+付与されていない上の正方形をローカルモデルとする。
+ヤング率は 210 GPa、ポアソン比は 0.3 である。
+また、有限要素はアイソパラメトリック平面ひずみ三角形二次要素とする。
+このモデルを解析するとき、
+はじめにグローバルモデルを解析して初期残差を求めるが、
+グローバルモデルに荷重境界条件が付与されていないので初期残差がゼロとなってしまう。
+そこで、一度目のグローバル解析、ローカル解析の後、
+二度目のグローバル解析の結果から初期残差を求める。
+
+まず、
+緩和付きブロック Gauss--Seidel 法の緩和係数を変化させて反復回数の変化を見る。
+続いて、
+問題の自由度数を変化させて反復回数の変化を観察する。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.4\hsize]{./img/two_cubes.eps}
+ \end{center}
+ \caption{静弾性解析ベンチマークのための二つの正方形のモデル}\label{fig:two_cubes}
+\end{figure}
+\subsection{緩和係数による反復回数の変化}
+本小節では緩和付きブロック Gauss--Seidel 法の緩和係数を変化させて、
+緩和係数を Aitken 補外により動的に求める方法が有効であることを示す。
+ベンチマーク問題の自由度はグローバルモデル、ローカルモデルともに 882 自由度とした。
+問題の総自由度は 1,764 である。
+緩和係数$\omega$を 0.1、0.2、0.3、0.4 と変化させたときと、
+Aitken 補外で動的緩和したときの数値実験結果を図\ref{fig:omega_iter}に示す。
+横軸が反復回数、縦軸が残差ノルムである。
+収束閾値は$10^{-3}$とした。
+また、Aitken 補外の初期値は\cite{Suzuki1999}に倣って 0.1 とした。
+緩和係数$\omega$を一定にすると概ね残差が直線的に小さくなることがグラフからわかる。
+また、グラフにはプロットしていないが$\omega$を0.5より大きくすると反復が発散し、
+$\omega = 0.4$のときも一次的に収束せずに若干不安定に収束することがわかった。
+グラフから、
+$\omega$一定のときは$\omega = 0.3$付近に最適点があると推測できるが、
+これは問題依存であり、
+モデル形状が変化すると最適な$\omega$も変化する。
+一方、Aitken 補外を用いて動的な緩和を行うと、
+$\omega$一定のときよりも小さい反復回数で収束を得られる。
+
+上と同じ条件で Aitken 補外の初期緩和係数$\omega_0$を0.0001から0.8まで適当に変化させたときの反復回数の測定結果を図\ref{fig:omega_zero_iter}に示す。
+横軸が反復回数、縦軸が残差ノルムである。
+$\omega_0$が 0 から 1 の間であればほぼ同じ反復回数で収束することがわかった。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/omega_iter/residual.eps}
+ \end{center}
+ \caption{緩和係数を変化させたときの収束残差履歴}\label{fig:omega_iter}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/omega_zero_iter/residual.eps}
+ \end{center}
+ \caption{Aitken 補外の初期緩和係数を変化させたときの収束残差履歴}\label{fig:omega_zero_iter}
+\end{figure}
+\subsection{問題自由度による反復回数の変化}
+本小節では図\ref{fig:two_cubes}のモデルの要素分割数を変化させ、
+問題規模に対する反復回数の変化を調べる。
+表\ref{tab:dofs_iter}に問題総自由度に対する反復回数を示す。
+問題総自由度に関わらず概ね同じ反復回数で収束することがわかった。
+この中で一番大きい自由度である 161,604 自由度のメッシュを図\ref{fig:two_cubes_mesh}に、
+解析結果を図\ref{fig:two_cubes_result}に示す。
+可視化には、
+数値シミュレーション用可視化フレームワーク AutoGL~\cite{Kawai2006}を用いた。
+グローバル領域とローカル領域を離して可視化しているが実際には連続であることに注意する。
+コンターは Mises の相当応力であり、変位は 100 倍拡大してある。
+また、解析に要した時間は表\ref{tab:rin_spec}の計算機で 143 s であった。
+\begin{table}[tbp]
+ \begin{center}
+  \caption{問題総自由度に対する反復回数}\label{tab:dofs_iter}
+  \begin{tabular}{cc|c}
+   \hline
+   一辺の要素分割数 & 総自由度 & 反復回数 \\
+   \hline
+   \hline
+   1 & 36 & 6 \\
+   2 & 100 & 10 \\
+   4 & 324 & 10 \\
+   8 & 1,156 & 10 \\
+   10 & 1,764 & 10 \\
+   20 & 6,724 & 8 \\
+   40 & 26,244 & 10 \\
+   80 & 103,684 & 10 \\
+   100 & 161,604 & 10 \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{table}[tbp]
+ \begin{center}
+  \caption{二次元解析のベンチマークに使用した計算機環境}\label{tab:rin_spec}
+  \begin{tabular}{r|l}
+   \hline
+   \hline
+   CPU  & Intel Core i7-920 (Nehalem) \\
+   {}   & 42.7 Gflops \\
+   {}   & 2.67 GHz \\
+   {}   & 4 cores \\
+   {}   & SSE4 \\
+   {}   & L2 cache 256 KB $\times$ 4 \\
+   {}   & L3 cache 8 MB \\
+   {}   & QPI 4.8 GT/s \\
+   DRAM & DDR3-1066 \\
+   {}   & 12 GB (2 GB $\times$ 6) \\
+   {}   & 25.6 GB/s \\
+   OS   & Ubuntu 11.04 (Natty Narwhal) \\
+   Compiler & Intel C/C++ Compiler 12.1\cite{Intel_Compilers} \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\section{二次元の疲労き裂進展解析}
+本節では図\ref{fig:ect}のような片側にき裂のある帯板の二次元き裂進展解析を行う。
+解析スキームとして、分離反復解法の他に、
+比較対象として通常の有限要素法およびズーミング法を用いる。
+通常の有限要素法とは計算時間および精度を比較し、
+ズーミング法とは精度の比較を行う。
+
+まず、分離反復解法を用いて解析を行う。
+帯板モデルの上下の対称性から 2 分の 1 モデルを作成し、
+アイソパラメトリック平面応力三角形二次要素を用いて分割を行う。
+グローバルモデルの自由度数が 105,382、
+ローカルモデルの自由度数がその約 8 分の 1 で 13,702、
+総自由度数が 119,084 である。
+ヤング率は 210 GPa、ポアソン比は 0.3 である。
+き裂進展解析の解析ステップ数は、
+き裂長$a$を 10.0 mm から 14.0 mm まで一要素ずつ進展させ、計 41 ステップである。
+き裂長$a$が 10.0 mm のときのメッシュを図\ref{fig:ect_2d_mesh}に、
+応力コンターおよび変形図を図\ref{fig:ect_2d_result}に示す。
+応力コンターは Mises の相当応力であり、変位は 100 倍に拡大してある。
+グローバルモデルとローカルモデルを分離して可視化していることに注意する。
+図\ref{fig:ect_2d_residual}に解析の最初の 10 ステップ分の残差履歴を示す。
+横軸が総反復回数、縦軸が残差ノルムである。
+図\ref{fig:ect_2d_residual2}に全解析ステップそれぞれの残差履歴を重ねあわせたグラフを示す。
+横軸が反復回数、縦軸が残差ノルムである。
+図\ref{fig:ect_2d_num_iter}に各解析ステップの反復回数を示す。
+横軸が解析ステップ、縦軸が反復回数である。
+解析ステップはき裂長に対応するが、
+反復回数はき裂長に関わらずあまり変化しないことがわかった。
+表\ref{tab:rin_spec}の計算機を用いたときの計算時間およびその処理毎の内訳を表\ref{tab:ect_2d_time}に示す。
+累計計算時間は複数回行われる処理の計算時間の累計、
+平均計算時間は累計計算時間を処理回数で割ったものである。
+また、「その他」の処理はメモリ確保、ファイル入出力、剛性行列の生成などを含む。
+続いて、同様の解析を通常の有限要素法にて行った。
+計算時間を表\ref{tab:ect_2d_time_conventional}に示す。
+表\ref{tab:ect_2d_time}と表\ref{tab:ect_2d_time_conventional}を比較すると、
+通常の有限要素法を用いるよりも分離反復解法を用いた方が 12.9 倍速くなった。
+処理別の計算時間を見ると、
+双方共に全体の処理の 8 割強が LDL 分解および前進・後退代入で占められていることがわかる。
+通常の有限要素法では LDL 分解および前進・後退代入を解析ステップ数だけ行うが、
+分離反復解法ではグローバル解析の LDL 分解を 1 回しか行わない。
+これは分離反復解法の場合、グローバルモデルがき裂を含まないためにメッシュおよび剛性行列が解析全体を通じて不変であるからである。
+また、分離反復解法では通常の有限要素法よりも前進・後退代入の回数が多くなっている。
+これは各解析ステップ中の反復計算であり、
+今回の解析例では図\ref{fig:ect_2d_num_iter}の通り平均 15.6 倍の回数だけ前進・後退代入を行っている。
+しかし、自由度数の大きい連立一次方程式の場合、
+前進・後退代入の計算時間は一般に LDL 分解の計算時間と比較すると非常に小さいため、
+結果的に分離反復解法の方が通常の有限要素法よりも小さい計算時間となっている。
+このような分離反復解法の優位性は、
+ローカルモデルのみでメッシュまたは要素剛性が変化するような場合に常に得られる。
+本手法は、
+多くの材料非線形現象など、
+非線形性が局所的に発現するような問題一般に応用することが可能であると考えられる。
+
+分離反復解法、通常の有限要素法、およびズーミング法の精度を比較する。
+ズーミング法のグローバルモデルでは本来ならば粗いメッシュ分割を行うべきだが、
+今回は比較の簡単のために図\ref{fig:ect_2d_mesh}と同様の細かさのメッシュ分割を行う。
+このモデル化方法では、
+粗いメッシュが特異場を表現できないことによる精度劣化、
+および補間による精度劣化の二つを排除している。
+一般にズーミング法では、き裂をモデル化しないか、
+もしくは粗いメッシュでモデル化する。
+今回はき裂長$a$を初期長さ 10.0 mm から進展させず、
+ローカルモデルでのみき裂を進展させるようなモデル化を行う。
+また、グローバルモデルからローカルモデルへ渡す境界条件はすべての節点で強制変位境界条件とする。
+図\ref{fig:ect_2d_result_zooming}にき裂長$a$が 14.0 mm (グローバルモデルでは 10.0 mm) のときの解析結果を示す。
+図\ref{fig:ect_2d_sif}に解析結果から直接変位外挿法により求めた応力拡大係数を示す。
+実線は片側にき裂のある帯板の一様引張の理論解
+\begin{equation}
+ K_I = F (a/W) \sigma \sqrt{\pi a},
+\end{equation}
+\begin{equation}
+ F (a/W) = 1.12 - 0.231 (a/W) + 10.55 (a/W)^2 - 21.72 (a/W)^3 + 30.39 (a/W)^4
+\end{equation}
+である\cite{Shiratori1980}。
+図\ref{fig:ect}から$a$は 10.0 mm から 14.0 mm、
+$W = 48.0$ mm、$\sigma = 100$ MPaである。
+図\ref{fig:ect_2d_cycles}に応力拡大係数から求めた疲労サイクル数を示す。
+き裂進展則には式 (\ref{eq:paris_law}) の Paris 則を用いた。
+式中の材料定数は日本機械学会発電用原子力設備規格維持規格\cite{jsmecode}から$C = 3.78 \times 10^{-12}$、$n = 3.07$とし、
+$\Delta K = K_I$、$\Delta a = 0.1$ mm (一定) とした。
+分離反復解法の解は通常の有限要素解析により求めた解とほぼ一致しており、
+理論解ともある程度一致していることがわかる。
+しかしながら、ズーミング法の解はこれらと大きく離れている。
+ズーミング法の精度はローカル領域の大きさや受け渡す境界条件に敏感である。
+今回の解析例の精度が著しく低かった理由は、
+き裂長がローカル領域の半分以上と非常に長かったからである。
+また、
+受け渡す境界条件がすべて強制変位境界条件であったのも精度劣化に寄与している。
+ズーミング法では、
+今回の解析例のように安直な設定を行うと十分な精度の解が得られず、
+十分な精度の解が得られるようなローカル領域の大きさや境界条件の設定には経験が必要である。
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.5\hsize]{./img/ect.eps}
+ \end{center}
+ \caption{片側にき裂のある帯板の一様引張}\label{fig:ect}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_2d/residual/residual.eps}
+ \end{center}
+ \caption{分離反復解法による二次元き裂進展解析の最初の 10 ステップの残差履歴}\label{fig:ect_2d_residual}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_2d/residual/residual2.eps}
+ \end{center}
+ \caption{分離反復解法による二次元き裂進展解析の残差履歴}\label{fig:ect_2d_residual2}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_2d/num_iter/num_iter.eps}
+ \end{center}
+ \caption{分離反復解法による二次元き裂進展解析の反復回数}\label{fig:ect_2d_num_iter}
+\end{figure}
+\begin{table}[tbp]
+ \begin{center}
+  \caption{分離反復解法による二次元き裂進展解析の計算時間とその処理毎の内訳}\label{tab:ect_2d_time}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理内容 & 累計計算時間 & 平均計算時間 & 処理回数 \\
+   \hline
+   \hline
+   全体 & 878 s & - & - \\
+   \hline
+   グローバル解析の LDL 分解      & 198 s (23 \%) & 198 s    & 1 \\
+   ローカル解析の LDL 分解        & 411 s (47 \%) & 10.0 s   & 41 \\
+   グローバル解析の前進・後退代入 & 118 s (13 \%) & 0.174 s  & 680 \\
+   ローカル解析の前進・後退代入   & 10.7 s (1 \%) & 0.0167 s & 639 \\
+   その他                         & 140 s (16 \%) & -        & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+ \begin{center}
+  \caption{通常の有限要素法による二次元き裂進展解析の計算時間とその処理毎の内訳}\label{tab:ect_2d_time_conventional}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理内容 & 累計計算時間 & 平均計算時間 & 処理回数 \\
+   \hline
+   \hline
+   全体 & 11,300 & - & - \\
+   \hline
+   LDL 分解       & 9,180 s (81 \%) & 224 s   & 41 \\
+   前進・後退代入 & 7.41 s (0 \%)   & 0.181 s & 41 \\
+   その他         & 2,110 s (19 \%) & -       & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_2d/sif/sif.eps}
+ \end{center}
+ \caption{二次元き裂進展解析の応力拡大係数}\label{fig:ect_2d_sif}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_2d/sif/cycles.eps}
+ \end{center}
+ \caption{二次元き裂進展解析の疲労サイクル数}\label{fig:ect_2d_cycles}
+\end{figure}
+\section{三次元の疲労き裂進展解析}
+図\ref{fig:ect}のモデルの三次元の疲労き裂進展解析を行った。
+対称性から図\ref{fig:ect_3d_mesh}のような 4 分の 1 モデルのメッシュを作成した。
+有限要素はアイソパラメトリック四面体二次要素であり、
+材料定数は二次元解析と同様にヤング率 210 GPa、ポアソン比 0.3 とした。
+グローバルモデルの自由度数は 1,738,803、
+ローカルモデルの自由度数は 226,083、
+総自由度数は 1,964,886 である。
+計算機環境は表\ref{tab:times_spec}のような一台の計算機である。
+き裂長$a$が 10.0 mm のときの解析結果を図\ref{fig:ect_3d_result}に示す。
+変位は 200 倍に拡大してある。
+線形代数ソルバーには Intel MKL 10.2~\cite{Intel_MKL} の PARDISO~\cite{Schenka2001} を用い、
+並列スレッド数は 4 とした。
+メモリ使用量は自由度数に概ね比例し今回の解析例では 19.4 GB であった。
+一方、通常の有限要素法のメモリ使用量は 20.9 GB であった。
+分離反復解法の計算時間を表\ref{tab:ect_3d_time}、
+通常の有限要素解析の計算時間を表\ref{tab:ect_3d_time_conventional}に示す。
+また、分離反復解法の解析ステップ毎の残差履歴を図\ref{fig:ect_3d_residual}および図\ref{fig:ect_3d_residual2}に、
+反復回数を図\ref{fig:ect_3d_num_iter}に示す。
+図\ref{fig:ect_3d_residual}および図\ref{fig:ect_3d_residual2}の横軸は反復回数、
+縦軸は残差ノルムである。
+図\ref{fig:ect_3d_num_iter}の横軸は解析ステップ、縦軸は反復回数である。
+反復回数の平均は二次元解析とほぼ変わらず、15.8 回であった。
+両者の計算時間を比較する。
+スピードアップは 4.52 であった。
+まず、分離反復解法の計算時間の 50 \%、通常の有限要素法の計算時間の 11 \% である「その他」の 6 千秒強はメモリ確保、ファイル入出力、剛性行列の生成などを含む。
+特に、このうち約 3 分の 1 の 2,100 s は解析ステップ毎のファイル出力であった。
+このように、分離反復解法の場合は計算時間の 50 \% を「その他」が占めるが、
+前節の二次元解析と同様にホットスポットは線形代数ソルバーである。
+前節の二次元解析と同様に、
+グローバル解析のシンボリック分解および数値分解を解析のはじめに一回行うだけになる。
+そして、三角求解の回数が反復回数だけ多くなるが、
+全体としては分離反復解法の方が計算時間が小さくなる。
+
+き裂長$a = 10.0$ mm のときのき裂先端の応力拡大係数を図\ref{fig:ect_3d_sif_thickness}に示す。
+横軸が板厚方向の節点座標、縦軸が応力拡大係数である。
+なお、
+板厚方向の座標が負のものは対称性から正のものと同じ値を折り返して表示している。
+今回の解析例のような二次元的なき裂では、
+板厚が有限であることから応力拡大係数がこの図のように山型になることが知られており、
+今回の解析でもこれを再現できている。
+また、
+分離反復解法および通常の有限要素解析の結果は二次元解析と同様に理論解とほぼ一致している。
+
+き裂を進展させたときの各進展ステップの応力拡大係数を図\ref{fig:ect_3d_sif}に示す。
+各解析ステップの応力拡大係数には図\ref{fig:ect_3d_sif_thickness}の中央の座標の値を用いている。
+この応力拡大係数から Paris 則により求めた疲労サイクル数を図\ref{fig:ect_3d_cycles}に示す。
+二次元解析と同様に、
+分離反復解法と通常の有限要素解析の結果がよく一致していることがわかる。
+\begin{table}[tbp]
+ \begin{center}
+  \caption{三次元解析のベンチマークに使用した計算機環境}\label{tab:times_spec}
+  \begin{tabular}{r|l}
+   \hline
+   \hline
+   CPU  & Intel Core i7-930 (Nehalem) \\
+   {}   & 44.8 Gflops \\
+   {}   & 2.80 GHz \\
+   {}   & 4 cores \\
+   {}   & SSE4 \\
+   {}   & L2 cache 256 KB $\times$ 4 \\
+   {}   & L3 cache 8 MB \\
+   {}   & QPI 4.8 GT/s \\
+   DRAM & DDR3-1333 \\
+   {}   & 24 GB (4 GB $\times$ 6) \\
+   {}   & 25.6 GB/s \\
+   OS   & Linux Mint 12 (Lisa) \\
+   Compiler & Intel C/C++ Compiler 12.1\cite{Intel_Compilers} \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/residual/residual.eps}
+ \end{center}
+ \caption{分離反復解法による三次元き裂進展解析の最初の 10 ステップの残差履歴}\label{fig:ect_3d_residual}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/residual/residual2.eps}
+ \end{center}
+ \caption{分離反復解法による三次元き裂進展解析の残差履歴}\label{fig:ect_3d_residual2}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/num_iter/num_iter.eps}
+ \end{center}
+ \caption{分離反復解法による三次元き裂進展解析の反復回数}\label{fig:ect_3d_num_iter}
+\end{figure}
+\begin{table}[tbp]
+ \begin{center}
+  \caption{分離反復解法による三次元き裂進展解析の計算時間とその各処理毎の内訳}\label{tab:ect_3d_time}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理内容 & 累計計算時間 & 平均計算時間 & 処理回数 \\
+   \hline
+   \hline
+   全体 & 12,600 s & - & - \\
+   \hline
+   グローバル解析の分解処理     & 960 s (8 \%)    & 960 s   & 1 \\
+   ローカル解析の分解処理       & 1,190 s (9 \%)  & 29.0 s  & 41 \\
+   グローバル解析の三角求解処理 & 3,730 s (30 \%) & 5.41 s  & 690 \\
+   ローカル解析の三角求解処理   & 407 s (3 \%)    & 0.627 s & 649 \\
+   その他                       & 6,310 s (50 \%) & -  & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+ \begin{center}
+  \caption{通常の有限要素法による三次元き裂進展解析の計算時間とその各処理毎の内訳}\label{tab:ect_3d_time_conventional}
+  \begin{tabular}{r|ccc}
+   \hline
+   処理内容 & 累計計算時間 & 平均計算時間 & 処理回数 \\
+   \hline
+   \hline
+   全体 & 57,000 s & - & - \\
+   \hline
+   分解処理     & 50,300 s (88 \%) & 1,230 s & 41 \\
+   三角求解処理 & 257 s (1 \%)     & 6.27 s  & 41 \\
+   その他       & 6,440 s (11 \%)  & -  & - \\
+   \hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/sif/sif_thickness.eps}
+ \end{center}
+ \caption{片側にき裂のある帯板のき裂先端の応力拡大係数}\label{fig:ect_3d_sif_thickness}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/sif/sif.eps}
+ \end{center}
+ \caption{三次元き裂進展解析の応力拡大係数}\label{fig:ect_3d_sif}
+\end{figure}
+\begin{figure}[tbp]
+ \begin{center}
+  \includegraphics[width=0.9\hsize]{./img/ect_3d/sif/cycles.eps}
+ \end{center}
+ \caption{三次元き裂進展解析の疲労サイクル数}\label{fig:ect_3d_cycles}
+\end{figure}
+\section{結言}
+本章では、分離反復解法を用いて数値実験を行った。
+まず、
+単純な形状のモデルを用いた静弾性解析を通じて、
+分離反復解法の反復特性について調べた。
+Aitken 補外による動的緩和付きのブロック Gauss--Seidel 法を用いれば、
+初期緩和係数や問題の自由度数に関わらずほぼ一定の反復回数で収束することがわかった。
+続いて、
+分離反復解法を用いて二次元および三次元の疲労き裂進展解析を行った。
+二次元の 12 万自由度の解析例では通常の有限要素法よりも 12.9 倍、
+三次元の 196 万自由度の解析例では 4.52 倍高速化した。
+また、精度は通常の有限要素法とほぼ同等であり、
+ズーミング法と違って精度がローカル領域の大きさにほとんど依存しないことがわかった。
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/two_cubes/mesh.png}
+ \end{center}
+ \caption{二つの正方形のモデルの 16 万自由度のメッシュ}\label{fig:two_cubes_mesh}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/two_cubes/result.png}
+ \end{center}
+ \caption{二つの正方形のモデルの応力コンター付き変形図}\label{fig:two_cubes_result}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/ect_2d/mesh.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の 12 万自由度の二次元メッシュ}\label{fig:ect_2d_mesh}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/ect_2d/result.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の二次元解析結果の応力コンター付き変形図}\label{fig:ect_2d_result}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/ect_2d/result_zooming.png}
+ \end{center}
+ \caption{片側にき裂のある帯板のズーミング法による二次元解析結果の応力コンター付き変形図}\label{fig:ect_2d_result_zooming}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/ect_3d/mesh.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の 196 万自由度の三次元メッシュ}\label{fig:ect_3d_mesh}
+\end{figure}
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=\hsize, bb=0 0 800 800]{./img/ect_3d/result.png}
+ \end{center}
+ \caption{片側にき裂のある帯板の三次元解析結果の応力コンター付き変形図}\label{fig:ect_3d_result}
+\end{figure}
