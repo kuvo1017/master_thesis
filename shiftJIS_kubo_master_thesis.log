@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  13 JAN 2015 11:20
+This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  13 JAN 2015 13:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -41,7 +41,11 @@ LaTeX Info: Redefining \TeX on input line 1731.
 LaTeX Info: Redefining \LaTeX on input line 1757.
 LaTeX Info: Redefining \LaTeXe on input line 1782.
 \heisei=\count89
-) (c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (c:/w32tex/share/texmf-dist/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment')
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip43
 
@@ -280,10 +284,10 @@ End of file on the terminal!
 
  
 Here is how much of TeX's memory you used:
- 2522 strings out of 493800
- 30356 string characters out of 6153372
- 89685 words of memory out of 5000000
- 5998 multiletter control sequences out of 15000+600000
+ 2558 strings out of 493800
+ 30948 string characters out of 6153372
+ 90564 words of memory out of 5000000
+ 6030 multiletter control sequences out of 15000+600000
  8380 words of font info for 36 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  27i,0n,32p,287b,85s stack positions out of 5000i,500n,10000p,500000b,80000s
