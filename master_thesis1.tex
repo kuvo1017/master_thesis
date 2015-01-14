@@ -387,21 +387,65 @@
 長方形が接触しているということは結局辺が交わっていると考えられるため、次に線分の交差について分離軸を用いて考える。またこの概念を線分についても考える。図\ref{fig:lines1}（左）では1,2の線分は交わっている。これを分離軸を使って考えると図\ref{fig:lines1}（右）の様に投影線分に対してもう片方の線分の射影を凝縮点と呼ぶ。この凝縮点が互いの投影線分に含まれていれば、2つの線分は交わっている。図\ref{fig:lines2}は、交わっていない線分について、表したものである。
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
-  \caption{（左）}
-  \label{fig:line-shadow}
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines1.png} % 画像サイズ 320pt x 240pt の例
+  \caption{（左）交差した線分（右）投影線分と凝縮点}
+  \label{fig:lines1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
-  \caption{分離軸と投影線分}
-  \label{fig:line-shadow}
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines2.png} % 画像サイズ 320pt x 240pt の例
+  \caption{（左）交差していない線分（右）投影線分と凝縮点}
+  \label{fig:lines2}
 \end{figure}
 \clearpage
+車体が長方形であるため、対辺が平行なため、投影線分は全部で4本だけでよい。これは単純にお互いの辺の交差判定を(4×4=)16回するよりかなり少ない計算量で済む。図\ref{fig:inter-collid1}の様に投影線分と凝集点が、接していない時にエージェントどうしは衝突していないと判定できる。図\ref{fig:inter-collid2}のように計算には1,2の投影線分への距離を\textit{d}車体の投影線分への射影の半分を$\textit{r}_{1}$,$\textit{r}_{2}$とすると、以下の式
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid1.png} % 画像サイズ 320pt x 240pt の例
+  \caption{4つの投影線分}
+  \label{fig:inter-collid1}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid2.png} % 画像サイズ 320pt x 240pt の例
+  \caption{衝突判定の計算}
+  \label{fig:inter-collid2}
+\end{figure}
 
+\begin{equation}
+  d < r_1 + r_2
+\end{equation}
+が4つの投影線分全てについて成り立つときに、エージェントどうしが衝突したと判定する。
+\clearpage
 \section{挙動検証と感度解析}
 実装したそれぞれの事故について、挙動の検証および感度解析を行った。
-画像については
+画像について、エラーが発生していないエージェントは青色、エラーが発生しているエージェントは赤色となっている。また、事故が発生したときのエージェントは黒色で表示される。
+\subsection{追突更事故}
+\subsubsection{挙動検証}
+\clearpage
+\subsubsection{感度解析}
+\clearpage
+\subsection{出会い頭事故}
+\subsubsection{挙動検証}
+\clearpage
+\subsubsection{感度解析}
+\clearpage
+\subsection{右左折事故}
+\subsubsection{挙動検証}
+\clearpage
+\subsubsection{感度解析}
+\clearpage
+\subsection{進路変更事故}
+\subsubsection{挙動検証}
+\clearpage
+\subsubsection{感度解析}
+\clearpage
+\subsection{正面衝突事故}
+\subsubsection{挙動検証}
+\clearpage
+\subsubsection{感度解析}
+6
+
 \clearpage
 \section{実都市への応用}
 

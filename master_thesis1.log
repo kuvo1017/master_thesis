@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  13 JAN 2015 22:33
+This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  14 JAN 2015 20:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -506,41 +506,76 @@ File: ./img/front-collid.png Graphic file (type bmp)
 File: ./img/side-collid.png Graphic file (type bmp)
  <./img/side-collid.png> [31
 
-] [32
+]
+File: ./img/line-shadow.png Graphic file (type bmp)
 
-] [33
+<./img/line-shadow.png> [32
+
+]
+File: ./img/lines1.png Graphic file (type bmp)
+ <./img/lines1.png>
+File: ./img/lines2.png Graphic file (type bmp)
+ <./img/lines2.png> [33
+
+]
+[34]
+File: ./img/inter-collid1.png Graphic file (type bmp)
+ <./img/inter-collid1.png>
+File: ./img/inter-collid2.png Graphic file (type bmp)
+ <./img/inter-collid2.png> [35
+
+] [36] [37
+
+]
+[38
+
+] [39
+
+] [40
+
+] [41
+
+] [42
+
+] [43
+
+] [44
+
+] [45
+
+] [46
 
 ]
 
-LaTeX Warning: Citation `list_commands' on page 34 undefined on input line 399.
+LaTeX Warning: Citation `list_commands' on page 47 undefined on input line 462.
 
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 416.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 479.
 
 (c:/w32tex/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [34
+) [47
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 443.
+(Font)              scaled to size 19.9311pt on input line 506.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 443.
+(Font)              scaled to size 19.9311pt on input line 506.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 23.90964pt on input line 444.
+(Font)              scaled to size 23.90964pt on input line 507.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 23.90964pt on input line 444.
+(Font)              scaled to size 23.90964pt on input line 507.
 
 
-LaTeX Warning: Citation `list_commands' on page 35 undefined on input line 448.
+LaTeX Warning: Citation `list_commands' on page 48 undefined on input line 511.
 
 
-[35]
+[48]
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 462.
+(Font)              scaled to size 6.72699pt on input line 525.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 4.805pt on input line 462.
- [36] [37] [38] (./master_thesis1.aux)
+(Font)              scaled to size 4.805pt on input line 525.
+ [49] [50] [51] (./master_thesis1.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -549,12 +584,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2943 strings out of 493800
- 36349 string characters out of 6153372
- 99746 words of memory out of 5000000
- 6331 multiletter control sequences out of 15000+600000
+ 2958 strings out of 493800
+ 36596 string characters out of 6153372
+ 99796 words of memory out of 5000000
+ 6341 multiletter control sequences out of 15000+600000
  46743 words of font info for 161 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,13n,32p,1243b,381s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on master_thesis1.dvi (38 pages, 67456 bytes).
+Output written on master_thesis1.dvi (51 pages, 72080 bytes).
