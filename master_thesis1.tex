@@ -104,7 +104,7 @@
 %
 \title{東京大学大学院工学系研究科システム創成学専攻 
 \protect\\修士論文
-\\広域での交通安全施策評価が可能な交通流シミュレータの開発
+\\複数の交通事故モードを実装した交通流シミュレータの開発
 \\指導教員吉村忍教授}
 
 \author{久保恒太\thanks{東京大学大学院工学系研究科システム創成学専攻}}
@@ -156,7 +156,7 @@
 　このような国土交通省をはじめとした，行政の重点的な交通事故対策により，日本の事故死亡者は1992年から，また，事故発生件数は2004年から連続して減少傾向にある．図\ref{fig:accident-translation}に近年の交通事故による死者数および負傷者数を示す。しかし、依然として平成25年中の年間交通事故死者数は4,373人負傷者数は役78万人\cite{police2013}である．この数字が示すように交通事故は依然として大きな社会問題であり，交通事故をなくすことは国家の利益につながる．\\
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 624 407]{./img/accident-translation.pdf} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=1.0\hsize,bb=0 0 624 407]{./img/accident-translation.pdf}
   \caption{交通事故死者数、負傷者数の推移}
   \label{fig:accident-translation}
 \end{figure}
@@ -180,6 +180,9 @@
 　過去の研究においては認知エラーが採用されているものが多い、認知エラーによる事故は件数も多く、見えているかどうかということが物理的に比較的明確な現象なのでモデル化しやすいからである。これに対して判断エラーを考慮することは人間の思考の一部をモデル化することとなり、様々な考慮をしなければならない。古川らは交通事故シミュレーションを行う上でこの判断エラーを取り入れた\cite{Furukawa2009}。この研究ではUDM(Universal Design Model)というモデルを提案している。UDMにおける認知過程ではエージェントがそれぞれ現実の世界とは違う外部世界というものを保持している。エージェントは認知段階において外部世界に情報を蓄える、そして判断段階では現実の外部環境ではなく、外部世界から情報を参照する。また、ドライバは個性や心理状態に応じて運転欲求を持っており、の欲求に応じて判断を変えてリスク判断を行っていく。このリスク判断の部分については確率的な計算を行っている。外部世界モデルの概念はエージェントによって見えているものがそもそも違い、判断についてもその時々によって異なるということを表している点で現実の運転行動をよく表現していると考えられる。そのため、本研究ではモデルを構築する上で外部世界の概念を取り入れ、判断・認知エラーを加味することとする。操作段階におけるエラーについて事故件数が少ないとされているため，本研究では扱わない．
 \subsubsection{計算時間を考慮した簡易なモデル}
 　本研究の目的とする広域での交通流シミュレーションを実現するためには計算時間の短縮が不可欠であるが、認知・判断過程でエージェントにエラーを起こすということは複雑な計算を行う場合が多く、計算量が多くなりがちである。藤井らの研究\cite{Fujii2011}は認知エラーに絞り単一のモデルから構築されており、ドライバに見えている景色を二次元の画像として、各ドライバのエージェントが持つことで、他のエージェントを認知できなくなった時に衝突の可能性がある。認知できるかどうかの判断については、中心視野、周辺視野を考慮している。この研究は人間の視覚を精緻に再現し、現実と近いものになってはいるものの、二次元の図を各タイムステップで描く必要があり、計算量が膨大となるため、広域での交通流シミュレーションには向かない。本研究では目的に合わせ、現実の事故を再現しながらも、簡易なモデルを構築するという手法で広域での交通流シミュレーションを実現する。
+
+\subsubsection{事故率を出力}
+安全施策評価の具体的な方法としては、各種の安全支援ITSをシミュレーションで実装した時や、道路構造を変化したときなどの事故率の変化が考えられる。この目的を達成させるためにはある施策が事故にどの程度効果があるかを評価できればよく、必ずしも、現実と同じ程度の事故件数を必ずしも発生させる必要はない。また、交通事故は日本全体で見ると年間約80万件も年間に発生しているが、ある都市で数日間の事故件数を見てもそんなに多発するものでもない。そのため、安全支援策が有効であるかを測るためには、必然的に長期間のシミュレーションが必要になり、計算量の多い広域での交通流シミュレーションでは効率が悪い。そのため、本研究では現実の事故より事故率を発生するようにしている。
 
 \newpage
 
@@ -209,7 +212,7 @@
 交通事故は分類して考えられる。図\ref{fig:accident-classification}は平成15年から平成25年までに起きた交通事故を分類分けをした円グラフである。このグラフは警察庁のデータ\cite{police2013}を元に作成した。
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 350 340]{./img/accident-classification.pdf} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 350 340]{./img/accident-classification.pdf}
   \caption{平成15~25年における交通事故の分類}
   \label{fig:accident-classification}
 \end{figure}
@@ -239,14 +242,14 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause1.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause1.png}
   \caption{追突事故の要因}
   \label{fig:rear-cause1}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause2.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause2.png}
   \caption{先行車を見なかった要因}
   \label{fig:rear-cause2}
 \end{figure}
@@ -259,7 +262,7 @@
 追突事故が発生するまでのフロチャートを図\ref{fig:rear-flow}に示す。\\
 \begin{figure}[phtb]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 292 674]{./img/rear-flow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 292 674]{./img/rear-flow.png}
   \caption{追突事故のフロチャート}
 
   \label{fig:rear-flow}
@@ -273,13 +276,13 @@
 シミュレーション開始時に全ての交差点について、遮蔽物を配置するかどうか決める。一つの交差点における遮蔽物の数はその交差点とつながっている単路の数から、見通しの計算に寄与しない遮蔽物の数を引いたものである。例えば四叉路の場合図\ref{fig:barrier}の様に遮蔽物が配置される。配置には交差点で隣合う単路、例えば単路1,2の間に遮蔽物を一つずつ配置する。図の様な場合遮蔽物は4つ配置されることとなる。また、この様にして遮蔽物が間にある単路に「見通しの悪い単路」と定義する。
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 906 783]{./img/barrier1.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=1.0\hsize,bb=0 0 906 783]{./img/barrier1.png}
   \caption{四叉路における遮蔽物}
   \label{fig:barrier1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 836 733]{./img/barrier2.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 836 733]{./img/barrier2.png}
   \caption{三叉路における遮蔽物}
   \label{fig:barrier2}
 \end{figure}
@@ -290,7 +293,7 @@
 \newpage
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1179 692]{./img/sight-judge.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=1.0\hsize,bb=0 0 1179 692]{./img/sight-judge.png}
   \caption{（左）認知できているとき　（左）認知エラーが生じているとき}
   \label{fig:sight-judge}
 \end{figure}
@@ -301,7 +304,7 @@
 \newpage
 \begin{figure}[phtb]
   \centering
-  \includegraphics[width=0.6\hsize,bb=0 0 523 864]{./img/passing-flow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.6\hsize,bb=0 0 523 864]{./img/passing-flow.png}
   \caption{出会い頭事故のフロチャート}
   \label{fig:passing-flow}
 \end{figure}
@@ -314,7 +317,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 361 731]{./img/LR-flow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 361 731]{./img/LR-flow.png}
   \caption{右左折事故のフロチャート}
   \label{fig:LR-flow}
 \end{figure}
@@ -326,7 +329,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 317 640]{./img/shift-flow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 317 640]{./img/shift-flow.png}
   \caption{進路変更事故のフロチャート}
   \label{fig:shift-flow}
 \end{figure}
@@ -339,7 +342,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 396 816]{./img/head-flow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 396 816]{./img/head-flow.png}
   \caption{正面衝突事故のフロチャート}
   \label{fig:head-flow}
 \end{figure}
@@ -356,7 +359,7 @@
 \end{equation}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 567 810]{./img/front-collid.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.5\hsize,bb=0 0 567 810]{./img/front-collid.png}
   \caption{追突事故の衝突判定}
   \label{fig:rear-collid}
 \end{figure}
@@ -369,7 +372,7 @@
 \end{eqnarray}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/side-collid.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/side-collid.png}
   \caption{進路変更・正面衝突事故の衝突判定}
   \label{fig:side-collid}
 \end{figure}
@@ -379,7 +382,7 @@
 最後に出会い頭・右左折事故の衝突判定であるが、この判定では衝突時車体どうしが並行な状態ではないため、進路変更・正面衝突事故のアルゴリズムでは対応しきれない。そのため少々複雑な計算手法を用いた。2つの長方形が接触していないということは、長方形の間に線分が引けるということに言い換えられる。ここでその様な2つの長方形の間の線分に垂直な軸を分離軸とする。また、分離軸に対する長方形の射影を投影線分と呼ぶ。ここでは投影線分が離れていれば交差していないということになる。（図\ref{fig:line-shadow}）
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png}
   \caption{分離軸と投影線分}
   \label{fig:line-shadow}
 \end{figure}
@@ -387,13 +390,13 @@
 長方形が接触しているということは結局辺が交わっていると考えられるため、次に線分の交差について分離軸を用いて考える。またこの概念を線分についても考える。図\ref{fig:lines1}（左）では1,2の線分は交わっている。これを分離軸を使って考えると図\ref{fig:lines1}（右）の様に投影線分に対してもう片方の線分の射影を凝縮点と呼ぶ。この凝縮点が互いの投影線分に含まれていれば、2つの線分は交わっている。図\ref{fig:lines2}は、交わっていない線分について、表したものである。
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines1.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines1.png}
   \caption{（左）交差した線分（右）投影線分と凝縮点}
   \label{fig:lines1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines2.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines2.png}
   \caption{（左）交差していない線分（右）投影線分と凝縮点}
   \label{fig:lines2}
 \end{figure}
@@ -401,13 +404,13 @@
 車体が長方形であるため、対辺が平行なため、投影線分は全部で4本だけでよい。これは単純にお互いの辺の交差判定を(4×4=)16回するよりかなり少ない計算量で済む。図\ref{fig:inter-collid1}の様に投影線分と凝集点が、接していない時にエージェントどうしは衝突していないと判定できる。図\ref{fig:inter-collid2}のように計算には1,2の投影線分への距離を\textit{d}車体の投影線分への射影の半分を$\textit{r}_{1}$,$\textit{r}_{2}$とすると、以下の式
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid1.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid1.png}
   \caption{4つの投影線分}
   \label{fig:inter-collid1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid2.png} % 画像サイズ 320pt x 240pt の例
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid2.png}
   \caption{衝突判定の計算}
   \label{fig:inter-collid2}
 \end{figure}
@@ -419,7 +422,27 @@
 \clearpage
 \section{挙動検証と感度解析}
 実装したそれぞれの事故について、挙動の検証および感度解析を行った。
-画像について、エラーが発生していないエージェントは青色、エラーが発生しているエージェントは赤色となっている。また、事故が発生したときのエージェントは黒色で表示される。
+\subsection{挙動検証概要}
+MATESでのシミュレーションを可視化したものから、挙動の検証を行った。画像について、エラーが発生していないエージェントは青色、エラーが発生しているエージェントは赤色となっている。また、事故が発生したときのエージェントは黒色で表示される。
+\subsection{感度解析概要}
+本モデルにおいては先述したように、現実の事故率より高い事故率を出力するが、どの程度の割合でどの事故が起こるのかというのは現実の数字に合わせる必要がある。この割合がどの程度が適切であるかを調べるために、交通量に対する事故率の変化、エラー率に対する事故率の変化を求め、感度解析を行った。
+\subsubsection{交通量と事故率の関係}
+現象の理解のため、交通量と事故率との関係についてもそれぞれ、実験を行った。ここでの事故率\cite{MLIT3}は事故件数等の絶対数を道路延長と交通量で基準化したものであり、事故危険度の評価指標として最も一般的に用いられるものである。$R$をある道路区間における事故率（件/億台キロまたは人/億台キロ）事故率の計算式は以下で表される。ここで、$N$は一年間の事故件数（件または人）、$Q$は一日当りの交通量（台/日）、$L$は道路の区間延長（km）を表す。
+\begin{equation}
+  R = \frac{N}{Q \times L }
+\end{equation}
+国土交通省が交通事故統合データベースを用いて算出した、現実の事故における交通量と事故率の関係と比較した。図\ref{fig:MLIT}に示す。このデータベースでは、ある一定の区間内で発生した事故を全国で記録したものからなっている。また、グラフの事故率はデータ内の各交通区間における交通量が一定の値に含まれる交通区間での平均の事故率を表している。この結果によると、交通量が増加するとともに事故率は一度増加して、その後減少するという一様ではないが、連続的な動きをみている。事故率が交通量で基準化した値にも関わらずまだ交通量の変化に伴って変化することから、交通量の変化により交通現象が変化していることが考えられる。
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/MLIT.png}
+  \caption{交通事故統合データベースにおける交通量と事故率の関係}
+  \label{fig:MLIT}
+\end{figure}
+\clearpage
+また、エラー率に対する感度解析では、エラー率と事故率の関係を線形近似することで、事故率をコントロールする際にエラー率をどの程度にすればよいかを知る関数を作成した。MATESでは小型車と大型車がエージェントとして存在しており、現実の値と近づけるため、大型車の発生割合は小型車の３割程度としている。
+
+
+
 \subsection{追突更事故}
 \subsubsection{挙動検証}
 \clearpage
@@ -430,9 +453,82 @@
 \clearpage
 \subsubsection{感度解析}
 \clearpage
+
+
+%右左折始まり
 \subsection{右左折事故}
-\subsubsection{挙動検証}
+\subsubsection{右左折事故の挙動検証}
+図\ref{fig:lr-behaviour}に右左折事故の状態を示す。この図では上側、下側から交差点に進入しようとするエージェントをそれぞれ、エージェントa,bとする。図ではa,bの両方に右左折のエラーが起きている。右左折エラーが起きていない場合は、この状態ではaは非優先車であり、優先車両であるbが進入しようとしているため、交差点前で停止するはずであるが、傲慢なエラーが起きているため、進入することで事故が発生している。
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-behavior.png}
+  \caption{右左折事故の挙動}
+  \label{fig:behavior}
+\end{figure}
 \clearpage
+\subsubsection{右左折事故の交通量と事故率の関係}
+シミュレーションにおける道路図を図\ref{fig:lr-roadmap}に示す。また、車両は４つの車線全てから同じ割合で発生し、交差点には信号が設置されている。右左折事故における交通量と事故率の関係を図\ref{fig:lr-traffic-accident}に示す。交通量が1500台/月のあたりでピークに達し、その後ゆるやかに事故率が減少していくのがわかる。これは交通量が増え渋滞が生じると、連続的に優先道路のエージェントが交差点に侵入し、傲慢な判断エラーが生じていても、エラー車の方が先に交差点を通過できるという判断を行わないためである。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-roadmap.png}
+  \caption{右左折事故における道路図}
+  \label{fig:lr-roadmap}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-traffic-accident.png}
+  \caption{右左折事故における交通量と事故率の関係}
+  \label{fig:lr-traffic-accident}
+\end{figure}
+\subsubsection{右左折事故のエラー率と事故率の関係}
+エラー率と事故率の関係を図\ref{fig:lr-error-accident}に示す。この結果から、エラー率と事故率が線形関係にあることがわかった。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-error-accident.png}
+  \caption{右左折事故におけるエラー率と事故率の関係}
+  \label{fig:lr-error-accident}
+\end{figure}
+
+%右左折終了
+
+%右左折始まり
+\subsection{右左折事故}
+\subsubsection{右左折事故の挙動検証}
+図\ref{fig:lr-behaviour}に右左折事故の状態を示す。この図では上側、下側から交差点に進入しようとするエージェントをそれぞれ、エージェントa,bとする。図ではa,bの両方に右左折のエラーが起きている。右左折エラーが起きていない場合は、この状態ではaは非優先車であり、優先車両であるbが進入しようとしているため、交差点前で停止するはずであるが、傲慢なエラーが起きているため、進入することで事故が発生している。
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-behavior.png}
+  \caption{右左折事故の挙動}
+  \label{fig:behavior}
+\end{figure}
+\clearpage
+\subsubsection{右左折事故の交通量と事故率の関係}
+シミュレーションにおける道路図を図\ref{fig:lr-roadmap}に示す。また、車両は４つの車線全てから同じ割合で発生し、交差点には信号が設置されている。右左折事故における交通量と事故率の関係を図\ref{fig:lr-traffic-accident}に示す。交通量が1500台/月のあたりでピークに達し、その後ゆるやかに事故率が減少していくのがわかる。これは交通量が増え渋滞が生じると、連続的に優先道路のエージェントが交差点に侵入し、傲慢な判断エラーが生じていても、エラー車の方が先に交差点を通過できるという判断を行わないためである。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-roadmap.png}
+  \caption{右左折事故における道路図}
+  \label{fig:lr-roadmap}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-traffic-accident.png}
+  \caption{右左折事故における交通量と事故率の関係}
+  \label{fig:lr-traffic-accident}
+\end{figure}
+\subsubsection{右左折事故のエラー率と事故率の関係}
+エラー率と事故率の関係を図\ref{fig:lr-error-accident}に示す。この結果から、エラー率と事故率が線形関係にあることがわかった。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-error-accident.png}
+  \caption{右左折事故におけるエラー率と事故率の関係}
+  \label{fig:lr-error-accident}
+\end{figure}
+%右左折終了
+
+
 \subsubsection{感度解析}
 \clearpage
 \subsection{進路変更事故}
@@ -444,93 +540,13 @@
 \subsubsection{挙動検証}
 \clearpage
 \subsubsection{感度解析}
-6
 
 \clearpage
 \section{実都市への応用}
-
+感度解析から得られた結果と、事故が起こる割合から実際の都市（岡山市）の道路情報を用いたシミュレーションを行った。事故が起こる割合には
+シミュレーションの条件
 \section{結論}
 
-\section{はじめに}
-本文はただのふつうの文章なのでとにかくふつうに入力する。
-ソースファイルの中で改行する場所は基本的に自由で、
-改行が本文に反映されることはない。
-MS Word だと好きなところで改行できるけど、
-ふつうの文章で段落の途中で改行する必要とかないよねというのが \LaTeX 的思考。
-改段落には空白行を一行入れる。
-以降はよく使うコマンドを書いていく。
-内容は LaTeX コマンドシート一覧\cite{list_commands}を参考にした。
-このサイトは非常に便利なので何度も参照するといいと思う。
-ちなみに、参考文献の参照には相互参照という仕組みを使う。
-\LaTeX ではラベルを適当に付けて相互に参照することで、
-参考文献、数式、図、表の番号がズレることを防止できる。
-もちろん参考文献の参照を [1] のように直打ちするのもダメではない。
-%
-\section{空白と強制改行}
-段落の中での改行は基本的にはやらないが、
-強制改 \\ 行することができる。
-このとき、
-強制改 \\[1cm] 行と共に 1 cm 空けるみたいなこともできる。
-また、水平方向にもで、
-強制的に空 \hspace{1cm} 白が作れる。
-コマンド名前から想像できるように、
-垂直方向の空 \\ \vspace{1cm} \\ 白を空けるコマンドもある。
-この辺のコマンドは学位論文の表紙を作るときに使える。
-ちなみに、単位は \texttt{cm} の他に、
-\texttt{mm}、\texttt{in} (インチ)、
-\texttt{em} (大文字 M の幅)、\texttt{ex} (小文字の x の高さ)、
-\texttt{pt} (ポイント) あたりがよく使われる。
-特に \texttt{em} と \texttt{ex} は、
-フォントサイズに対して相対的な大きさなので意外と使える。
-%
-\section{箇条書きと書体}
-よく使う書体の一覧を示す。
-\begin{enumerate}
- \item \textrm{Roman}
- \item \textit{Italic}
- \item \textbf{Bold}
- \item \textsf{Sans Serif}
- \item \texttt{Monospace}
-\end{enumerate}
-フォントサイズも手動で設定できる。
-あまり使わないけど。
-\begin{description}
- \item[tiny] {\tiny フォントサイズ}
- \item[scriptsize] {\scriptsize フォントサイズ}
- \item[footnotesize] {\footnotesize フォントサイズ}
- \item[small] {\small フォントサイズ}
- \item[normalsize] {\normalsize フォントサイズ}
- \item[large] {\large フォントサイズ}
- \item[Large] {\Large フォントサイズ}
- \item[LARGE] {\LARGE フォントサイズ}
- \item[huge] {\huge フォントサイズ}
- \item[Huge] {\Huge フォントサイズ}
-\end{description}
-%
-\section{数式}
-数式に関する細かいコマンドは\cite{list_commands}を参照してもらうとして、
-ここでは数式の基本についてのみ記す。
-まず、数式は必ず数式モードの中で書く。
-数式モードには\textbf{ふつうの数式}と\textbf{文章中の数式}の 2 種類がある。
-前者は
-\begin{equation}
- y = \alpha x + y
-\end{equation}
-のように書く。
-後者は$y = \alpha y + x$のように書く。
-ちなみに、ギリシャ文字は数式モード内でしか使えないので、
-文章中では$\alpha$のように書く必要がある。
-他には、プリアンブルで定義したコマンドを使って
-\begin{equation}
- \bvec{q} = \bvec{A} \bvec{p}\label{eq:spmv}
-\end{equation}
-のように行列やベクトルを書いたり、
-この式に対して相互参照で式 (\ref{eq:spmv}) と参照できたりする。
-\begin{equation}
- \bvec{z} = \bvec{M}_{-1} \bvec{r}\nonumber
-\end{equation}
-のように数式番号を消すこともできる。
-%
 \section{表と図}
 表と図は結構むずかしい。
 基本的には HTML と同じような思考で取り組むと大体正しい。
@@ -549,36 +565,6 @@ MS Word だと好きなところで改行できるけど、
   \hline
  \end{tabular}
 \end{table}
-%
-\subsection{図}
-画像は画像ファイルを用意するのがめんどうなのでコメント内にサンプルを書いておく。
-EPS 形式と PNG/JPEG 形式の例を順に示す。
-\LaTeX では EPS の方がメジャーで、
-グラフとかポンチ絵とかはできるだけ EPS 形式で作るのが \LaTeX 脳。
-グラフは Gnuplot、ポンチ絵は Inkscape で描けばいいと思う。
-写真や可視化の図は仕方がないから PNG 形式や JPEG 形式で作る。
-詳しくは\textbf{ラスタ画像}と\textbf{ベクトル画像}をググってほしい。
-%
-% \begin{figure}[ht]
-%  \centering
-%  \includegraphics[width=0.5\hsize]{hoge.eps} % 横幅がページ幅の 0.5 倍の例
-%  \caption{EPS 形式の画像のサンプル}\label{fig:eps_sample} % キャプションは画像の下
-% \end{figure}
-%
-% \begin{figure}[ht]
-%  \centering
-%  \includegraphics[width=0.5\hsize,bb=0 0 320 240]{hoge.png} % 画像サイズ 320pt x 240pt の例
-%  \caption{PNG/JPEG 形式の画像のサンプル}\label{fig:png_jpeg_sample}
-% \end{figure}
-%
-\section{その他小ネタ}
-脚注\footnote{ふっとのーと}が個人的に好き。
-
-%
-% 参考文献一覧を書く。
-% 引数の 9 は、参考文献の総数の桁数を表す。
-% 9 か 99 にするのがふつう。
-% 参考文献リストは \bibitem{} でラベルを付けながら書く。
 %
 \begin{thebibliography}{9}
  \bibitem{ITS-Japan}
@@ -637,19 +623,10 @@ EPS 形式と PNG/JPEG 形式の例を順に示す。
 	四輪車の正面衝突事故発生状況と特徴の分析，
 	交通事故総合分析センター研究発表会論文集，
 	2010
- \bibitem{Shinshi2011}
-         紳士太郎.
-         ふえぇの非定常音響解析における減衰振動特性.
-         日本計算萌え学会論文集,
-         Vol.~2, No.~1, pp.~1--4, 2011.
-         % ~ を使わないと . で文末と判定されて不自然に大きい空白が空いてしまうことがある。
-         % -- は en ダッシュ。
- \bibitem{Shinshi2010}
-         T. Shinshi. % 大文字一文字の場合は T.~ などとする必要はない。
-         ``Large deformation simulation of golden-brown hair with twin tails.''
-         % ダブルクオートを書く場合は `` と '' のようにする。
-         \textit{Journal of Computational Moe}, % 論文誌名はイタリック体。
-         \textbf{5} (2):~17--24, 2010. % Vol., No., pp. を省略する表記方法の例。
+ \bibitem{MLIT3}
+	国土交通省国土技術政策総合研究所，
+	交通事故統合データベースを用いたマクロ交通事故分析
+	，国総研資料， No.48，2002
 \end{thebibliography}
 %
 % 本文を終わりにする。
