@@ -1,73 +1,13 @@
-%%
-%% LaTeX Hetare Template
-%%
-%% Author: Yasunori Yusa
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% # ƒrƒ‹ƒh•ϋ–@
-%
-%     % platex latex_hetare_template.tex
-%
-% DVI ƒtƒ@ƒCƒ‹‚»‚Μ‘Ό‚ªo—Ν‚³‚κ‚ιB
-%
-%     % dvipdfmx latex_hetare_template.dvi
-%
-% PDF ƒtƒ@ƒCƒ‹‚ªo—Ν‚³‚κ‚ιB
-%
-% ‚ά‚½‚ΝA•t‘®‚Μ Makefile ‚πg‚Α‚Δ©“®‰»‚·‚ιB
-%
-%     % make
-%
-% # ƒgƒ‰ƒuƒ‹ƒVƒ…[ƒeƒBƒ“ƒO
-%
-% ## PDF ‚ª•¶‰»‚―‚·‚ιB
-%
-% latex_hetare_template.tex ‚Μ•¶ƒR[ƒh‚Ι’Σ‚·‚ιB
-% ‚±‚Μƒeƒ“ƒvƒ[ƒg‚Ν Ubuntu 12.10 Θ~‚Μ platex ‚ΜƒfƒtƒHƒ‹ƒg‚Μ
-% UTF-8 (‰όsƒR[ƒh‚Ν LF) ‚πξ–{‚Ζ‚·‚ιB
-% ‚Ζ‚θ‚ ‚¦‚ΈAƒ\[ƒXƒR[ƒh‚π•Ο·‚µ‚Δ‚έ‚ιB
-%
-%     % nkf -wLu --overwrite latex_hetare_template.tex
-%
-% ‚ ‚Ζ‚ΝAplatex ‚Ε–Ύ¦“I‚Ι•¶ƒR[ƒh‚πw’θ‚µ‚Δ‚έ‚ι (Ubuntu ΘO‚ΜΒ‹«‚Ε—Lψ)B
-%
-%     % platex -kanji=utf8 latex_hetare_template.tex
-%
-% Ubuntu 12.04 Θ‘O‚Ν UTF-8 ‚ªg‚¦‚Θ‚Ά‚Μ‚Ε EUC-JP ‚Θ‚Η‚Ι•Ο·‚µ‚Δg‚¤B
-%
-% ## Ql•¶£A”®A•\A}‚ΜQΖ‚ª ?? ‚Ι‚Θ‚ιB
-%
-% platex ‚π‰½‰ρ‚©ΐs‚·‚ιB’Κν‚Ν 2 ‰ρ‚Ε\•ªB
-% d‘g‚έ‚π’m‚θ‚½‚Άl‚Νo—Ν‚³‚κ‚½ latex_hetare_template.aux ‚πQΖB
-%
-% ## platex ‚ªƒGƒ‰[‚Ε~‚ά‚Α‚½‚Ζ‚«‚Ι Ctrl+c ‚Ε”²‚―‚η‚κ‚Θ‚ΆB
-%
-% X (‚½‚Ύ‚Μ‘ε•¶‚Μ X) ‚π“ό—Ν‚µ‚Δƒ^[[[ƒ“ƒbI
-% ‚ά‚½‚ΝACtrl+d ‚π‰‚µ‚Δ‚έ‚ιB
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% # –{•¶‚π‘‚­‘O‚Ι
-%
-% ‚ά‚Έ‚ΝƒhƒLƒ…ƒƒ“ƒgƒNƒ‰ƒX‚π“Η‚έ‚ήB
-% jsarticle.cls ‚ª’θ”Τ (“Η‚έ‚ή‚Ζ‚«‚Ιg’£q‚Ν‘‚©‚Θ‚Ά)B
-% wΚ_•¶‚Ε‚Ν jsbook.cls ‚ΰ‚ζ‚­g‚ν‚κ‚ιB
-% “Η‚έ‚ή‚Ζ‚«‚ΙƒIƒvƒVƒ‡ƒ“‚πw’θ‚Ε‚«‚ιB
+
 % ƒtƒHƒ“ƒgƒTƒCƒY 11ptA—p†ƒTƒCƒY a4j •Σ‚θ‚ª‚ζ‚­g‚ν‚κ‚ιB
 %
 \documentclass[14pt,a4j]{jsarticle}
-%
-% ‘±‚Ά‚ΔƒpƒbƒP[ƒW (ƒXƒ^ƒCƒ‹ƒtƒ@ƒCƒ‹) ‚π“Η‚έ‚ήB
-% amsmath.sty ‚Ζ amssymb.sty ‚Ζ graphicx.sty ‚ª’θ”Τ‚ΕA
-% ‰½‚ΰl‚¦‚Έ‚Ι‚Ζ‚θ‚ ‚¦‚Έ“Η‚έ‚ρ‚Ε‚¨‚­‚Μ‚ªκ”Κ“IB
-%
+
 \usepackage{amsmath}  % ƒAƒƒƒJ”w‰ο‚Μ”®g’£B
+\setcounter{MaxMatrixCols}{11}
 \usepackage{amssymb}  % ƒAƒƒƒJ”w‰ο‚Μ”w‹L†g’£B
 \usepackage[dvipdfmx]{graphicx} % ‰ζ‘ΦA‚ΜƒRƒ}ƒ“ƒh‚π’ρ‹‚·‚ιB
-%
-% €’θ”Τ‚ΘƒpƒbƒP[ƒW‚ΰ‚Ά‚­‚Β‚©Π‰ξ‚·‚ιB
-%
+
 \usepackage[margin=25truemm]{geometry} % —]”’‚πέ’θ‚·‚ιBγ‰Ί¶‰E 25 mm ‚Μ—αB
 \usepackage{cite} % \cite{} ‚Μ‡”Τ‚π©“®’²®‚µ‚Δ‚­‚κ‚ιB[3, 5, 4, 1] -> [1, 3-5]
 \usepackage{url} % \url{} ƒRƒ}ƒ“ƒh‚π—Lψ‚Ι‚·‚ιBURL ‚βƒ[ƒ‹ƒAƒhƒƒX‚Ιg‚¤B
@@ -156,13 +96,13 @@
 @‚±‚Μ‚ζ‚¤‚Θ‘“yπ’ΚΘ‚π‚Ν‚¶‚ί‚Ζ‚µ‚½Cs­‚Μd“_“I‚Θπ’Κ–Μ‘Ξτ‚Ι‚ζ‚θC“ϊ–{‚Μ–Μ€–SÒ‚Ν1992”N‚©‚ηC‚ά‚½C–Μ”­¶”‚Ν2004”N‚©‚ηA‘±‚µ‚ΔΈ­Xό‚Ι‚ ‚ιD}\ref{fig:accident-translation}‚Ι‹ί”N‚Μπ’Κ–Μ‚Ι‚ζ‚ι€Ò”‚¨‚ζ‚Ρ•‰Ò”‚π¦‚·B‚µ‚©‚µAΛ‘R‚Ζ‚µ‚Δ•½¬25”N’†‚Μ”NΤπ’Κ–Μ€Ò”‚Ν4,373l•‰Ò”‚Ν–π78–l\cite{police2013}‚Ε‚ ‚ιD‚±‚Μ”‚ª¦‚·‚ζ‚¤‚Ιπ’Κ–Μ‚ΝΛ‘R‚Ζ‚µ‚Δ‘ε‚«‚ΘΠ‰ο–β‘θ‚Ε‚ ‚θCπ’Κ–Μ‚π‚Θ‚­‚·‚±‚Ζ‚Ν‘‰Ζ‚Μ—‰v‚Ι‚Β‚Θ‚ª‚ιD\\
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 624 407]{./img/accident-translation.pdf}
+  \includegraphics[width=1.0\hsize]{./img/accident-translation.pdf}
   \caption{π’Κ–Μ€Ò”A•‰Ò”‚Μ„Ϊ}
   \label{fig:accident-translation}
 \end{figure}
 @‚±‚Μ—l‚Θσ‹µ‚Μ’†‚Επ’Κ–Μ‚Ι‘Ξ‚µ‚Δψ‰Κ‚Μ‚ ‚ιΐ‘Sx‰‡‘Ξτ‚ª‘Ò‚Ώ–]‚ά‚κ‚ι‚ªAe‘Ξτ‚π•]‰Ώ‚µAψ—¦“I‚Ιΐ{‚µ‚Δ‚Ά‚­‚±‚Ζ‚ªd—v‚Ε‚ ‚ιBπ’Κΐ‘Sx‰‡{τ‚π•]‰Ώ‚µ‚ζ‚¤‚Ζ‚·‚ι‚ΙA–β‘θ‚Ζ‚Θ‚ι‚Μ‚ªΐ±‚ΜΆ“ο‚³‚Ε‚ ‚ιBπ’Κ»Ϋ‚Μΐ±‚Ε‚Ν“ΉH‚β‚»‚Μό•Σ{έ‚πΐ±‚Μ‚½‚Ρ‚ΙH–‚µ‚Δ‚Ν‘ε‚«‚Θ”ο—p‚ª‚©‚©‚ιB‚»‚Μ‚½‚ίAπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚ζ‚Α‚ΔAΐΫπ’Κ–Μ‚πΔ»‚Ε‚«‚ι‚ΖC“ΉH‚βπ’Κ‹K§‚ΜέvCITS„i‚βπ’Κ‹³η‚Φ‚Μ——p‚Θ‚Η‚Ι‚ζ‚ι–Μσ‹µ‚Μ•Ο‰»‚π‰Ό‘z“I‚ΙΔ»‚·‚ι‚±‚Ζ‚Ε‚»‚κ‚η‚Μ{τ‚π•]‰Ώ‚·‚ι‚±‚Ζ‚ª‚Ε‚«‚ιB‚±‚¤‚µ‚½“_‚Επ’Κ–Μ‚πΔ»‚·‚ιπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒ^‚Ι‚ζ‚ιΐ‘Sx‰‡{τ•]‰Ώ‚Ν–Μ‚ΜΈ­‚Ιρ—^‚·‚ι‚Ζl‚¦‚η‚κ‚ιB
 \subsection{π’Κ–ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Μ»σ}
-ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚π—p‚Ά‚½π’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚ΙΦ‚·‚ι¤‹†‚Ν»έ‚ά‚ΕA‘½‚­‚³‚κ‚Δ‚«‚½B‚»‚κ‚η‚Μ¤‹†‚Νπ’Κa‘Ψ‚ΙΦ‚·‚ι‚ΰ‚Μ‚Θ‚Η‚ª‘½‚­Aπ’Κ–Μ‚ΙΦ‚·‚ι‚ΰ‚Μ‚Ν­‚Θ‚ΆB‚»‚Μ——R‚Ζ‚µ‚Δ‚ΝA‚»‚ΰ‚»‚ΰπ’Κ–Μ‚πƒ‚ƒfƒ‹‰»‚·‚ι‚±‚Ζ‚ª“ο‚µ‚Ά‚±‚Ζ‚Θ‚Η‚ª‹“‚°‚η‚κ‚ιB‚±‚¤‚Ά‚Α‚½’†‚Εs‚ν‚κ‚Δ‚«‚½ω‘¶¤‹†‚Ε‚Νπ—lX‚Θƒ‚ƒfƒ‹‚π’ρΔ‚µπ’Κ–Μ‚ΜΔ»‚µ‚Δ‚«‚½B
+ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚π—p‚Ά‚½π’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚ΙΦ‚·‚ι¤‹†‚Ν»έ‚ά‚ΕA‘½‚­‚³‚κ‚Δ‚«‚½B‚»‚κ‚η‚Μ¤‹†‚Νπ’Κa‘Ψ‚ΙΦ‚·‚ι‚ΰ‚Μ‚Θ‚Η‚ª‘½‚­Aπ’Κ–Μ‚ΙΦ‚·‚ι‚ΰ‚Μ‚Ν­‚Θ‚ΆB‚»‚Μ——R‚Ζ‚µ‚Δ‚ΝA‚»‚ΰ‚»‚ΰπ’Κ–Μ‚πƒ‚ƒfƒ‹‰»‚·‚ι‚±‚Ζ‚ª“ο‚µ‚Ά‚±‚Ζ‚Θ‚Η‚ª‹“‚°‚η‚κ‚ιB‚±‚¤‚Ά‚Α‚½’†‚Εs‚ν‚κ‚Δ‚«‚½ω‘¶¤‹†‚Ε‚Ν—lX‚Θƒ‚ƒfƒ‹‚π’ρΔ‚µπ’Κ–Μ‚πΔ»‚µ‚Δ‚«‚½B
 “c’†‚η‚Μ¤‹†‚Ε‚Ν”F’mƒGƒ‰[E”»’fƒGƒ‰[
 ©“®Τ‚Μ‰^“]s“®‚Ν”F’mE”»’fE‘€μ‚Μ3‚Β‚Μ‰ί’φ‚Ι•ª—ή‚³‚κ‚ιD‚±‚Μ3‚Β‚Μ‰ί’φ‚Μ‚Η‚±‚©‚ΙƒGƒ‰[σ‘Τ‚ª‹N‚«‚½‚Ιπ’Κ–Μ‚Ν”­¶‚·‚ι(2)Dω‘¶‚Μπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒ^‚Ι‚¨‚―‚ιπ’Κ–Μ‚Μΐ‘•‚Ι‚¨‚Ά‚Δ‚ΰC‚±‚Μl‚¦•ϋ‚Ι‰‚Α‚½‚ΰ‚Μ‚ª‘½‚ΆD”F’m’iK‚Ι‚¨‚―‚ιƒGƒ‰[‚Ε‚ΝC”F’mƒtƒBƒ‹ƒ^‚Ζ‚Ά‚¤T”O‚Ι‚ζ‚θCƒhƒ‰ƒCƒoΤ‚Ε‚Μ”F’mƒƒxƒ‹‚Μ·‚π•\‚µ‚½“c’†‚η(3)‚Μƒ‚ƒfƒ‹‚βC“΅δ‚η(4)‚Μ’†S‹–μ‚Ζό•Σ‹–μ‚πl—¶‚µ‚½ƒ‚ƒfƒ‹‚Θ‚Η‚ª‚ ‚ιD‚ά‚½CΓμ‚η(5)‚Μ¤‹†‚ΝƒG[ƒWƒFƒ“ƒg‚Μ”»’f‚Ι‚ζ‚ιƒGƒ‰[‚Ι“¥‚έ‚ρ‚Ύ‚ΰ‚Μ‚Ε‚ ‚ιD‚±‚κ‚η‚Μ¤‹†‚Ε‚Νπ’Κ–Μ‚πΐ»Ϋ‚Ι‹ί‚Ά`‚ΕΔ»‚µ‚Δ‚Ν‚Ά‚ι‚ΰ‚Μ‚ΜC—α‚¦‚ΞC“Α’θ‚Μπ·“_‚Θ‚Η‹Η‚Ε‚Μΐ‘S{τ•]‰Ώ‚Ε‚Μ——p‚Ιΐ‚η‚κ‚Δ‚¨‚θCLζ‚ΘƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚Ν——p‚Ε‚«‚ΈCΐΫ‚ΙXH‚πέv‚·‚ιΫ‚Μπ’Κΐ‘S{τ•]‰Ώ‚Μΐ—p«‚Μ–β‘θ‚ªc‚ιD‚±‚Μ‚ζ‚¤‚Θ»σ‚©‚ηLζ‚Ε——p‚Ε‚«‚ιπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒ^‚ª•K—v‚Ζ‚³‚κ‚Δ‚Ά‚ιD
 \subsection{¤‹†‚Μ–Ϊ“I}
@@ -191,7 +131,7 @@
 ‚±‚±‚ΕMATES‚Ι‚¨‚―‚ι”F’mE”»’fE‘€μ‚Ι‚Β‚Ά‚Δΰ–Ύ‚·‚ιBMATES‚Ι‚¨‚Ά‚Δ‚ΝA0.1•b‚²‚Ζ‚ΙeƒG[ƒWƒFƒ“ƒg‚ª‰^“]s“®‚πs‚¤Beƒ^ƒCƒ€ƒXƒeƒbƒv‚Ε‚Μ”F’mE”»’fE‘€μ‚Μ‘S‘Μ‚Μƒtƒƒ`ƒƒ[ƒg‚π}\ref{fig:flow}‚Ι¦‚·B\\\\
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 624 407]{./img/flow.png}% ‰ζ‘ƒTƒCƒY 320pt x 240pt ‚Μ—α
+  \includegraphics[width=1.0\hsize]{./img/flow.png}% ‰ζ‘ƒTƒCƒY 320pt x 240pt ‚Μ—α
   \caption{”F’mE”»’fE‘€μ‚Μƒtƒƒ`ƒƒ[ƒg}
   \label{fig:flow}
 \end{figure}
@@ -212,7 +152,7 @@
 π’Κ–Μ‚Ν•ª—ή‚µ‚Δl‚¦‚η‚κ‚ιB}\ref{fig:accident-classification}‚Ν•½¬15”N‚©‚η•½¬25”N‚ά‚Ε‚Ι‹N‚«‚½π’Κ–Μ‚π•ª—ή•ª‚―‚π‚µ‚½‰~ƒOƒ‰ƒt‚Ε‚ ‚ιB‚±‚ΜƒOƒ‰ƒt‚Νx@’΅‚Μƒf[ƒ^\cite{police2013}‚π³‚Ιμ¬‚µ‚½B
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 350 340]{./img/accident-classification.pdf}
+  \includegraphics[width=0.5\hsize]{./img/accident-classification.pdf}
   \caption{•½¬15~25”N‚Ι‚¨‚―‚ιπ’Κ–Μ‚Μ•ª—ή}
   \label{fig:accident-classification}
 \end{figure}
@@ -242,14 +182,14 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause1.png}
+  \includegraphics[width=1.0\hsize]{./img/rear-cause1.png}
   \caption{’Η“Λ–Μ‚Μ—vφ}
   \label{fig:rear-cause1}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1004 450]{./img/rear-cause2.png}
+  \includegraphics[width=1.0\hsize]{./img/rear-cause2.png}
   \caption{ζsΤ‚π©‚Θ‚©‚Α‚½—vφ}
   \label{fig:rear-cause2}
 \end{figure}
@@ -262,7 +202,7 @@
 ’Η“Λ–Μ‚ª”­¶‚·‚ι‚ά‚Ε‚Μƒtƒƒ`ƒƒ[ƒg‚π}\ref{fig:rear-flow}‚Ι¦‚·B\\
 \begin{figure}[phtb]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 292 674]{./img/rear-flow.png}
+  \includegraphics[width=0.5\hsize]{./img/rear-flow.png}
   \caption{’Η“Λ–Μ‚Μƒtƒƒ`ƒƒ[ƒg}
 
   \label{fig:rear-flow}
@@ -276,13 +216,13 @@
 ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“Jn‚Ι‘S‚Δ‚Μπ·“_‚Ι‚Β‚Ά‚ΔAΥ•Α•¨‚π”z’u‚·‚ι‚©‚Η‚¤‚©‚ί‚ιBκ‚Β‚Μπ·“_‚Ι‚¨‚―‚ιΥ•Α•¨‚Μ”‚Ν‚»‚Μπ·“_‚Ζ‚Β‚Θ‚ª‚Α‚Δ‚Ά‚ι’PH‚Μ”‚©‚ηA©’Κ‚µ‚ΜvZ‚Ιρ—^‚µ‚Θ‚ΆΥ•Α•¨‚Μ”‚πψ‚Ά‚½‚ΰ‚Μ‚Ε‚ ‚ιB—α‚¦‚Ξl³H‚Μκ‡}\ref{fig:barrier}‚Μ—l‚ΙΥ•Α•¨‚ª”z’u‚³‚κ‚ιB”z’u‚Ι‚Νπ·“_‚Ε—Χ‡‚¤’PHA—α‚¦‚Ξ’PH1,2‚ΜΤ‚ΙΥ•Α•¨‚πκ‚Β‚Έ‚Β”z’u‚·‚ιB}‚Μ—l‚Θκ‡Υ•Α•¨‚Ν4‚Β”z’u‚³‚κ‚ι‚±‚Ζ‚Ζ‚Θ‚ιB‚ά‚½A‚±‚Μ—l‚Ι‚µ‚ΔΥ•Α•¨‚ªΤ‚Ι‚ ‚ι’PH‚Ιu©’Κ‚µ‚Μ«‚Ά’PHv‚Ζ’θ‹`‚·‚ιB
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 906 783]{./img/barrier1.png}
+  \includegraphics[width=1.0\hsize]{./img/barrier1.png}
   \caption{l³H‚Ι‚¨‚―‚ιΥ•Α•¨}
   \label{fig:barrier1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 836 733]{./img/barrier2.png}
+  \includegraphics[width=1.0\hsize]{./img/barrier2.png}
   \caption{O³H‚Ι‚¨‚―‚ιΥ•Α•¨}
   \label{fig:barrier2}
 \end{figure}
@@ -293,7 +233,7 @@
 \newpage
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.0\hsize,bb=0 0 1179 692]{./img/sight-judge.png}
+  \includegraphics[width=1.0\hsize]{./img/sight-judge.png}
   \caption{i¶j”F’m‚Ε‚«‚Δ‚Ά‚ι‚Ζ‚«@i¶j”F’mƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚ι‚Ζ‚«}
   \label{fig:sight-judge}
 \end{figure}
@@ -304,7 +244,7 @@
 \newpage
 \begin{figure}[phtb]
   \centering
-  \includegraphics[width=0.6\hsize,bb=0 0 523 864]{./img/passing-flow.png}
+  \includegraphics[width=0.6\hsize]{./img/passing-flow.png}
   \caption{o‰ο‚Ά“ª–Μ‚Μƒtƒƒ`ƒƒ[ƒg}
   \label{fig:passing-flow}
 \end{figure}
@@ -317,7 +257,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 361 731]{./img/LR-flow.png}
+  \includegraphics[width=0.5\hsize]{./img/LR-flow.png}
   \caption{‰E¶ά–Μ‚Μƒtƒƒ`ƒƒ[ƒg}
   \label{fig:LR-flow}
 \end{figure}
@@ -329,7 +269,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 317 640]{./img/shift-flow.png}
+  \includegraphics[width=0.5\hsize]{./img/shift-flow.png}
   \caption{iH•ΟX–Μ‚Μƒtƒƒ`ƒƒ[ƒg}
   \label{fig:shift-flow}
 \end{figure}
@@ -338,11 +278,11 @@
 \subsection{³–ΚΥ“Λ–Μ}
 ³–ΚΥ“Λ‚Μ–Μ‚Ν”‚±‚»­‚Θ‚Ά‚ΰ‚Μ‚ΜAΥ“Λ‚·‚ιΤ—Ό‚Η‚¤‚µ‚Μ‘¬“x‚ª”ρν‚Ι‘¬‚Ά‚±‚Ζ‚βAΥ“Λ‚·‚ιΚ’u‚ΜΦWγAdΗ–ΜE€–S–Μ‚Ι‚Θ‚ι‚±‚Ζ‚ª‘½‚­”ρν‚Ιd‘ε‚Θ–Μ‚Ε‚ ‚ιB‰ª‚η‚Μ•ρ\cite{katsuoka}‚Ι‚ζ‚κ‚ΞA“T^“I‚Θ³–ΚΥ“Λ–Μ‚Ν‹–°‚θ‚βA•s’Σ‚Ι‚ζ‚Α‚ΔΤ—Ό‚ª‘ΞόΤό‚Ιi“ό‚·‚ι‚±‚Ζ‚Ι‚ζ‚θ”­¶‚·‚ι‚±‚Ζ‚ª‘½‚ΆD‚»‚±‚Ε³–ΚΥ“Λ‚Ε‚Ν©‚Θ‚Ά”F’mƒGƒ‰[‚ª”­¶‚·‚ι‚±‚Ζ‚ΕC‘ΞόΤό‚ΙΪ‚·‚ιΕ“ΰΤό‚π‘–s’†‚Ι‘ΞόΤό‚Ιi“ό‚·‚ι‚Ζ‚Ά‚¤ƒ‚ƒfƒ‹‚π\’z‚·‚ιB
 
-‚ά‚Έ‘ΞόΤό‚ª‘¶έ‚·‚ι‚©‚Η‚¤‚©‚ΝA“―‚¶’PH“ΰ‚ΜΤό‚π‘S‚Δζ“Ύ‚µAƒG[ƒWƒFƒ“ƒg‚ª’PH“ΰ“―κ•ϋό‚Ι‚¨‚Ά‚ΔAκ”Τ‰E‘¤‚ΜΤόi‚±‚κ‚πΕ“ΰΤό‚ΖΔ‚Τj‚Ι‘¶έ‚·‚ι‚©‚Η‚¤‚πm‚©‚ί‚ι‚±‚Ζ‚Εm”F‚·‚ιBƒG[ƒWƒFƒ“ƒg‚ªΕ“ΰΤό‚Ι‚Ά‚ΔA‘ΞόΤό‚ª‘¶έ‚·‚ι‚Ιm—¦vZ‚πs‚ΆA©‚Θ‚Ά”F’mƒGƒ‰[‚ª”­¶‚·‚ι‚©‚π’θ‚·‚ιB‚±‚ΜƒGƒ‰[‚ª‹N‚«‚ιm—¦‚π³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ’θ‹`‚·‚ιDƒGƒ‰[”­¶‚ΙCΤ—Ό‚π‘ΞόΤό‘¤‚ΙΪ“®‚·‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚Ζ‚µ‚½DΪ“®‚µ‚½γ‚Ν³‚ΜΚ’u‚©‚η‰E‘¤‚Φ3mΪ“®‚µ‚½γ‚Ι³‚ΜΚ’u‚Φ–ί‚ι‚ΰ‚Μ‚Ζ‚·‚ιB‘ΞόΤ—Ό‚ª‘¶έ‚·‚ι‚Ζ‚«‚Ι³–ΚΥ“Λ‚Μ–Μ‚ª‹N‚±‚ι‰Β”\«‚ª‚ ‚ιD³–ΚΥ“Λ–Μ‚Μƒtƒƒ`ƒƒ[ƒg‚π}\ref{fig:head-flow}‚Ι¦‚·B
+‚ά‚Έ‘ΞόΤό‚ª‘¶έ‚·‚ι‚©‚Η‚¤‚©‚ΝA“―‚¶’PH“ΰ‚ΜΤό‚π‘S‚Δζ“Ύ‚µAƒG[ƒWƒFƒ“ƒg‚ª’PH“ΰ“―κ•ϋό‚Ι‚¨‚Ά‚ΔAκ”Τ‰E‘¤‚ΜΤόi‚±‚κ‚πΕ“ΰΤό‚ΖΔ‚Τj‚Ι‘¶έ‚·‚ι‚©‚Η‚¤‚πm‚©‚ί‚ι‚±‚Ζ‚Εm”F‚·‚ιBƒG[ƒWƒFƒ“ƒg‚ªΕ“ΰΤό‚Ι‚Ά‚ΔA‘ΞόΤό‚ª‘¶έ‚·‚ι‚Ιm—¦vZ‚πs‚ΆA©‚Θ‚Ά”F’mƒGƒ‰[‚ª”­¶‚·‚ι‚©‚π’θ‚·‚ιB‚±‚ΜƒGƒ‰[‚ª‹N‚«‚ιm—¦‚π³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ’θ‹`‚·‚ιDƒGƒ‰[”­¶‚ΙCΤ—Ό‚π‘ΞόΤό‘¤‚ΙΪ“®‚·‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚Ζ‚µ‚½DΪ“®‚µ‚½γ‚Ν³‚ΜΚ’u‚©‚η‰E‘¤‚Φ3mΪ“®‚µ‚½γ‚Ι³‚ΜΚ’u‚Φ–ί‚ι‚ΰ‚Μ‚Ζ‚·‚ιB‚ά‚½A‘ΞόΤό‚Ιi“ό‚·‚ι‚Ζ‚¤‚ΆsΧ‚Ν’β~‚µ‚Δ‚Ά‚ικ‡‚βAa‘Ψ‚Θ‚Η’α‘¬‚Μκ‡‚Ι‹N‚±‚ι‰Β”\«‚ª’α‚Ά‚½‚ίAƒG[ƒWƒFƒ“ƒg‚Μ‘¬“x30km/Θγ‚Μ‚Ι¶‚¶‚ι‚ΰ‚Μ‚Ζ‚µ‚½B‘ΞόΤ—Ό‚ª‘¶έ‚·‚ι‚Ζ‚«‚Ι³–ΚΥ“Λ‚Μ–Μ‚ª‹N‚±‚ι‰Β”\«‚ª‚ ‚ιD³–ΚΥ“Λ–Μ‚Μƒtƒƒ`ƒƒ[ƒg‚π}\ref{fig:head-flow}‚Ι¦‚·B
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 396 816]{./img/head-flow.png}
+  \includegraphics[width=0.5\hsize]{./img/head-flow.png}
   \caption{³–ΚΥ“Λ–Μ‚Μƒtƒƒ`ƒƒ[ƒg}
   \label{fig:head-flow}
 \end{figure}
@@ -359,7 +299,7 @@
 \end{equation}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\hsize,bb=0 0 567 810]{./img/front-collid.png}
+  \includegraphics[width=0.5\hsize]{./img/front-collid.png}
   \caption{’Η“Λ–Μ‚ΜΥ“Λ”»’θ}
   \label{fig:rear-collid}
 \end{figure}
@@ -372,7 +312,7 @@
 \end{eqnarray}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/side-collid.png}
+  \includegraphics[width=1.0\hsize]{./img/side-collid.png}
   \caption{iH•ΟXE³–ΚΥ“Λ–Μ‚ΜΥ“Λ”»’θ}
   \label{fig:side-collid}
 \end{figure}
@@ -382,7 +322,7 @@
 Εγ‚Ιo‰ο‚Ά“ªE‰E¶ά–Μ‚ΜΥ“Λ”»’θ‚Ε‚ ‚ι‚ªA‚±‚Μ”»’θ‚Ε‚ΝΥ“ΛΤ‘Μ‚Η‚¤‚µ‚ª•ΐs‚Θσ‘Τ‚Ε‚Ν‚Θ‚Ά‚½‚ίAiH•ΟXE³–ΚΥ“Λ–Μ‚ΜƒAƒ‹ƒSƒƒYƒ€‚Ε‚Ν‘Ξ‰‚µ‚«‚κ‚Θ‚ΆB‚»‚Μ‚½‚ί­X•΅G‚ΘvZθ–@‚π—p‚Ά‚½B2‚Β‚Μ’·•ϋ`‚ªΪG‚µ‚Δ‚Ά‚Θ‚Ά‚Ζ‚Ά‚¤‚±‚Ζ‚ΝA’·•ϋ`‚ΜΤ‚Ιό•ª‚ªψ‚―‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚ΙΎ‚Ά·‚¦‚η‚κ‚ιB‚±‚±‚Ε‚»‚Μ—l‚Θ2‚Β‚Μ’·•ϋ`‚ΜΤ‚Μό•ª‚Ι‚’Ό‚Θ²‚π•ª—£²‚Ζ‚·‚ιB‚ά‚½A•ª—£²‚Ι‘Ξ‚·‚ι’·•ϋ`‚ΜΛ‰e‚π“‰eό•ª‚ΖΔ‚ΤB‚±‚±‚Ε‚Ν“‰eό•ª‚ª—£‚κ‚Δ‚Ά‚κ‚Ξπ·‚µ‚Δ‚Ά‚Θ‚Ά‚Ζ‚Ά‚¤‚±‚Ζ‚Ι‚Θ‚ιBi}\ref{fig:line-shadow}j
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/line-shadow.png}
+  \includegraphics[width=1.0\hsize]{./img/line-shadow.png}
   \caption{•ª—£²‚Ζ“‰eό•ª}
   \label{fig:line-shadow}
 \end{figure}
@@ -390,13 +330,13 @@
 ’·•ϋ`‚ªΪG‚µ‚Δ‚Ά‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚Ν‹‹Η•Σ‚ªπ‚ν‚Α‚Δ‚Ά‚ι‚Ζl‚¦‚η‚κ‚ι‚½‚ίA‚Ιό•ª‚Μπ·‚Ι‚Β‚Ά‚Δ•ª—£²‚π—p‚Ά‚Δl‚¦‚ιB‚ά‚½‚±‚ΜT”O‚πό•ª‚Ι‚Β‚Ά‚Δ‚ΰl‚¦‚ιB}\ref{fig:lines1}i¶j‚Ε‚Ν1,2‚Μό•ª‚Νπ‚ν‚Α‚Δ‚Ά‚ιB‚±‚κ‚π•ª—£²‚πg‚Α‚Δl‚¦‚ι‚Ζ}\ref{fig:lines1}i‰Ej‚Μ—l‚Ι“‰eό•ª‚Ι‘Ξ‚µ‚Δ‚ΰ‚¤•Π•ϋ‚Μό•ª‚ΜΛ‰e‚π‹Γk“_‚ΖΔ‚ΤB‚±‚Μ‹Γk“_‚ªέ‚Ά‚Μ“‰eό•ª‚Ιά‚ά‚κ‚Δ‚Ά‚κ‚ΞA2‚Β‚Μό•ª‚Νπ‚ν‚Α‚Δ‚Ά‚ιB}\ref{fig:lines2}‚ΝAπ‚ν‚Α‚Δ‚Ά‚Θ‚Άό•ª‚Ι‚Β‚Ά‚ΔA•\‚µ‚½‚ΰ‚Μ‚Ε‚ ‚ιB
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines1.png}
+  \includegraphics[width=1.0\hsize]{./img/lines1.png}
   \caption{i¶jπ·‚µ‚½ό•ªi‰Ej“‰eό•ª‚Ζ‹Γk“_}
   \label{fig:lines1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lines2.png}
+  \includegraphics[width=1.0\hsize]{./img/lines2.png}
   \caption{i¶jπ·‚µ‚Δ‚Ά‚Θ‚Άό•ªi‰Ej“‰eό•ª‚Ζ‹Γk“_}
   \label{fig:lines2}
 \end{figure}
@@ -404,13 +344,13 @@
 Τ‘Μ‚ª’·•ϋ`‚Ε‚ ‚ι‚½‚ίA‘Ξ•Σ‚ª•½s‚Θ‚½‚ίA“‰eό•ª‚Ν‘S•”‚Ε4–{‚Ύ‚―‚Ε‚ζ‚ΆB‚±‚κ‚Ν’Pƒ‚Ι‚¨έ‚Ά‚Μ•Σ‚Μπ·”»’θ‚π(4~4=)16‰ρ‚·‚ι‚ζ‚θ‚©‚Θ‚θ­‚Θ‚ΆvZ—Κ‚ΕΟ‚ήB}\ref{fig:inter-collid1}‚Μ—l‚Ι“‰eό•ª‚Ζ‹ΓW“_‚ªAΪ‚µ‚Δ‚Ά‚Θ‚Ά‚ΙƒG[ƒWƒFƒ“ƒg‚Η‚¤‚µ‚ΝΥ“Λ‚µ‚Δ‚Ά‚Θ‚Ά‚Ζ”»’θ‚Ε‚«‚ιB}\ref{fig:inter-collid2}‚Μ‚ζ‚¤‚ΙvZ‚Ι‚Ν1,2‚Μ“‰eό•ª‚Φ‚Μ‹——£‚π\textit{d}Τ‘Μ‚Μ“‰eό•ª‚Φ‚ΜΛ‰e‚Μ”Ό•ª‚π$\textit{r}_{1}$,$\textit{r}_{2}$‚Ζ‚·‚ι‚ΖAΘ‰Ί‚Μ®
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid1.png}
+  \includegraphics[width=1.0\hsize]{./img/inter-collid1.png}
   \caption{4‚Β‚Μ“‰eό•ª}
   \label{fig:inter-collid1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/inter-collid2.png}
+  \includegraphics[width=0.6\hsize]{./img/inter-collid2.png}
   \caption{Υ“Λ”»’θ‚ΜvZ}
   \label{fig:inter-collid2}
 \end{figure}
@@ -423,7 +363,7 @@
 \section{‹““®Ψ‚Ζ΄“x‰πΝ}
 ΐ‘•‚µ‚½‚»‚κ‚Ό‚κ‚Μ–Μ‚Ι‚Β‚Ά‚ΔA‹““®‚ΜΨ‚¨‚ζ‚Ρ΄“x‰πΝ‚πs‚Α‚½B
 \subsection{‹““®ΨT—v}
-MATES‚Ε‚ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚π‰Β‹‰»‚µ‚½‚ΰ‚Μ‚©‚ηA‹““®‚ΜΨ‚πs‚Α‚½B‰ζ‘‚Ι‚Β‚Ά‚ΔAƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚Θ‚ΆƒG[ƒWƒFƒ“ƒg‚ΝΒFAƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚ιƒG[ƒWƒFƒ“ƒg‚ΝΤF‚Ζ‚Θ‚Α‚Δ‚Ά‚ιB‚ά‚½A–Μ‚ª”­¶‚µ‚½‚Ζ‚«‚ΜƒG[ƒWƒFƒ“ƒg‚Ν•F‚Ε•\¦‚³‚κ‚ιB
+MATES‚Ε‚ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚π‰Β‹‰»‚µ‚½‚ΰ‚Μ‚©‚ηA‹““®‚ΜΨ‚πs‚Α‚½B‰ζ‘‚Ι‚Β‚Ά‚ΔAƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚Θ‚ΆƒG[ƒWƒFƒ“ƒg‚ΝΒFAƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚ιƒG[ƒWƒFƒ“ƒg‚ΝΤF‚Ζ‚Θ‚Α‚Δ‚Ά‚ιB–Μ‚ª”­¶‚µ‚½‚Ζ‚«‚ΜƒG[ƒWƒFƒ“ƒg‚Ν•F‚Ε•\¦‚³‚κ‚ιB‚ά‚½A‚ζ‚θ‚ν‚©‚θ‚β‚·‚Ά—l‚Ι‹““®Ψ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚ΝΐΫ‚Ιg—p‚·‚ικ‡‚ζ‚θ‚©‚Θ‚θ‚‚­έ’θ‚µ‚Δ‚Ά‚ι‚½‚ίAƒGƒ‰[”­¶’†Τ—Ό‚ª‘½‚­‘¶έ‚·‚ιB
 \subsection{΄“x‰πΝT—v}
 –{ƒ‚ƒfƒ‹‚Ι‚¨‚Ά‚Δ‚Νζq‚µ‚½‚ζ‚¤‚ΙA»ΐ‚Μ–Μ—¦‚ζ‚θ‚‚Ά–Μ—¦‚πo—Ν‚·‚ι‚ªA‚Η‚Μ’φ“x‚Μ„‡‚Ε‚Η‚Μ–Μ‚ª‹N‚±‚ι‚Μ‚©‚Ζ‚Ά‚¤‚Μ‚Ν»ΐ‚Μ”‚Ι‡‚ν‚Ή‚ι•K—v‚ª‚ ‚ιB‚±‚Μ„‡‚ª‚Η‚Μ’φ“x‚ª“KΨ‚Ε‚ ‚ι‚©‚π’²‚Χ‚ι‚½‚ί‚ΙAπ’Κ—Κ‚Ι‘Ξ‚·‚ι–Μ—¦‚Μ•Ο‰»AƒGƒ‰[—¦‚Ι‘Ξ‚·‚ι–Μ—¦‚Μ•Ο‰»‚π‹‚ίA΄“x‰πΝ‚πs‚Α‚½B
 \subsubsection{π’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
@@ -432,140 +372,260 @@ MATES‚Ε‚ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚π‰Β‹‰»‚µ‚½‚ΰ‚Μ‚©‚ηA‹““®‚ΜΨ‚πs‚Α‚½B‰ζ‘‚Ι‚Β‚Ά‚Δ
   R = \frac{N}{Q \times L }
 \end{equation}
 ‘“yπ’ΚΘ‚ªπ’Κ–Μ“‡ƒf[ƒ^ƒx[ƒX‚π—p‚Ά‚ΔZo‚µ‚½A»ΐ‚Μ–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚Ζ”δr‚µ‚½B}\ref{fig:MLIT}‚Ι¦‚·B‚±‚Μƒf[ƒ^ƒx[ƒX‚Ε‚ΝA‚ ‚ικ’θ‚Μ‹ζΤ“ΰ‚Ε”­¶‚µ‚½–Μ‚π‘S‘‚Ε‹L^‚µ‚½‚ΰ‚Μ‚©‚η‚Θ‚Α‚Δ‚Ά‚ιB‚ά‚½AƒOƒ‰ƒt‚Μ–Μ—¦‚Νƒf[ƒ^“ΰ‚Μeπ’Κ‹ζΤ‚Ι‚¨‚―‚ιπ’Κ—Κ‚ªκ’θ‚Μ’l‚Ιά‚ά‚κ‚ιπ’Κ‹ζΤ‚Ε‚Μ•½‹Ο‚Μ–Μ—¦‚π•\‚µ‚Δ‚Ά‚ιB‚±‚Μ‹‰Κ‚Ι‚ζ‚ι‚ΖAπ’Κ—Κ‚ª‘‰Α‚·‚ι‚Ζ‚Ζ‚ΰ‚Ι–Μ—¦‚Νκ“x‘‰Α‚µ‚ΔA‚»‚ΜγΈ­‚·‚ι‚Ζ‚Ά‚¤κ—l‚Ε‚Ν‚Θ‚Ά‚ªAA‘±“I‚Θ“®‚«‚π‚έ‚Δ‚Ά‚ιB–Μ—¦‚ªπ’Κ—Κ‚Εξ€‰»‚µ‚½’l‚Ι‚ΰΦ‚ν‚η‚Έ‚ά‚Ύπ’Κ—Κ‚Μ•Ο‰»‚Ι”Ί‚Α‚Δ•Ο‰»‚·‚ι‚±‚Ζ‚©‚ηAπ’Κ—Κ‚Μ•Ο‰»‚Ι‚ζ‚θπ’Κ»Ϋ‚ª•Ο‰»‚µ‚Δ‚Ά‚ι‚±‚Ζ‚ªl‚¦‚η‚κ‚ιB
-\begin{figure}[tbp]
+\begin{figure}[!tbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/MLIT.png}
+  \includegraphics[width=1.0\hsize]{./img/MLIT.png}
   \caption{π’Κ–Μ“‡ƒf[ƒ^ƒx[ƒX‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
   \label{fig:MLIT}
 \end{figure}
 \clearpage
-‚ά‚½AƒGƒ‰[—¦‚Ι‘Ξ‚·‚ι΄“x‰πΝ‚Ε‚ΝAƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚πό`‹ί—‚·‚ι‚±‚Ζ‚ΕA–Μ—¦‚πƒRƒ“ƒgƒ[ƒ‹‚·‚ιΫ‚ΙƒGƒ‰[—¦‚π‚Η‚Μ’φ“x‚Ι‚·‚κ‚Ξ‚ζ‚Ά‚©‚π’m‚ιΦ”‚πμ¬‚µ‚½BMATES‚Ε‚Ν¬^Τ‚Ζ‘ε^Τ‚ªƒG[ƒWƒFƒ“ƒg‚Ζ‚µ‚Δ‘¶έ‚µ‚Δ‚¨‚θA»ΐ‚Μ’l‚Ζ‹ί‚Γ‚―‚ι‚½‚ίA‘ε^Τ‚Μ”­¶„‡‚Ν¬^Τ‚Μ‚R„’φ“x‚Ζ‚µ‚Δ‚Ά‚ιB
+‚ά‚½AƒGƒ‰[—¦‚Ι‘Ξ‚·‚ι΄“x‰πΝ‚Ε‚ΝAƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚πό`‹ί—‚·‚ι‚±‚Ζ‚ΕA–Μ—¦‚πƒRƒ“ƒgƒ[ƒ‹‚·‚ιΫ‚ΙƒGƒ‰[—¦‚π‚Η‚Μ’φ“x‚Ι‚·‚κ‚Ξ‚ζ‚Ά‚©‚π’m‚ιΦ”‚πμ¬‚µ‚½B
+MATES‚Ε‚Ν¬^Τ‚Ζ‘ε^Τ‚ªƒG[ƒWƒFƒ“ƒg‚Ζ‚µ‚Δ‘¶έ‚µ‚Δ‚¨‚θA»ΐ‚Μ’l‚Ζ‹ί‚Γ‚―‚ι‚½‚ίA‘ε^Τ‚Μ”­¶„‡‚Ν¬^Τ‚Μ‚R„’φ“x‚Ζ‚µ‚Δ‚Ά‚ιB
 
 
-
-\subsection{’Η“ΛX–Μ}
-\subsubsection{‹““®Ψ}
+%’Η“Λn‚ά‚θ
+\subsection{’Η“Λ–Μ}
+\subsubsection{’Η“Λ–Μ‚Μ‹““®Ψ}
+}\ref{fig:rear-behavior}‚Ι’Η“Λ–Μ‚Μ‹““®‚π¦‚·B}‚Μ’†S•”‚ΙM†‚ª‚ ‚θAM†‚Μθ‘O‚Ε’β~‚µ‚Δ‚Ά‚ιƒG[ƒWƒFƒ“ƒg1‚Ι‘Ξ‚µ‚ΔAƒG[ƒWƒFƒ“ƒg2‚ª’Η“Λ‚·‚ι‚Ζ‚±‚λ‚π¦‚µ‚Δ‚Ά‚ιBe©‰^“]ƒ‚ƒfƒ‹‚Ι‚ζ‚θA2‚Ι”F’mƒGƒ‰[‚ª¶‚¶A1‚ª’β~‚µ‚Δ‚Ά‚ι‚Ι‚ΰΦ‚ν‚η‚ΈAis‚µ‚Δ‚Ά‚ι‚Ζ”»’f‚·‚ι‚½‚ίA–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/rear-behavior.png}
+  \caption{’Η“Λ–Μ‚Μ‹““®}
+  \label{fig:behavior}
+\end{figure}
 \clearpage
-\subsubsection{΄“x‰πΝ}
+\subsubsection{’Η“Λ–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:rear-roadmap}‚Ι¦‚·BMATES‚Ι‚¨‚Ά‚ΔeƒG[ƒWƒFƒ“ƒg‚Μ©—R‘–sσ‘Τ‚Ι‚¨‚―‚ισ–]‘¬“x‚ª“―κ‚Ε‚ ‚ι‚½‚ίAOD‚ΜΤ‚Ι‘S‚­M†‚ª‚Θ‚Ά’PHγ‚Ε‚Ν’Η“Λ–Μ‚ª‹N‚«‚Θ‚ΆB‚»‚Μ‚½‚ίA‚±‚±‚Ε‚ΝA2‚Β‚Μ’PH‚ΜΤ‚ΙM†‚π‹²‚ή‚±‚Ζ‚ΕA’Η“Λ–Μ‚πΔ»‚µ‚Δ‚Ά‚ιB‚ά‚½AΤ—Ό‚ΝeΤό‚©‚η“―‚¶„‡‚Ε”­¶‚·‚ιB
+%Wrote here
+’Η“Λ–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:rear-traffic-accident}‚Ι¦‚·B‚±‚κ‚Ι‚ζ‚ι‚ΖAπ’Κ—Κ‚ª‘‚¦‚ι‚Ι‚µ‚½‚ª‚Α‚ΔA–Μ—¦‚ΝγΈ‚µ‚Δ‚Ά‚­‚ªA25000‘δ/“ϊ•t‹ί‚Ι‚Θ‚ι‚ΖAγΈ‚ª~‚ά‚Α‚Δ‚Ά‚ι‚ζ‚¤‚Ι©‚Δζ‚κ‚ιB‚±‚κ‚Ν18,000‘δ/“ϊ•t‹ί‚©‚ηa‘Ψ‚ª”­¶‚µ‚Δ‚¨‚θAζsΤ‚ª’α‘¬‚ ‚ι‚Ά‚Ν’β~‚µ‚Δ‚Ά‚ι‚ΖA©‚Θ‚Ά”F’mƒGƒ‰[‚ª”­¶‚µ‚Δ‚ΰA—\‘ª‚·‚ιζsΤ‚ª’α‘¬‚Ε‚ ‚θA©Τ‚Ν’β~‚·‚ι‚½‚ίA–Μ‚ª”­¶‚µ‚Ι‚­‚­‚Θ‚Α‚Δ‚Ά‚ι‚Ζl‚¦‚η‚κ‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/rear-roadmap.png}
+  \caption{’Η“Λ–Μ‚Ι‚¨‚―‚ι“ΉH}}
+  \label{fig:rear-roadmap}
+\end{figure}
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/rear-traffic-accident.png}
+  \caption{’Η“Λ–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:rear-traffic-accident}
+\end{figure}
+\subsubsection{’Η“Λ–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:rear-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ªm”F‚Ε‚«‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/rear-error-accident.png}
+  \caption{’Η“Λ–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:rear-error-accident}
+\end{figure}
 \clearpage
+%’Η“ΛI—Ή
+
+%o‰ο‚Ά“ªn‚ά‚θ
 \subsection{o‰ο‚Ά“ª–Μ}
-\subsubsection{‹““®Ψ}
+\subsubsection{o‰ο‚Ά“ª–Μ‚Μ‹““®Ψ}
+‚ά‚ΈAό–‚Θ”»’fƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚Θ‚Ά‚ΜƒG[ƒWƒFƒ“ƒg‚Μ‹““®‚π}\ref{fig:passing-behavior1}‚Ι¦‚·B}‚Μ•‚Ά•”•ª‚ªΥ•Α•¨‚π•\‚µ‚Δ‚Ά‚ιB‚±‚Μ}‚Επ·“_‚ΙM†‚ª‚Θ‚Ά‚½‚ίAƒG[ƒWƒFƒ“ƒg1‚ª‚Ά‚ιΤό‚ª—Dζ“ΉH‚Ζ‚Θ‚Α‚Δ‚Ά‚ιBκ–‡–Ϊ‚Μ}‚Ε‚Ν1,2‚ΜΤ‚Ι©‚¦‚Θ‚Ά”F’mƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚ιB‚»‚Μ‚½‚ίAƒG[ƒWƒFƒ“ƒg‚Νπ·“_‚Ιi“ό‚·‚ιθ‘O‚Εκ’β~‚·‚ι‚±‚Ζ‚ΕA1‚Μ‘¶έ‚π”F’m‚µA1‚Ι“Ή‚π‚δ‚Έ‚Α‚Δ‚Ά‚ι‚±‚Ζ‚ª‚ν‚©‚ιB‚±‚Μ—l‚ΙA©’Κ‚µ‚Μ«‚Άπ·“_‚Μ‹ί•Σ‚Ε‚ΝAκ’β~‚πs‚¤‚±‚Ζ‚ΕA”F’mƒGƒ‰[‚π‰πΑ‚µ–Μ‚π–h‚®‚Ζ‚Ά‚¤‹““®‚πΨ‚·‚ι‚±‚Ζ‚ª‚Ε‚«‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\hsize]{./img/passing-behavior1.png}
+  \caption{”»’fƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚Θ‚ΆƒG[ƒWƒFƒ“ƒg‚Μ©’Κ‚µ‚Μ«‚Άπ·“_‚Ε‚Μ‹““®}
+  \label{fig:passing-behavior1}
+\end{figure}
 \clearpage
-\subsubsection{΄“x‰πΝ}
+‚Ι}\ref{fig:passing-behavior2}‚Ιo‰ο‚Ά“ª–Μ‚Μ‹““®‚π¦‚·BƒG[ƒWƒFƒ“ƒg1‚Ν©‚¦‚Θ‚Ά”F’mƒGƒ‰[‚Ι‚ζ‚θAƒG[ƒWƒFƒ“ƒg2‚π”F’m‚µ‚Δ‚Ά‚Θ‚Ά‚©‚Βό–‚Θ”»’fƒGƒ‰[‚ª”­¶‚µ‚Δ‚Ά‚ι‚½‚ίA©’Κ‚µ‚Μ«‚Άπ·“_‚Ι‚³‚µ‚©‚©‚ι‚ΰAκ’β~‚πs‚ν‚Θ‚ΆB‚»‚Μ‚½‚ίA‚»‚Μ‚ά‚άπ·“_‚Ιi“ό‚µ‚ζ‚¤‚Ζ‚·‚ι2‚Ζo‰ο‚Ά“ª–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\hsize]{./img/passing-behavior2.png}
+  \caption{o‰ο‚Ά“ª–Μ‚Μ‹““®}
+  \label{fig:passing-behavior2}
+\end{figure}
 \clearpage
-
+\subsubsection{o‰ο‚Ά“ª–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:passing-roadmap}‚Ι¦‚·Bo‰ο‚Ά“ª–Μ‚ªM†‚Μ‚Θ‚Άπ·“_‚Ε”­¶‚·‚ι‚±‚Ζ‚©‚η–{ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚Ά‚Δ‚ΰAπ·“_‚ΙM†‚Ν‚Θ‚ΆB”­¶‚·‚ιΤ—Ό‚Ν}‚Μ1,2‚Μ•ϋό‚Φό‚©‚¤Τ—Ό‚Ύ‚―‚Ι‚µ‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/passing-roadmap.png}
+  \caption{o‰ο‚Ά“ª–Μ‚Ι‚¨‚―‚ι“ΉH}}
+  \label{fig:passing-roadmap}
+\end{figure}
+\clearpage
+o‰ο‚Ά“ª–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:passing-traffic-accident}‚Ι¦‚·Bo‰ο‚Ά“ª–Μ‚Ι‚¨‚Ά‚Δ‚ΝAπ’Κ—Κ‚ª‘‚¦‚ι‚Ω‚ΗA–Μ—¦‚ΰ‘‰Α‚·‚ιXό‚Ι‚ ‚ι‚±‚Ζ‚ª‚ν‚©‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/passing-traffic-accident.png}
+  \caption{o‰ο‚Ά“ª–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:passing-traffic-accident}
+\end{figure}
+\clearpage
+\subsubsection{o‰ο‚Ά“ª–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:passing-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ªm”F‚Ε‚«‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/passing-error-accident.png}
+  \caption{o‰ο‚Ά“ª–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:passing-error-accident}
+\end{figure}
+\clearpage
+%o‰ο‚Ά“ªI—Ή
 
 %‰E¶άn‚ά‚θ
 \subsection{‰E¶ά–Μ}
 \subsubsection{‰E¶ά–Μ‚Μ‹““®Ψ}
-}\ref{fig:lr-behaviour}‚Ι‰E¶ά–Μ‚Μσ‘Τ‚π¦‚·B‚±‚Μ}‚Ε‚Νγ‘¤A‰Ί‘¤‚©‚ηπ·“_‚Ιi“ό‚µ‚ζ‚¤‚Ζ‚·‚ιƒG[ƒWƒFƒ“ƒg‚π‚»‚κ‚Ό‚κAƒG[ƒWƒFƒ“ƒga,b‚Ζ‚·‚ιB}‚Ε‚Νa,b‚Μ—Ό•ϋ‚Ι‰E¶ά‚ΜƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚ιB‰E¶άƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚Θ‚Άκ‡‚ΝA‚±‚Μσ‘Τ‚Ε‚Νa‚Ν”ρ—DζΤ‚Ε‚ ‚θA—DζΤ—Ό‚Ε‚ ‚ιb‚ªi“ό‚µ‚ζ‚¤‚Ζ‚µ‚Δ‚Ά‚ι‚½‚ίAπ·“_‘O‚Ε’β~‚·‚ι‚Ν‚Έ‚Ε‚ ‚ι‚ªAό–‚ΘƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚ι‚½‚ίAi“ό‚·‚ι‚±‚Ζ‚Ε–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB
+‚±‚±‚Ε‚ΝAπ’Κ–Μ—\‘ªάƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“ƒ}ƒjƒ…ƒAƒ‹‚Μ–—α‚Ι]‚ΆA‰Eά‘Ξ’ΌiiΘ‰Ί‰E’ΌjA‰Eά‘Ξ¶άiΘ‰Ί‰E¶άj‚Μ—Ό•ϋ‚Μ–Μ‚Μ‹““®‚πΨ‚µ‚½B–Μ‚Μ‹““®Ψ‚Μ‘O‚Ι’Κν‚Μ‰E¶ά‚Μ‰^“]s“®‚Ι‚¨‚―‚ι}‚π}\ref{lr-behavior0}‚Ι¦‚·B‚±‚±‚Ε‚ΝƒG[ƒWƒFƒ“ƒg1‚ª’Όi‚µ‚ζ‚¤‚Ζ‚µ‚Δ‚¨‚θAƒG[ƒWƒFƒ“ƒg2‚Ν‰Eά‚π‚µ‚ζ‚¤‚Ζ‚µ‚Δ‚Ά‚ιB‰Eά‚Ζ’Όi‚Μκ‡A’Όi‚Μ•ϋ‚ª—DζΤ‚Ζ‚Θ‚ι‚Μ‚ΕAΒM†‚Ε‚ ‚Α‚Δ‚ΰ2‚Ν1‚ª’Κ‚θ‰ί‚¬‚ι‚Μ‚π‘Ò‚Α‚Δ‚©‚ηAπ·“_‚Ιi“ό‚·‚ιB
 \newpage
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-behavior.png}
+  \includegraphics[width=1.0\hsize]{./img/lr-behavior0.png}
+  \caption{‰E¶ά‚Μ‰^“]s“®}
+  \label{fig:lr-behavior0}
+\end{figure}
+\clearpage
+@
+
+‘±‚Ά‚Δ}\ref{fig:lr-behavior‚P}‚Ι‰E¶ά–Μ‚Μ‹““®‚π¦‚·BƒG[ƒWƒFƒ“ƒg1‚Ν’ΌiΤ‚Ε‚ ‚θAƒG[ƒWƒFƒ“ƒg2‚Ν‰EάΤ‚Ε‚ ‚ιB‚±‚Μ–{—‚Θ‚η‚ΞA2‚ª—DζΤ‚Ε‚ ‚ι1‚Ι“Ή‚π‚δ‚Έ‚ι‚Χ‚«‚Ε‚ ‚ι‚ªAό–‚Θ”»’fƒGƒ‰[‚ª”­¶‚µA1‚ªs‚­‘O‚Ι©Τ‚ª“n‚θΨ‚κ‚ι‚Ζ”»’f‚µA‰E’Ό‚ΜΥ“Λ–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB“―—l‚Ι}\ref{fig:lr-behavior2}‚Ι‰E¶ά‚ΜΥ“Λ–Μ‚Μ‹““®‚π¦‚·B‚±‚±‚Ε‚ΝA1‚Ν‰EάA2‚Ν¶ά‚πs‚¨‚¤‚Ζ‚µ‚Δ‚¨‚θA–{—1‚Ν“Ή‚πχ‚ι‚Χ‚«‚Ύ‚ªAό–‚Θ”»’fƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚ι‚½‚ίA‰E¶ά‚ΜΥ“Λ–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/lr-behavior1.png}
+  \caption{‰E’Ό–Μ‚Μ‹““®}
+  \label{fig:lr-behavior1}
+\end{figure}
+\begin{figure}[!tbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/lr-behavior2.png}
   \caption{‰E¶ά–Μ‚Μ‹““®}
-  \label{fig:behavior}
+  \label{fig:lr-behavior2}
 \end{figure}
 \clearpage
 \subsubsection{‰E¶ά–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
-ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:lr-roadmap}‚Ι¦‚·B‚ά‚½AΤ—Ό‚Ν‚S‚Β‚ΜΤό‘S‚Δ‚©‚η“―‚¶„‡‚Ε”­¶‚µAπ·“_‚Ι‚ΝM†‚ªέ’u‚³‚κ‚Δ‚Ά‚ιB‰E¶ά–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-traffic-accident}‚Ι¦‚·Bπ’Κ—Κ‚ª1500‘δ/‚Μ‚ ‚½‚θ‚Εƒs[ƒN‚Ι’B‚µA‚»‚Μγ‚δ‚ι‚β‚©‚Ι–Μ—¦‚ªΈ­‚µ‚Δ‚Ά‚­‚Μ‚ª‚ν‚©‚ιB‚±‚κ‚Νπ’Κ—Κ‚ª‘‚¦a‘Ψ‚ª¶‚¶‚ι‚ΖAA‘±“I‚Ι—Dζ“ΉH‚ΜƒG[ƒWƒFƒ“ƒg‚ªπ·“_‚ΙN“ό‚µAό–‚Θ”»’fƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚Δ‚ΰAƒGƒ‰[Τ‚Μ•ϋ‚ªζ‚Ιπ·“_‚π’Κ‰ί‚Ε‚«‚ι‚Ζ‚Ά‚¤”»’f‚πs‚ν‚Θ‚Ά‚½‚ί‚Ε‚ ‚ιB
+ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:lr-roadmap}‚Ι¦‚·B‚ά‚½AΤ—Ό‚Ν‚S‚Β‚ΜΤό‘S‚Δ‚©‚η“―‚¶„‡‚Ε”­¶‚µAπ·“_‚Ι‚ΝM†‚ªέ’u‚³‚κ‚Δ‚Ά‚ιB‰E¶ά–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-traffic-accident}‚Ι¦‚·Bπ’Κ—Κ‚ª15000‘δ/‚Μ‚ ‚½‚θ‚Εƒs[ƒN‚Ι’B‚µA‚»‚Μγ‚δ‚ι‚β‚©‚Ι–Μ—¦‚ªΈ­‚µ‚Δ‚Ά‚­‚Μ‚ª‚ν‚©‚ιB‚±‚κ‚Νπ’Κ—Κ‚ª‘‚¦a‘Ψ‚ª¶‚¶‚ι‚ΖAA‘±“I‚Ι—Dζ“ΉH‚ΜƒG[ƒWƒFƒ“ƒg‚ªπ·“_‚ΙN“ό‚µAό–‚Θ”»’fƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚Δ‚ΰAƒGƒ‰[Τ‚Μ•ϋ‚ªζ‚Ιπ·“_‚π’Κ‰ί‚Ε‚«‚ι‚Ζ‚Ά‚¤”»’f‚πs‚ν‚Θ‚Ά‚½‚ί‚Ε‚ ‚ιB
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-roadmap.png}
+  \includegraphics[width=1.0\hsize]{./img/lr-roadmap.png}
   \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ι“ΉH}}
   \label{fig:lr-roadmap}
 \end{figure}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-traffic-accident.png}
+  \includegraphics[width=1.0\hsize]{./img/lr-traffic-accident.png}
   \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
   \label{fig:lr-traffic-accident}
 \end{figure}
 \subsubsection{‰E¶ά–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
-ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ª‚ν‚©‚Α‚½B
+ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ªm”F‚Ε‚«‚½B
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-error-accident.png}
+  \includegraphics[width=1.0\hsize]{./img/lr-error-accident.png}
   \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
   \label{fig:lr-error-accident}
 \end{figure}
-
+\clearpage
 %‰E¶άI—Ή
 
-%‰E¶άn‚ά‚θ
-\subsection{‰E¶ά–Μ}
-\subsubsection{‰E¶ά–Μ‚Μ‹““®Ψ}
-}\ref{fig:lr-behaviour}‚Ι‰E¶ά–Μ‚Μσ‘Τ‚π¦‚·B‚±‚Μ}‚Ε‚Νγ‘¤A‰Ί‘¤‚©‚ηπ·“_‚Ιi“ό‚µ‚ζ‚¤‚Ζ‚·‚ιƒG[ƒWƒFƒ“ƒg‚π‚»‚κ‚Ό‚κAƒG[ƒWƒFƒ“ƒga,b‚Ζ‚·‚ιB}‚Ε‚Νa,b‚Μ—Ό•ϋ‚Ι‰E¶ά‚ΜƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚ιB‰E¶άƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚Θ‚Άκ‡‚ΝA‚±‚Μσ‘Τ‚Ε‚Νa‚Ν”ρ—DζΤ‚Ε‚ ‚θA—DζΤ—Ό‚Ε‚ ‚ιb‚ªi“ό‚µ‚ζ‚¤‚Ζ‚µ‚Δ‚Ά‚ι‚½‚ίAπ·“_‘O‚Ε’β~‚·‚ι‚Ν‚Έ‚Ε‚ ‚ι‚ªAό–‚ΘƒGƒ‰[‚ª‹N‚«‚Δ‚Ά‚ι‚½‚ίAi“ό‚·‚ι‚±‚Ζ‚Ε–Μ‚ª”­¶‚µ‚Δ‚Ά‚ιB
-\newpage
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-behavior.png}
-  \caption{‰E¶ά–Μ‚Μ‹““®}
-  \label{fig:behavior}
-\end{figure}
-\clearpage
-\subsubsection{‰E¶ά–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
-ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:lr-roadmap}‚Ι¦‚·B‚ά‚½AΤ—Ό‚Ν‚S‚Β‚ΜΤό‘S‚Δ‚©‚η“―‚¶„‡‚Ε”­¶‚µAπ·“_‚Ι‚ΝM†‚ªέ’u‚³‚κ‚Δ‚Ά‚ιB‰E¶ά–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-traffic-accident}‚Ι¦‚·Bπ’Κ—Κ‚ª1500‘δ/‚Μ‚ ‚½‚θ‚Εƒs[ƒN‚Ι’B‚µA‚»‚Μγ‚δ‚ι‚β‚©‚Ι–Μ—¦‚ªΈ­‚µ‚Δ‚Ά‚­‚Μ‚ª‚ν‚©‚ιB‚±‚κ‚Νπ’Κ—Κ‚ª‘‚¦a‘Ψ‚ª¶‚¶‚ι‚ΖAA‘±“I‚Ι—Dζ“ΉH‚ΜƒG[ƒWƒFƒ“ƒg‚ªπ·“_‚ΙN“ό‚µAό–‚Θ”»’fƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚Δ‚ΰAƒGƒ‰[Τ‚Μ•ϋ‚ªζ‚Ιπ·“_‚π’Κ‰ί‚Ε‚«‚ι‚Ζ‚Ά‚¤”»’f‚πs‚ν‚Θ‚Ά‚½‚ί‚Ε‚ ‚ιB
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-roadmap.png}
-  \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ι“ΉH}}
-  \label{fig:lr-roadmap}
-\end{figure}
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-traffic-accident.png}
-  \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
-  \label{fig:lr-traffic-accident}
-\end{figure}
-\subsubsection{‰E¶ά–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
-ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:lr-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ª‚ν‚©‚Α‚½B
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\hsize,bb=0 0 826 882]{./img/lr-error-accident.png}
-  \caption{‰E¶ά–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
-  \label{fig:lr-error-accident}
-\end{figure}
-%‰E¶άI—Ή
-
-
-\subsubsection{΄“x‰πΝ}
-\clearpage
+%iH•ΟXn‚ά‚θ
 \subsection{iH•ΟX–Μ}
-\subsubsection{‹““®Ψ}
+\subsubsection{iH•ΟX–Μ‚Μ‹““®Ψ}
+}\ref{fig:shift-behavior}‚ΙiH•ΟX–Μ‚Μ‹““®‚π¦‚·B}‚Ε‚ΝƒG[ƒWƒFƒ“ƒg1‚ª‚ªƒG[ƒWƒFƒ“ƒg2‚ª‚Ά‚ιΤό‚Φ‚ΜiH•ΟX‚πs‚¨‚¤‚Ζ‚µ‚Δ‚Ά‚ιB‚±‚ΜAe©‰^“]ƒ‚ƒfƒ‹‚Ι‚ζ‚ι©‚Θ‚Ά”F’mƒGƒ‰[‚ª¶‚¶‚ι‚±‚Ζ‚ΕA2‚π”F’m‚µ‚Θ‚Ά‚±‚Ζ‚Ι‚Θ‚θAiH•ΟX‚πJn‚µ‚Δ‚µ‚ά‚½‚ίAiH•ΟX–Μ‚ª¶‚¶‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\hsize]{./img/shift-behavior.png}
+  \caption{iH•ΟX–Μ‚Μ‹““®}
+  \label{fig:shift-behavior}
+\end{figure}
 \clearpage
-\subsubsection{΄“x‰πΝ}
+\subsubsection{iH•ΟX–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚Ν‰E¶ά–Μ‚Ζ“―‚¶‚ΰ‚Μ‚Ε‚ ‚ι}\ref{fig:lr-roadmap}‚Ζ‚Θ‚ιB‚±‚±‚ΕiH•ΟX–Μ‚Μ΄“x‰πΝ‚Ιπ·“_‚Μ‚ ‚ι“ΉH‚πg—p‚µ‚Δ‚Ά‚ι‚Μ‚ΝAMATES‚Ι‚¨‚Ά‚Δ‚ΝiH•ΟX‚ªs‚ν‚κ‚ι‚Μ‚ΝAξ–{“I‚Ι–Ϊ“I’n‚ª•K—v‚Θ‚Ζ‚«‚Ε‚ ‚θA‚»‚Μ‚½‚ί‚Ι‚Ν‰E¶ά‚π‚·‚ι•K—v‚ª‚ ‚ι‚½‚ί‚Ε‚ ‚ιBΤ—Ό‚Ν‚S‚Β‚Μ’PH‚©‚η“―‚¶„‡‚Ε”­¶‚µAπ·“_‚Ι‚ΝM†‚ªέ’u‚³‚κ‚Δ‚Ά‚ιBiH•ΟX–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:shift-traffic-accident}‚Ι¦‚·Bπ’Κ—Κ‚Μ‘‰Α‚Ι]‚ΆA–Μ—¦‚ª‚‚ά‚Α‚Δ‚Ά‚ι‚±‚Ζ‚ª‚ν‚©‚ιB
 \clearpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/shift-traffic-accident.png}
+  \caption{iH•ΟX–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:shift-traffic-accident}
+\end{figure}
+\subsubsection{iH•ΟX–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:shift-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ªm”F‚Ε‚«‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/shift-error-accident.png}
+  \caption{iH•ΟX–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:shift-error-accident}
+\end{figure}
+\clearpage
+%iH•ΟXI—Ή
+
+%³–ΚΥ“Λn‚ά‚θ
 \subsection{³–ΚΥ“Λ–Μ}
-\subsubsection{‹““®Ψ}
+\subsubsection{³–ΚΥ“Λ–Μ‚Μ‹““®Ψ}
+}\ref{fig:head-behavior}‚Ι³–ΚΥ“Λ–Μ‚Μ‹““®‚π¦‚·BƒG[ƒWƒFƒ“ƒg1‚Ι©‚Θ‚Ά”F’mƒGƒ‰[‚ª¶‚¶‚Δ‚Ά‚ι‚±‚Ζ‚ΕA™X‚Ι‘ΞόΤό‚Ιi“ό•~‚Ά‚Δ‚Ά‚«ΕI“I‚Ι2‚Ι³–ΚΥ“Λ‚·‚ι‚Ζ‚Ά‚¤‚ΰ‚Μ‚Ε‚ ‚ιB
+
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/head-behavior.png}
+  \caption{³–ΚΥ“Λ–Μ‚Μ‹““®}
+  \label{fig:behavior}
+\end{figure}
 \clearpage
-\subsubsection{΄“x‰πΝ}
+\subsubsection{³–ΚΥ“Λ–Μ‚Μπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι‚¨‚―‚ι“ΉH}‚π}\ref{fig:head-roadmap}‚Ι¦‚·B³–ΚΥ“Λ‚Μ΄“x‰πΝ‚Ι‚¨‚Ά‚Δ‚Ν•Π‘¤κΤό‚Έ‚Β‚ΜM†‚Μ‚Θ‚Ά“ΉH‚πg—p‚µ‚½B‘ΞόΤό‚ª‚ ‚ι“ΉH‚Ε‚Θ‚Ά‚Ζ³–ΚΥ“Λ–Μ‚ª”­¶‚µ‚Θ‚Ά‚©‚η‚Ε‚ ‚ιB³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:head-traffic-accident}‚Ι¦‚·B³–ΚΥ“Λ–Μ‚Ε‚ΝA50000‘δ/“ϊ‚ ‚½‚θ‚Ιƒs[ƒN‚ª‚ ‚ιB‚±‚κ‚Νπ’Κ—Κ‚ª­‚Θ‚Ά—Μζ‚Ε‚ΝA‰΅‚Ιƒuƒ‚Δ‚ΰ‚»‚±‚ΙΤ—Ό‚ª‚Ά‚Θ‚Ά‰Β”\«‚ª‚‚Ά‚ªA‹t‚Ι‘‚¦‚·‚¬‚Δa‘Ψ‚ª¶‚¶‚ι‚ΖA‘¬“x‚ª’x‚­‚Θ‚θƒGƒ‰[‚ª”­¶‚µ‚Θ‚Ά‚½‚ί‚Ε‚ ‚ιB
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/head-roadmap.png}
+  \caption{³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ι“ΉH}}
+  \label{fig:head-roadmap}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/head-traffic-accident.png}
+  \caption{³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ιπ’Κ—Κ‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:head-traffic-accident}
+\end{figure}
+\subsubsection{³–ΚΥ“Λ–Μ‚ΜƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+ƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW‚π}\ref{fig:head-error-accident}‚Ι¦‚·B‚±‚Μ‹‰Κ‚©‚ηAƒGƒ‰[—¦‚Ζ–Μ—¦‚ªό`ΦW‚Ι‚ ‚ι‚±‚Ζ‚ªm”F‚Ε‚«‚½B
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\hsize]{./img/head-error-accident.png}
+  \caption{³–ΚΥ“Λ–Μ‚Ι‚¨‚―‚ιƒGƒ‰[—¦‚Ζ–Μ—¦‚ΜΦW}
+  \label{fig:head-error-accident}
+\end{figure}
+\clearpage
+%³–ΚΥ“ΛI—Ή
+
+
 
 \clearpage
 \section{ΐ“ss‚Φ‚Μ‰—p}
-΄“x‰πΝ‚©‚η“Ύ‚η‚κ‚½‹‰Κ‚ΖA–Μ‚ª‹N‚±‚ι„‡‚©‚ηΐΫ‚Μ“ssi‰ªRsj‚Μ“ΉHξ•ρ‚π—p‚Ά‚½ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πs‚Α‚½B–Μ‚ª‹N‚±‚ι„‡‚Ι‚Ν
-ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Μπ
-\section{‹_}
-
-\section{•\‚Ζ}}
-•\‚Ζ}‚Ν‹\‚ή‚Έ‚©‚µ‚ΆB
-ξ–{“I‚Ι‚Ν HTML ‚Ζ“―‚¶‚ζ‚¤‚Θvl‚Εζ‚θ‘g‚ή‚Ζ‘ε‘Μ³‚µ‚ΆB
-\subsection{•\}
-•\\ref{tab:sample}‚Ι•\‚Μ—α‚π¦‚·B
-%
+π’Κ–Μ‚Μ‹““®Ψ‚©‚ηΐ“ss‚Φ‚Μ‰—p—α‚π¦‚·‚½‚ίA‰ªRs‚Ι‚¨‚―‚ιπ’Κ–ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πs‚Α‚½B
+΄“x‰πΝ‚©‚η“Ύ‚η‚κ‚½‹‰Κ‚ΖA–Μ‚ª‹N‚±‚ι„‡‚©‚η“ΉHξ•ρ‚π—p‚Ά‚½ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πs‚Α‚½B‚»‚κ‚Ό‚κ‚Μ–Μ‚ª‹N‚±‚ι„‡‚Ι‚Ν΄“x‰πΝ‚Ε‹‚ί‚½‹ί—‹Θό‚ΜW”‚π——p‚µ‚½B–Μ—¦$R_a$‚ΖƒGƒ‰[—¦$R_e$‚ΜΦW‚ΝW”ƒΏ‚π—p‚Ά‚ΔΘ‰Ί‚Ε•\‚³‚κ‚ιB
+\begin{equation}
+  R_a = ƒΏR_e
+\end{equation}
+‚ά‚½AƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Μπ‚Ζ‚µ‚ΔA–Μ‚Μ”­¶‚·‚ι„‡‚Νx@’΅‚Ι‚ζ‚ι–Μ”­¶„‡\cite{police2013}‚πQl‚Ι‚µ‚½B΄“x‰πΝ‚Ι‚ζ‚Α‚Δ‹‚ί‚η‚κ‚½e–Μ‚Ι‚¨‚―‚ιƒΏ‹y‚ΡAƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι“K‰‚·‚ι’l‚π•\\ref{tab:simulation}‚Ι¦‚·B
 \begin{table}[htbp] % •\‚ΜΚ’u (h, t, b, p ‚π—Dζ‡‚Ι•ΐ‚Χ‚ι)Bh: ‚±‚±; t: ƒy[ƒWγ•”; b: ƒy[ƒW‰Ί•”; p: V‚µ‚Άƒy[ƒW
  \centering % •\‚ΜƒZƒ“ƒ^ƒƒ“ƒO
- \caption{•\‚ΜƒTƒ“ƒvƒ‹}\label{tab:sample} % ƒLƒƒƒvƒVƒ‡ƒ“‚Ζƒ‰ƒxƒ‹
- \begin{tabular}{r|cl} % —ρ‚ΖcόBc: ’†‰›‘µ‚¦; l: ¶‘µ‚¦; r: ‰E‘µ‚¦; |: cό
+ \caption{ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι—p‚Ά‚½’l}\label{tab:simulation} % ƒLƒƒƒvƒVƒ‡ƒ“‚Ζƒ‰ƒxƒ‹
+ \begin{tabular}{lrrrr} % —ρ‚ΖcόBc: ’†‰›‘µ‚¦; l: ¶‘µ‚¦; r: ‰E‘µ‚¦; |: cό
   \hline % ‰΅ό
-  ‰E & ’†‰› & ¶ \\
-  \hline\hline % ‰΅ό‚π 2 –{
-  ‚έ‚¬  & ‚Ώ‚γ‚¤‚¨‚¤ & ‚Π‚Ύ‚θ \\
-  Right & Center     & Left \\
+  –Μ–Ό & $\alpha$ & „‡[\%] & –Μ—¦[/‘δƒLƒ] & ƒGƒ‰[—¦[-]\\
+  \hline % ‰΅ό‚π 2 –{
+  ’Η“Λ  & 40.6 & 41.3 & 5.00 $\times 10^{-3}$ & 1.23 $\times 10^{-4}$ \\
+  o‰ο‚Ά“ª  & 1.82 & 28.6 & 3.46 $\times 10^{-3}$ & 1.91 $\times 10^{-3}$ \\
+  ‰E¶ά  & 0.23 & 14.5 & 1.76 $\times 10^{-3}$ & 7.78 $\times 10^{-3}$ \\
+  iH•ΟX & 1.10 & 1.6 & 1.99 $\times 10^{-4}$ & 1.82 $\times 10^{-4}$ \\
+  ³–ΚΥ“Λ  & 2.90 & 2.6 & 3.13 $\times 10^{-4}$ & 1.08 $\times 10^{-4}$ \\
   \hline
  \end{tabular}
 \end{table}
-%
+‚±‚Μ—l‚Ι‚µ‚ΔAvZ‚µ‚½ƒGƒ‰[—¦‚π—p‚Ά‚ΔƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πs‚Α‚½Be–Μ‚Μ”­¶‰ρ”‚π}\ref{fig:}¦‚·B‚ά‚½A“―—l‚Ι–Μ—¦‚Ζπ’Κ—Κ‚ΜΦW‚π}‚Ι¦‚·B‚ά‚½Aπ’Κ–Μ‚Μ•]‰Ώ²‚Ζ‚µ‚ΔA‚Η‚±‚Ε‚Η‚Μ’φ“x‚Η‚Μ‚ζ‚¤‚Θν—ή‚Μ–Μ‚ª‹N‚«‚½‚©‚Ζ‚Ά‚¤ξ•ρ‚π“ΉH’n}γ‚Ιo—Ν‚·‚ι‚±‚Ζ‚ΕAΐ‘Sx‰‡{τ•]‰Ώ‚Ι—L—p‚Ε‚ ‚ι‚Ζl‚¦‚η‚κ‚ιB‚±‚Μ—l‚Ι‚µ‚ΔA–Μ‚π‰Β‹‰»‚µ‚½‚ΰ‚Μ‚π}\ref{fig:}‚Ι¦‚·B}‚Μ—l‚Ι‚ ‚ι’nζ‘S‘Μ‚πλαΥ“I‚Ι©‚ι‚±‚Ζ‚ΰA‹Η“I‚Ι–β‘θ‚ª¶‚¶‚β‚·‚Άκ‚π‰Β‹‰»‚Ε‚«‚ιB‚ά‚½A”­¶’n“_‚Ι‚¨‚―‚ιF‚Μα‚Ά‚Ν–Μ‚Μν—ή‚π•\‚µ‚Δ‚Ά‚ιB‚±‚Μ—l‚Ι‰Β‹‰»‚·‚ι‚±‚Ζ‚Ι‚ζ‚θAΐΫ‚Ι‚Η‚±‚Ε‚Η‚¤‚Ά‚Α‚½–Μ‚ª”­¶‚µ‚Δ‚Ά‚ι‚©‚ª‚ν‚©‚θAπ’Κΐ‘Sx‰‡{τ•]‰Ώ‚Ι—L—p‚Ε‚ ‚ι‚Ζl‚¦‚η‚κ‚ιB
+
+
+\clearpage
+\section{‹_}
+@–{¤‹†‚Ε‚ΝLζ‚Μπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πΔ»‚µAπ’Κΐ‘Sx‰‡{τ•]‰Ώ‚·‚ι‚½‚ί‚Μπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚ΜJ”­‚πs‚Α‚½B‚»‚Μ‚½‚ί‚Μ•΅”‚Μ–Μi’Η“Λ–ΜEo‰ο‚Ά“ª–ΜE‰E¶ά–ΜEiH•ΟX–ΜE³–ΚΥ“Λ–Μj‚πΐ‘•AvZΤ‚π’Zk‚·‚ι‚±‚Ζ‚π–Ϊ“I‚Ζ‚µ‚Δ‚«‚½B•΅”‚Μπ’Κ–Μ‚ΜΔ»‚ΙΦ‚µ‚Δ‚ΝA–Μ‚Ζ‚»‚Μ—vφ‚Ε‚ ‚ι”F’mE”»’fƒGƒ‰[‚π‰Α–΅‚·‚ι‚±‚Ζ‚ΕA»ΐ‚Ι‘¥‚·ƒ‚ƒfƒ‹‚π\’z‚µ‚Β‚Β‚ΰAvZ•‰‰Χ‚Μ’αΈ‚π–Ϊw‚µ‚½B‚ά‚½A‚»‚κ‚Ό‚κ‚Μ–Μ‚Ι‘Ξ‚µ‚ΔA‹““®‚πΨ‚·‚ι‚±‚Ζ‚ΕA»ΐ‚Μ–Μ‚Ι‹ί‚Άπ’Κ»Ϋ‚πm”F‚·‚ι‚±‚Ζ‚ª‚Ε‚«‚½B‚ά‚½A΄“x‰πΝ‚πs‚Α‚½‚±‚Ζ‚ΕAƒGƒ‰[—¦‚Ζ–Μ—¦‚Ζ‚ΜΦW‚π•\‚µAƒGƒ‰[—¦‚πέ’θ‚·‚ι‚±‚Ζ‚Ε–Μ—¦‚Φ‚Μ”½‰f‚π‰Β”\‚Ζ‚µ‚½BΕγ‚Ι‰—p‚Ζ‚µ‚ΔA‰ªRs‚Ι‚¨‚―‚ιπ’Κ–ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚πs‚¤‚Ζ‚Ζ‚ΰ‚Ι–Μƒf[ƒ^‚Μ‰Β‹‰»‚πs‚Α‚½B‚±‚κ‚Ι‚ζ‚θA‚Η‚±‚ΕA‚Η‚Μ’φ“xA‚Η‚Μ‚ζ‚¤‚Θν—ή‚Μ–Μ‚ª‹N‚«‚ι‚©‚π—\‘ª‚·‚ι‚±‚Ζ‚ª‚Ε‚«Aΐ‘Sx‰‡{τ•]‰Ώ‚Ι”ρν‚Ι—L—p‚Ε‚ ‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚ªl‚¦‚η‚κ‚ιB‚ά‚½AvZΤ‚Ι‚Β‚Ά‚Δ‚ΰl—¶‚µ‚½‚Ζ‚±‚λAό”{‚ΜvZΤ‚Ζ‚Ά‚¤‹‰Κ‚©‚η]—‚ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚Ι”δ‚Χ‚ΔA’α•‰‰Χ‚ΕvZ‚ª‰Β”\‚Ε‚ ‚ι‚Ζ‚Ά‚¤‚±‚Ζ‚ª‚ν‚©‚Α‚½B\\
+@Εγ‚Ι΅γ‚Μ‰Ϋ‘θ‚Ζ‚µ‚ΔA»ΐ–Μ‚Ι‚Η‚Μ’φ“x‹ί‚Γ‚―‚ι‚Ζ‚Ά‚¤–β‘θ‚ª‚ ‚ιB–{¤‹†‚Ι‚¨‚Ά‚Δ‚ΝAπ’Κΐ‘Sx‰‡{τ‚π•]‰Ώ‚·‚ι‚½‚ί‚ΙAƒ‚ƒfƒ‹‚π‚ ‚ι’φ“xΘΥ‚Ι‚µ‚Δ‚¨‚θA»ΐ‚Μ–Μ‚πΔ»‚µ‚«‚κ‚Δ‚Ά‚ι‚Ζ‚Ν‚Ά‚¦‚Θ‚ΆB‚±‚Μ’†‚Ε‚ζ‚θ”Δ—p“I‚ΙA‚©‚Β³m‚Ι–Μ—¦‚πΔ»‚·‚ι‚Ι‚Ν‘½‚­‚Μ“w—Ν‚ª•K—v‚Ε‚ ‚λ‚¤B‹ο‘Μ“I‚Ι‚Ν’‹–ιA“Vσ‚Ι‚ζ‚ι‹”F«‚Μα‚Ά‚βA‘Ξl–ΜA’Η“Λ‚Θ‚Η‚Μ•΅G‚Θ‹““®‚π”Ί‚¤–Μ‚Θ‚Η‚Ν–{ƒ‚ƒfƒ‹‚Ι‚Ν“ό‚Α‚Δ‚¨‚η‚Έ‚±‚κ‚π“±“ό‚·‚ι‚±‚Ζ‚Ι‚ζ‚θA‚ζ‚θ³m‚Ι–Μ‚Μ”­¶‚πΔ»‚Ε‚«‚ιπ’Κ—¬ƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚ªϊ‘Ò‚³‚κ‚ιB
+\newpage
+
+
 \begin{thebibliography}{9}
  \bibitem{ITS-Japan}
         “Α’θ”ρ‰c—“®–@lITS Japan.
@@ -628,8 +688,6 @@ MATES‚Ε‚ΜƒVƒ~ƒ…ƒ[ƒVƒ‡ƒ“‚π‰Β‹‰»‚µ‚½‚ΰ‚Μ‚©‚ηA‹““®‚ΜΨ‚πs‚Α‚½B‰ζ‘‚Ι‚Β‚Ά‚Δ
 	π’Κ–Μ“‡ƒf[ƒ^ƒx[ƒX‚π—p‚Ά‚½ƒ}ƒNƒπ’Κ–Μ•ªΝ
 	C‘‘¤‘—ΏC No.48C2002
 \end{thebibliography}
-%
-% –{•¶‚πI‚ν‚θ‚Ι‚·‚ιB
-%
+
 
 \end{document}

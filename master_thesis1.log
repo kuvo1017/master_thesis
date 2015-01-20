@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  18 JAN 2015 10:03
+This is e-pTeX, Version 3.14159265-p3.5-130605-2.6 (utf8.sjis) (TeX Live 2014/W32TeX) (preloaded format=platex 2014.6.26)  20 JAN 2015 09:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -273,50 +273,48 @@ LaTeX Warning: Label `ITARDA2005' multiply defined.
 )
 \openout1 = `master_thesis1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 123.
-LaTeX Font Info:    Try loading font information for OML+txmi on input line 123
-.
+LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 63.
+LaTeX Font Info:    Try loading font information for OML+txmi on input line 63.
+
  (c:/w32tex/share/texmf-dist/tex/latex/txr/omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 123.
-LaTeX Font Info:    Try loading font information for OMS+txsy on input line 123
-.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 63.
+LaTeX Font Info:    Try loading font information for OMS+txsy on input line 63.
+
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 123.
-LaTeX Font Info:    Try loading font information for OMX+txex on input line 123
-.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 63.
+LaTeX Font Info:    Try loading font information for OMX+txex on input line 63.
+
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/omxtxex.fd
 File: omxtxex.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 123.
-LaTeX Font Info:    Try loading font information for U+txexa on input line 123.
-
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 63.
+LaTeX Font Info:    Try loading font information for U+txexa on input line 63.
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/utxexa.fd
 File: utxexa.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
 
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txr on input line 123.
-
+LaTeX Font Info:    Try loading font information for OT1+txr on input line 63.
  (c:/w32tex/share/texmf-dist/tex/latex/txr/ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
@@ -355,249 +353,305 @@ File: ot1txr.fd 2000/12/15 v3.1
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 129.
+(Font)              scaled to size 16.60605pt on input line 69.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 129.
+(Font)              scaled to size 16.60605pt on input line 69.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 129.
+(Font)              scaled to size 11.53198pt on input line 69.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 129.
+(Font)              scaled to size 11.53198pt on input line 69.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 129.
-LaTeX Font Info:    Try loading font information for U+txsya on input line 129.
-
+(Font)              scaled to size 5.76599pt on input line 69.
+LaTeX Font Info:    Try loading font information for U+txsya on input line 69.
 (c:/w32tex/share/texmf-dist/tex/latex/txr/utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txsyb on input line 129.
-
+LaTeX Font Info:    Try loading font information for U+txsyb on input line 69.
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txmia on input line 129.
-
+LaTeX Font Info:    Try loading font information for U+txmia on input line 69.
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txsyc on input line 129.
-
+LaTeX Font Info:    Try loading font information for U+txsyc on input line 69.
 
 (c:/w32tex/share/texmf-dist/tex/latex/txr/utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 4.805pt on input line 129.
+(Font)              scaled to size 4.805pt on input line 69.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 129.
+(Font)              scaled to size 5.76599pt on input line 69.
  [1
 
 ]
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 148.
+(Font)              scaled to size 9.60999pt on input line 88.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 148.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 148.
-
+(Font)              scaled to size 9.60999pt on input line 88.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 88.
 
 (c:/w32tex/share/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 148.
+(Font)              scaled to size 13.83836pt on input line 88.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 148.
+(Font)              scaled to size 13.83836pt on input line 88.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 148.
+(Font)              scaled to size 13.83836pt on input line 88.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 148.
- (./master_thesis1.toc)
+(Font)              scaled to size 13.83836pt on input line 88.
+ (./master_thesis1.toc
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 6.72699pt on input line 2.
+
+[2])
 \tf@toc=\write3
 \openout3 = `master_thesis1.toc'.
 
-
-[2]
+ [3]
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 152.
+(Font)              scaled to size 11.53198pt on input line 92.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 152.
+(Font)              scaled to size 11.53198pt on input line 92.
 File: ./img/accident-translation.pdf Graphic file (type pdf)
  <./img/accident-translation.pdf>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 160.
+(Font)              scaled to size 8.64899pt on input line 100.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 160.
- [3] [4] [5] [6] [7] [8]
+(Font)              scaled to size 8.64899pt on input line 100.
+ [4] [5] [6] [7] [8] [9]
 File: ./img/flow.png Graphic file (type bmp)
- <./img/flow.png>
+
+<./img/flow.png>
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 198.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 198.
+(Font)              scaled to size 9.60999pt on input line 138.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 198.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 198.
-
-[9] [10]
+(Font)              scaled to size 9.60999pt on input line 138.
+ [10] [11]
 File: ./img/accident-classification.pdf Graphic file (type pdf)
- <./img/accident-classification.pdf> [11] [12] [13]
+ <./img/accident-classification.pdf> [12] [13]
+[14]
 File: ./img/rear-cause1.png Graphic file (type bmp)
-
-<./img/rear-cause1.png>
+ <./img/rear-cause1.png>
 File: ./img/rear-cause2.png Graphic file (type bmp)
- <./img/rear-cause2.png> [14]
+ <./img/rear-cause2.png> [15]
 File: ./img/rear-flow.png Graphic file (type bmp)
- <./img/rear-flow.png>
-[15] [16]
 
-LaTeX Warning: Reference `fig:barrier' on page 17 undefined on input line 276.
+<./img/rear-flow.png> [16] [17]
+
+LaTeX Warning: Reference `fig:barrier' on page 18 undefined on input line 216.
 
 File: ./img/barrier1.png Graphic file (type bmp)
 <./img/barrier1.png>
 File: ./img/barrier2.png Graphic file (type bmp)
- <./img/barrier2.png> [17
+ <./img/barrier2.png> [18
 
-] [18] [19] [20
+] [19] [20] [21
 
 ]
 File: ./img/sight-judge.png Graphic file (type bmp)
 
-<./img/sight-judge.png> [21]
+<./img/sight-judge.png> [22]
 File: ./img/passing-flow.png Graphic file (type bmp)
- <./img/passing-flow.png> [22] [23
+ <./img/passing-flow.png> [23] [24
 
 ]
 File: ./img/LR-flow.png Graphic file (type bmp)
 
-<./img/LR-flow.png> [24]
+<./img/LR-flow.png> [25]
 
-LaTeX Warning: Reference `shift-flow' on page 25 undefined on input line 327.
+LaTeX Warning: Reference `shift-flow' on page 26 undefined on input line 267.
 
-[25
+[26
 
 ]
 File: ./img/shift-flow.png Graphic file (type bmp)
- <./img/shift-flow.png> [26]
+ <./img/shift-flow.png> [27]
 File: ./img/head-flow.png Graphic file (type bmp)
- <./img/head-flow.png> [27
+ <./img/head-flow.png> [28
 
-] [28]
+] [29]
 
-LaTeX Warning: Reference `rear-collid' on page 29 undefined on input line 355.
+LaTeX Warning: Reference `rear-collid' on page 30 undefined on input line 295.
 
 LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
-(Font)              Font shape `JT1/mc/m/n' tried instead on input line 355.
+(Font)              Font shape `JT1/mc/m/n' tried instead on input line 295.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 355.
+(Font)              scaled to size 9.60999pt on input line 295.
 LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
-(Font)              Font shape `JY1/mc/m/n' tried instead on input line 355.
+(Font)              Font shape `JY1/mc/m/n' tried instead on input line 295.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 355.
-LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 355.
+(Font)              scaled to size 9.60999pt on input line 295.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 355.
+(Font)              scaled to size 6.72699pt on input line 295.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 4.805pt on input line 355.
+(Font)              scaled to size 4.805pt on input line 295.
 File: ./img/front-collid.png Graphic file (type bmp)
-<./img/front-collid.png> [29
+<./img/front-collid.png> [30
 
-] [30]
+] [31]
 File: ./img/side-collid.png Graphic file (type bmp)
- <./img/side-collid.png> [31
+ <./img/side-collid.png> [32
 
-]
+] [33]
 File: ./img/line-shadow.png Graphic file (type bmp)
 
-<./img/line-shadow.png> [32
+<./img/line-shadow.png> [34
 
 ]
 File: ./img/lines1.png Graphic file (type bmp)
  <./img/lines1.png>
 File: ./img/lines2.png Graphic file (type bmp)
- <./img/lines2.png> [33
+ <./img/lines2.png> [35
 
 ]
-[34]
+[36]
 File: ./img/inter-collid1.png Graphic file (type bmp)
  <./img/inter-collid1.png>
 File: ./img/inter-collid2.png Graphic file (type bmp)
- <./img/inter-collid2.png> [35
+ <./img/inter-collid2.png> [37
 
-] [36]
+] [38]
 File: ./img/MLIT.png Graphic file (type bmp)
 
-<./img/MLIT.png> [37
+<./img/MLIT.png> [39
 
-] [38] [39
+] [40]
 
-] [40
+LaTeX Warning: Reference `fig:rear-behavior' on page 41 undefined on input line
+ 389.
 
-] [41
+[41
 
-] [42
+]
+File: ./img/rear-behavior.png Graphic file (type bmp)
+ <./img/rear-behavior.png>
+
+LaTeX Warning: Float too large for page by 177.63371pt on input line 396.
+
+[42]
+File: ./img/rear-roadmap.png Graphic file (type bmp)
+ <./img/rear-roadmap.png>
+File: ./img/rear-traffic-accident.png Graphic file (type bmp)
+ <./img/rear-traffic-accident.png>
+File: ./img/rear-error-accident.png Graphic file (type bmp)
+
+<./img/rear-error-accident.png> [43
+
+] [44]
+File: ./img/passing-behavior1.png Graphic file (type bmp)
+ <./img/passing-behavior1.png>
+[45
+
+]
+File: ./img/passing-behavior2.png Graphic file (type bmp)
+ <./img/passing-behavior2.png> [46
+
+]
+File: ./img/passing-roadmap.png Graphic file (type bmp)
+ <./img/passing-roadmap.png> [47
+
+]
+File: ./img/passing-traffic-accident.png Graphic file (type bmp)
+
+<./img/passing-traffic-accident.png> [48
+
+]
+File: ./img/passing-error-accident.png Graphic file (type bmp)
+ <./img/passing-error-accident.png>
+[49
 
 ]
 
-LaTeX Warning: Reference `fig:lr-behaviour' on page 43 undefined on input line 
-461.
+LaTeX Warning: Reference `lr-behavior0' on page 50 undefined on input line 475.
 
-[43
+
+[50
 
 ]
-File: ./img/lr-behavior.png Graphic file (type bmp)
- <./img/lr-behavior.png> [44]
+File: ./img/lr-behavior0.png Graphic file (type bmp)
+ <./img/lr-behavior0.png> [51]
 
-LaTeX Warning: File `./img/lr-roadmap.png' not found on input line 474.
+LaTeX Warning: Reference `fig:lr-behavior１' on page 52 undefined on input line
+ 486.
 
+File: ./img/lr-behavior1.png Graphic file (type bmp)
+<./img/lr-behavior1.png>
+File: ./img/lr-behavior2.png Graphic file (type bmp)
+ <./img/lr-behavior2.png>
+
+LaTeX Warning: Float too large for page by 13.24289pt on input line 498.
+
+[52
+
+] [53]
 File: ./img/lr-roadmap.png Graphic file (type bmp)
-<./img/lr-roadmap.png>
+ <./img/lr-roadmap.png>
 File: ./img/lr-traffic-accident.png Graphic file (type bmp)
- <./img/lr-traffic-accident.png>
+ <./img/lr-traffic-accident.png> [54
+
+]
 File: ./img/lr-error-accident.png Graphic file (type bmp)
 
-<./img/lr-error-accident.png> [45
+<./img/lr-error-accident.png> [55] [56]
+File: ./img/shift-behavior.png Graphic file (type bmp)
+ <./img/shift-behavior.png> [57
 
 ]
-
-LaTeX Warning: Reference `fig:lr-behaviour' on page 46 undefined on input line 
-498.
-
-[46] [47]
-File: ./img/lr-behavior.png Graphic file (type bmp)
- <./img/lr-behavior.png> [48]
-
-LaTeX Warning: File `./img/lr-roadmap.png' not found on input line 511.
-
-File: ./img/lr-roadmap.png Graphic file (type bmp)
-<./img/lr-roadmap.png>
-File: ./img/lr-traffic-accident.png Graphic file (type bmp)
- <./img/lr-traffic-accident.png>
-File: ./img/lr-error-accident.png Graphic file (type bmp)
-
-<./img/lr-error-accident.png> [49
-
-] [50] [51] [52
-
-] [53
-
-] [54
-
-] [55
+[58
 
 ]
+File: ./img/shift-traffic-accident.png Graphic file (type bmp)
+ <./img/shift-traffic-accident.png>
+File: ./img/shift-error-accident.png Graphic file (type bmp)
+ <./img/shift-error-accident.png>
+[59
 
-LaTeX Warning: Reference `tab:sample' on page 56 undefined on input line 554.
+] [60]
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 573.
+LaTeX Warning: Reference `fig:head-behavior' on page 61 undefined on input line
+ 559.
 
-(c:/w32tex/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+[61
+
+]
+File: ./img/head-behavior.png Graphic file (type bmp)
+ <./img/head-behavior.png> [62]
+File: ./img/head-roadmap.png Graphic file (type bmp)
+ <./img/head-roadmap.png>
+File: ./img/head-traffic-accident.png Graphic file (type bmp)
+
+<./img/head-traffic-accident.png>
+File: ./img/head-error-accident.png Graphic file (type bmp)
+ <./img/head-error-accident.png> [63
+
+] [64]
+
+LaTeX Warning: Reference `fig:' on page 65 undefined on input line 619.
+
+
+LaTeX Warning: Reference `fig:' on page 65 undefined on input line 619.
+
+[65
+
+
+] [66
+
+]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 633.
+
+ (c:/w32tex/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [56
-
-] [57]
+) [67]
 (./master_thesis1.aux)
 
 LaTeX Warning: There were undefined references.
@@ -607,12 +661,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2927 strings out of 493800
- 36271 string characters out of 6153372
- 99823 words of memory out of 5000000
- 6314 multiletter control sequences out of 15000+600000
+ 2985 strings out of 493800
+ 37595 string characters out of 6153372
+ 101002 words of memory out of 5000000
+ 6353 multiletter control sequences out of 15000+600000
  35401 words of font info for 124 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,13n,32p,1243b,381s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on master_thesis1.dvi (57 pages, 72124 bytes).
+Output written on master_thesis1.dvi (67 pages, 95616 bytes).
